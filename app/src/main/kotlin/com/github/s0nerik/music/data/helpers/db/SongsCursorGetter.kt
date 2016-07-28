@@ -1,33 +1,60 @@
-//package com.github.s0nerik.music.data.helpers.db
-//
-//import android.content.ContentResolver
-//import android.net.Uri
-//import android.provider.MediaStore.Audio.Media
-//
-//import app.App
-//import app.models.Album
-//import app.models.Song
-//import groovy.transform.CompileStatic
-//import javax.inject.Inject
-//
-//class SongsCursorGetter() : CursorGetter() {
-//
-//    var contentUri = Media.EXTERNAL_CONTENT_URI
-//    val selection =
-//    var selection: List<String>? = null
-//    var String: `as`? = null
-//    var String: `as`? = null
-//
-//    var projection: List<String>? = null
-//
-//    var sortOrder = SortOrder()[Media!!.ARTIST]
-//    var Media: SortOrder? = null
-//
-//    private val album: Album
-//
-////    init {
+package com.github.s0nerik.music.data.helpers.db
+
+import android.net.Uri
+import android.provider.MediaStore.Audio.Media
+import com.github.s0nerik.music.data.models.Album
+import com.github.s0nerik.music.data.models.Song
+
+class SongsCursorGetter() : CursorGetter() {
+    override val contentUri: Uri
+        get() = Media.EXTERNAL_CONTENT_URI
+    override val projection: List<String>
+        get() = listOf(
+                Media._ID,
+                Media.TITLE,
+                Media.ARTIST,
+                Media.ALBUM,
+                Media.DURATION,
+                Media.DATA,
+                Media.DISPLAY_NAME,
+                Media.SIZE,
+                Media.ALBUM_ID,
+                Media.ARTIST_ID,
+                Media.TRACK,
+                Media.MIME_TYPE
+        )
+    override val selection: List<String>
+        get() = listOf(
+            "${Media.IS_MUSIC} != 0",
+            "${Media.MIME_TYPE} in $supportedMimeTypesString"
+        )
+    override val sortOrder: SortOrder
+        get() = SortOrder(listOf(Media.ARTIST, Media.ALBUM, Media.TRACK, Media.DISPLAY_NAME), Order.ASCENDING)
+
+    private var album: Album? = null
+
+////
+////    //region Constructors
+////    SongsCursorGetter() {
 ////        App.get().inject(this)
 ////    }
+////
+////    SongsCursorGetter(@NonNull Album album) {
+////        this()
+////        this.album = album
+////        selection << ("$Media.ALBUM_ID = $album.id" as String)
+////    }
+////
+////    SongsCursorGetter(@NonNull SortOrder sortOrder) {
+////        this()
+////        this.sortOrder = sortOrder
+////    }
+////
+////    SongsCursorGetter(@NonNull Album album, @NonNull SortOrder sortOrder) {
+////        this(album)
+////        this.sortOrder = sortOrder
+////    }
+////    //endregion
 //
 //    constructor(album: Album) : this() {
 //        this.album = album
@@ -42,10 +69,9 @@
 //    constructor(album: Album, sortOrder: SortOrder) : this(album) {
 //        this.sortOrder = sortOrder
 //    }
-//
-//    companion object {
-//
-//        private val supportedMimeTypesString = "('" + Song.SUPPORTED_MIME_TYPES.join("','") + "')"
-//    }
+
+    companion object {
+        val supportedMimeTypesString = "('" + Song.SUPPORTED_MIME_TYPES.joinToString("','") + "')"
+    }
 //    //endregion
-//}
+}

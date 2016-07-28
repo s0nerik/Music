@@ -1,135 +1,163 @@
-//package com.github.s0nerik.music.data.models
+package com.github.s0nerik.music.data.models
+
+import rx.Observable
+import java.io.Serializable
+
+class MusicCollectionImpl : MusicCollection, Serializable {
+    override fun initFromMediaStore(): Observable<MusicCollection> {
+        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun getArtist(song: Song): Observable<Artist> {
+        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun getAlbum(song: Song): Observable<Album> {
+        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun getArtist(album: Album): Observable<Artist> {
+        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun getSongs(album: Album): Observable<List<Song>> {
+        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun getSongs(artist: Artist): Observable<List<Song>> {
+        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun getAlbums(artist: Artist): Observable<List<Album>> {
+        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+//    GroovyLongSparseArray<Song> songs = new GroovyLongSparseArray<>()
+//    GroovyLongSparseArray<Album> albums = new GroovyLongSparseArray<>()
+//    GroovyLongSparseArray<Artist> artists = new GroovyLongSparseArray<>()
 //
-//import java.io.Serializable
+//    @Inject
+//    protected transient Context context
 //
-//class MusicCollectionImpl : MusicCollection, Serializable {
-////    GroovyLongSparseArray<Song> songs = new GroovyLongSparseArray<>()
-////    GroovyLongSparseArray<Album> albums = new GroovyLongSparseArray<>()
-////    GroovyLongSparseArray<Artist> artists = new GroovyLongSparseArray<>()
-////
-////    @Inject
-////    protected transient Context context
-////
-////    class FetchingMediaStoreStartedNotification {}
-////    class FetchingMediaStoreCompletedNotification {}
-////    class SongsLoadedNotification {}
-////    class ArtistsLoadedNotification {}
-////    class AlbumsLoadedNotification {}
-////
-////    MusicCollectionImpl() {
-////        App.get().inject(this)
-////    }
-////
-////    Observable<Object> init() {
-////        clear()
-////        initFromFile().onErrorResumeNext(initFromMediaStore())
-////    }
-////
-////    private Observable<Object> initFromFile() {
-////        readAndInitCollectionFromFile()
-////                .doOnError { Debug.e it, "Collection initialization error." }
-////                .doOnCompleted { Debug.d "Collection initialized successfully." }
-////                .concatWith(Observable.just(this))
-////    }
-////
-////    private Observable<Object> initFromMediaStore() {
-////        loadAllSongs().cast(Object)
-////                      .doOnCompleted { Debug.d "Songs loaded..." }
-////                      .concatWith(loadAllArtists())
-////                      .doOnCompleted { Debug.d "Artists loaded..." }
-////                      .concatWith(loadAllAlbums())
-////                      .doOnCompleted { Debug.d "Albums loaded..." }
-////                      .concatWith(writeCollectionIntoFile())
-////                      .doOnCompleted { Debug.d "Collection written to file." }
-////                      .concatWith(Observable.just(this))
-////    }
-////
-////    Artist getArtist(Song song) {
-////        artists.get(song.artistId)
-////    }
-////
-////    Album getAlbum(Song song) {
-////        albums.get(song.albumId)
-////    }
-////
-////    Artist getArtist(Album album) {
-////        artists.get(album.artistId)
-////    }
-////
-////    List<Song> getSongs(Album album) {
-////        songs.filter { it.albumId == album.id }
-////    }
-////
-////    List<Song> getSongs(Artist artist) {
-////        songs.filter { it.artistId == artist.id }
-////    }
-////
-////    List<Album> getAlbums(Artist artist) {
-////        albums.filter { it.artistId == artist.id }
-////    }
-////
-////    private Observable<Song> loadAllSongs() {
-////        CursorConstructor.fromCursorGetter(Song, new SongsCursorGetter())
-////                         .onBackpressureBuffer()
-////                         .filter { it.source != null }
-////                         .doOnNext { songs.put(it.id, it) }
-////    }
-////
-////    private Observable<Artist> loadAllArtists() {
-////        CursorConstructor.fromCursorGetter(Artist, new ArtistsCursorGetter())
-////                         .onBackpressureBuffer()
-////                         .filter { isArtistHasSongs(it) }
-////                         .doOnNext { artists.put(it.id, it) }
-////    }
-////
-////    private Observable<Album> loadAllAlbums() {
-////        CursorConstructor.fromCursorGetter(Album, new AlbumsCursorGetter())
-////                         .onBackpressureBuffer()
-////                         .filter { isAlbumContainsSongs(it) }
-////                         .doOnNext { albums.put(it.id, it) }
-////    }
-////
-////    private boolean isArtistHasSongs(Artist artist) {
-////        songs.first { it.artistId == artist.id } != null
-////    }
-////
-////    private boolean isAlbumContainsSongs(Album album) {
-////        songs.first { it.albumId == album.id } != null
-////    }
-////
-////    private Observable<Object> writeCollectionIntoFile() {
-////        Observable.create({ Subscriber<Object> subscriber ->
-////            def stream = context.openFileOutput("collection.lwm", Context.MODE_PRIVATE)
-////
-////            new ObjectOutputStream(stream).withObjectOutputStream {
-////                it.writeObject(this as MusicCollectionImpl)
-////            }
-////
-////            subscriber.onCompleted()
-////        } as Observable.OnSubscribe<Object>)
-////    }
-////
-////    private Observable<Object> readAndInitCollectionFromFile() {
-////        Observable.create({ Subscriber<Object> subscriber ->
-////            def stream = context.openFileInput "collection.lwm"
-////
-////            new ObjectInputStream(stream).withObjectInputStream {
-////                initWith(it.readObject() as MusicCollectionImpl)
-////            }
-////
-////            subscriber.onCompleted()
-////        } as Observable.OnSubscribe<Object>)
-////    }
-////
-////    private void clear() {
-////        songs.clear()
-////        albums.clear()
-////        artists.clear()
-////    }
-////
-////    private void initWith(MusicCollectionImpl other) {
-////        songs = other.songs
-////        albums = other.albums
-////        artists = other.artists
-////    }
-//}
+//    class FetchingMediaStoreStartedNotification {}
+//    class FetchingMediaStoreCompletedNotification {}
+//    class SongsLoadedNotification {}
+//    class ArtistsLoadedNotification {}
+//    class AlbumsLoadedNotification {}
+//
+//    MusicCollectionImpl() {
+//        App.get().inject(this)
+//    }
+//
+//    Observable<Object> init() {
+//        clear()
+//        initFromFile().onErrorResumeNext(initFromMediaStore())
+//    }
+//
+//    private Observable<Object> initFromFile() {
+//        readAndInitCollectionFromFile()
+//                .doOnError { Debug.e it, "Collection initialization error." }
+//                .doOnCompleted { Debug.d "Collection initialized successfully." }
+//                .concatWith(Observable.just(this))
+//    }
+//
+//    private Observable<Object> initFromMediaStore() {
+//        loadAllSongs().cast(Object)
+//                      .doOnCompleted { Debug.d "Songs loaded..." }
+//                      .concatWith(loadAllArtists())
+//                      .doOnCompleted { Debug.d "Artists loaded..." }
+//                      .concatWith(loadAllAlbums())
+//                      .doOnCompleted { Debug.d "Albums loaded..." }
+//                      .concatWith(writeCollectionIntoFile())
+//                      .doOnCompleted { Debug.d "Collection written to file." }
+//                      .concatWith(Observable.just(this))
+//    }
+//
+//    Artist getArtist(Song song) {
+//        artists.get(song.artistId)
+//    }
+//
+//    Album getAlbum(Song song) {
+//        albums.get(song.albumId)
+//    }
+//
+//    Artist getArtist(Album album) {
+//        artists.get(album.artistId)
+//    }
+//
+//    List<Song> getSongs(Album album) {
+//        songs.filter { it.albumId == album.id }
+//    }
+//
+//    List<Song> getSongs(Artist artist) {
+//        songs.filter { it.artistId == artist.id }
+//    }
+//
+//    List<Album> getAlbums(Artist artist) {
+//        albums.filter { it.artistId == artist.id }
+//    }
+//
+//    private Observable<Song> loadAllSongs() {
+//        CursorConstructor.fromCursorGetter(Song, new SongsCursorGetter())
+//                         .onBackpressureBuffer()
+//                         .filter { it.source != null }
+//                         .doOnNext { songs.put(it.id, it) }
+//    }
+//
+//    private Observable<Artist> loadAllArtists() {
+//        CursorConstructor.fromCursorGetter(Artist, new ArtistsCursorGetter())
+//                         .onBackpressureBuffer()
+//                         .filter { isArtistHasSongs(it) }
+//                         .doOnNext { artists.put(it.id, it) }
+//    }
+//
+//    private Observable<Album> loadAllAlbums() {
+//        CursorConstructor.fromCursorGetter(Album, new AlbumsCursorGetter())
+//                         .onBackpressureBuffer()
+//                         .filter { isAlbumContainsSongs(it) }
+//                         .doOnNext { albums.put(it.id, it) }
+//    }
+//
+//    private boolean isArtistHasSongs(Artist artist) {
+//        songs.first { it.artistId == artist.id } != null
+//    }
+//
+//    private boolean isAlbumContainsSongs(Album album) {
+//        songs.first { it.albumId == album.id } != null
+//    }
+//
+//    private Observable<Object> writeCollectionIntoFile() {
+//        Observable.create({ Subscriber<Object> subscriber ->
+//            def stream = context.openFileOutput("collection.lwm", Context.MODE_PRIVATE)
+//
+//            new ObjectOutputStream(stream).withObjectOutputStream {
+//                it.writeObject(this as MusicCollectionImpl)
+//            }
+//
+//            subscriber.onCompleted()
+//        } as Observable.OnSubscribe<Object>)
+//    }
+//
+//    private Observable<Object> readAndInitCollectionFromFile() {
+//        Observable.create({ Subscriber<Object> subscriber ->
+//            def stream = context.openFileInput "collection.lwm"
+//
+//            new ObjectInputStream(stream).withObjectInputStream {
+//                initWith(it.readObject() as MusicCollectionImpl)
+//            }
+//
+//            subscriber.onCompleted()
+//        } as Observable.OnSubscribe<Object>)
+//    }
+//
+//    private void clear() {
+//        songs.clear()
+//        albums.clear()
+//        artists.clear()
+//    }
+//
+//    private void initWith(MusicCollectionImpl other) {
+//        songs = other.songs
+//        albums = other.albums
+//        artists = other.artists
+//    }
+}

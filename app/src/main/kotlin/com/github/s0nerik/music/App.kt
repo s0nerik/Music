@@ -7,7 +7,7 @@ import ru.noties.debug.Debug
 
 class App : Application() {
     companion object : AppComponent by App.comp {
-        lateinit var comp: AppComponent
+        lateinit private var comp: AppComponent
     }
 
     override fun onCreate() {

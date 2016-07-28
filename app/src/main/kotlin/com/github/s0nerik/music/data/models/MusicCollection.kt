@@ -1,24 +1,16 @@
-//package com.github.s0nerik.music.data.models
-//
-//import rx.Observable
-//
-//interface MusicCollection {
-////    fun initFromFile() : Observable<MusicCollection>
-//    fun initFromMediaStore() : Observable<MusicCollection>
-//
-////    fun getArtist(Song song) : Artist
-////    fun getAlbum(Song song) : Album
-////    fun getArtist(Album album) : Artist
-////
-////    List<Song> getSongs(Album album) {
-////        songs.filter { it.albumId == album.id }
-////    }
-////
-////    List<Song> getSongs(Artist artist) {
-////        songs.filter { it.artistId == artist.id }
-////    }
-////
-////    List<Album> getAlbums(Artist artist) {
-////        albums.filter { it.artistId == artist.id }
-////    }
-//}
+package com.github.s0nerik.music.data.models
+
+import rx.Observable
+
+interface MusicCollection {
+//    fun initFromFile() : Observable<MusicCollection>
+    fun initFromMediaStore() : Observable<MusicCollection>
+
+    fun getArtist(song: Song) : Observable<Artist>
+    fun getAlbum(song: Song) : Observable<Album>
+    fun getArtist(album: Album) : Observable<Artist>
+
+    fun getSongs(album: Album): Observable<List<Song>>
+    fun getSongs(artist: Artist): Observable<List<Song>>
+    fun getAlbums(artist: Artist): Observable<List<Album>>
+}
