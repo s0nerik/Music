@@ -1,5 +1,9 @@
 package com.github.s0nerik.music.data.helpers.db;
 
+enum class Order {
+    ASCENDING, DESCENDING
+}
+
 open class SortOrder {
 
     companion object {
@@ -22,8 +26,8 @@ open class SortOrder {
     override fun toString(): String {
         return order.map {
             when (it.value) {
-                Order.ASCENDING -> return it.key + " ASC"
-                Order.DESCENDING -> return it.key + " DESC"
+                Order.ASCENDING -> return "${it.key} ASC"
+                Order.DESCENDING -> return "${it.key} DESC"
                 else -> return ""
             }
         }.joinToString(", ")

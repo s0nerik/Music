@@ -15,7 +15,10 @@ package com.github.s0nerik.music.di
 //import app.websocket.WebSocketMessageServer
 
 import com.github.s0nerik.music.App
+import com.github.s0nerik.music.data.helpers.CollectionManager
 import dagger.Module
+import dagger.Provides
+import javax.inject.Singleton
 
 @Module
 class AppModule(private val application: App) {
@@ -90,11 +93,11 @@ class AppModule(private val application: App) {
 //    fun provideWebSocketMessageServer(): WebSocketMessageServer {
 //        return WebSocketMessageServer(InetSocketAddress(Config.WS_SERVER_PORT))
 //    }
-//
-//    @Provides
-//    @Singleton
-//    fun provideCollectionManager(): CollectionManager {
-//        return CollectionManager()
-//    }
+
+    @Provides
+    @Singleton
+    fun provideCollectionManager(): CollectionManager {
+        return CollectionManager()
+    }
 
 }

@@ -1,9 +1,10 @@
-package com.github.s0nerik.music.data.helpers.db
+package com.github.s0nerik.music.data.helpers.db.cursor_getters
 
 import android.content.ContentResolver
 import android.database.Cursor
 import android.net.Uri
 import com.github.s0nerik.music.App
+import com.github.s0nerik.music.data.helpers.db.SortOrder
 import java.util.*
 import javax.inject.Inject
 
@@ -16,10 +17,10 @@ abstract class CursorGetter {
         App.inject(this)
     }
 
-    internal abstract val contentUri: Uri
-    internal abstract val projection: List<String>
-    internal abstract val selection: List<String>
-    internal abstract val sortOrder: SortOrder
+    protected abstract val contentUri: Uri
+    protected abstract val projection: List<String>
+    protected open val selection: MutableList<String> = mutableListOf()
+    protected abstract val sortOrder: SortOrder
 
     fun projectionIndices(): Map<String, Int> {
         val indices = HashMap<String, Int>()
