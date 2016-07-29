@@ -1,4 +1,4 @@
-package com.github.s0nerik.music.data.models.ext
+package com.github.s0nerik.music.ext
 
 import android.content.ContentUris
 import android.net.Uri

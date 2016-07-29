@@ -12,8 +12,8 @@ import butterknife.ButterKnife
 import butterknife.OnClick
 import com.github.s0nerik.music.R
 import com.github.s0nerik.music.data.models.Song
-import com.github.s0nerik.music.data.models.ext.artistNameForUi
-import com.github.s0nerik.music.data.models.ext.durationString
+import com.github.s0nerik.music.ext.artistNameForUi
+import com.github.s0nerik.music.ext.durationString
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.viewholders.FlexibleViewHolder
 import javax.inject.Inject
