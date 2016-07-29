@@ -14,6 +14,8 @@ package com.github.s0nerik.music.di
 //import app.ui.Blurer
 //import app.websocket.WebSocketMessageServer
 
+import android.content.ContentResolver
+import android.content.res.Resources
 import com.github.s0nerik.music.App
 import com.github.s0nerik.music.data.helpers.CollectionManager
 import dagger.Module
@@ -21,7 +23,7 @@ import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-class AppModule(private val application: App) {
+class AppModule(private val app: App) {
 //    @Provides
 //    @Singleton
 //    fun provideBlurer(): Blurer {
@@ -93,6 +95,18 @@ class AppModule(private val application: App) {
 //    fun provideWebSocketMessageServer(): WebSocketMessageServer {
 //        return WebSocketMessageServer(InetSocketAddress(Config.WS_SERVER_PORT))
 //    }
+
+    @Provides
+    @Singleton
+    fun provideResources(): Resources {
+        return app.resources
+    }
+
+    @Provides
+    @Singleton
+    fun provideContentResolver(): ContentResolver {
+        return app.contentResolver
+    }
 
     @Provides
     @Singleton

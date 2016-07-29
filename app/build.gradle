@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'com.fernandocejas.frodo'
 
 android {
     compileSdkVersion 24
@@ -21,6 +22,8 @@ android {
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
+
+    defaultPublishConfig "debug"
 }
 
 kapt {
@@ -35,7 +38,12 @@ dependencies {
     })
 
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+    // Anko
     compile "org.jetbrains.anko:anko-sdk21:$anko_version"
+    compile "org.jetbrains.anko:anko-appcompat-v7:$anko_version"
+    compile "org.jetbrains.anko:anko-design:$anko_version"
+    compile "org.jetbrains.anko:anko-recyclerview-v7:$anko_version"
 
     // Support libs
     compile "com.android.support:appcompat-v7:$support_version"
@@ -51,16 +59,19 @@ dependencies {
 
     // UI
     compile 'eu.davidea:flexible-adapter:5.0.0-b7'
+    compile 'com.jakewharton:butterknife:8.2.1'
+    kapt 'com.jakewharton:butterknife-compiler:8.2.1'
 
     // Rx
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'io.reactivex:rxjava:1.1.6'
-    compile 'com.tbruyelle.rxpermissions:rxpermissions:0.2.0@aar'
+    compile 'com.tbruyelle.rxpermissions:rxpermissions:0.7.0@aar'
     compile "com.jakewharton.rxbinding:rxbinding-recyclerview-v7:$rxbinding_version"
     compile "com.jakewharton.rxbinding:rxbinding-design:$rxbinding_version"
     compile "com.jakewharton.rxbinding:rxbinding-support-v4:$rxbinding_version"
     compile 'com.trello:rxlifecycle:0.6.1'
     compile 'com.trello:rxlifecycle-components:0.6.1'
+    compile 'com.trello:rxlifecycle-kotlin:0.6.1'
     compile 'com.github.s0nerik:rxbus:1.0.0'
     compile 'com.github.s0nerik:rxlist:1.0.0'
     compile 'com.github.s0nerik:rxlist-binder:1.0.0'

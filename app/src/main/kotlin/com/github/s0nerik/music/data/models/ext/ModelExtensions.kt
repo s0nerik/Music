@@ -3,6 +3,7 @@ package com.github.s0nerik.music.data.models.ext
 import android.content.ContentUris
 import android.net.Uri
 import com.github.s0nerik.music.App
+import com.github.s0nerik.music.R
 import com.github.s0nerik.music.data.models.Album
 import com.github.s0nerik.music.data.models.Artist
 import com.github.s0nerik.music.data.models.Song
@@ -10,11 +11,14 @@ import rx.Observable
 
 //region Song extensions
 
+val Song.all: Observable<List<Song>>
+    get() = App.comp.getCollectionManager().getSongs()
+
 val Song.album: Observable<Album>
-    get() = App.getCollectionManager().getAlbum(this)
+    get() = App.comp.getCollectionManager().getAlbum(this)
 
 val Song.artist: Observable<Artist>
-    get() = App.getCollectionManager().getArtist(this)
+    get() = App.comp.getCollectionManager().getArtist(this)
 
 val Song.durationString: String
     get() {
@@ -30,21 +34,36 @@ val Song.sourceUri: Uri
 val Song.albumArtUri: Uri
     get() = ContentUris.withAppendedId(Song.ARTWORK_URI, albumId)
 
+val Song.artistNameForUi: String
+    get() {
+        if (artistName == null || "<unknown>" == artistName) {
+            return App.comp.getResources().getString(R.string.unknown_artist)
+        } else {
+            return artistName
+        }
+    }
+
 //endregion
 
 //region Artist extensions
 
+val Artist.all: Observable<List<Artist>>
+    get() = App.comp.getCollectionManager().getArtists()
+
 val Artist.albums: Observable<List<Album>>
-    get() = App.getCollectionManager().getAlbums(this)
+    get() = App.comp.getCollectionManager().getAlbums(this)
 
 //endregion
 
 //region Album extensions
 
+val Album.all: Observable<List<Album>>
+    get() = App.comp.getCollectionManager().getAlbums()
+
 val Album.artist: Observable<Artist>
-    get() = App.getCollectionManager().getArtist(this)
+    get() = App.comp.getCollectionManager().getArtist(this)
 
 val Album.songs: Observable<List<Song>>
-    get() = App.getCollectionManager().getSongs(this)
+    get() = App.comp.getCollectionManager().getSongs(this)
 
 //endregion

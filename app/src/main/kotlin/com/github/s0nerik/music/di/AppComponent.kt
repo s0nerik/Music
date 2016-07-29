@@ -1,5 +1,6 @@
 package com.github.s0nerik.music.di
 
+import android.content.res.Resources
 import com.github.s0nerik.music.data.helpers.CollectionManager
 import com.github.s0nerik.music.data.helpers.db.cursor_getters.CursorGetter
 import com.github.s0nerik.music.screens.splash.StartActivity
@@ -14,4 +15,5 @@ interface AppComponent {
     fun inject(x: CursorGetter)
 
     fun getCollectionManager(): CollectionManager
+    fun getResources(): Resources
 }

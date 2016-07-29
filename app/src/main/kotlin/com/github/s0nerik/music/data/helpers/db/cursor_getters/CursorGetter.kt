@@ -14,7 +14,7 @@ abstract class CursorGetter {
     lateinit var contentResolver: ContentResolver
 
     init {
-        App.inject(this)
+        App.comp.inject(this)
     }
 
     protected abstract val contentUri: Uri

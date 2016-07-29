@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/action_remove_from_queue"
+        android:title="@string/action_remove_from_queue"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/set_as_ringtone"
+        android:title="@string/action_set_as_ringtone"
+        app:showAsAction="never"/>
+
+</menu>
