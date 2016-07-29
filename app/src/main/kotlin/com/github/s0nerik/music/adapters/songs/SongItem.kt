@@ -3,7 +3,7 @@ package com.github.s0nerik.music.adapters.songs
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.github.s0nerik.music.R
-import com.github.s0nerik.music.adapters.base.MediaStoreItem
+import com.github.s0nerik.music.adapters.MediaStoreItem
 import com.github.s0nerik.music.data.models.Song
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.items.IFilterable
