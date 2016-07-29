@@ -15,6 +15,7 @@ package com.github.s0nerik.music.di
 //import app.websocket.WebSocketMessageServer
 
 import android.content.ContentResolver
+import android.content.Context
 import android.content.res.Resources
 import com.github.s0nerik.music.App
 import com.github.s0nerik.music.data.helpers.CollectionManager
@@ -95,6 +96,12 @@ class AppModule(private val app: App) {
 //    fun provideWebSocketMessageServer(): WebSocketMessageServer {
 //        return WebSocketMessageServer(InetSocketAddress(Config.WS_SERVER_PORT))
 //    }
+
+    @Provides
+    @Singleton
+    fun provideContext(): Context {
+        return app
+    }
 
     @Provides
     @Singleton

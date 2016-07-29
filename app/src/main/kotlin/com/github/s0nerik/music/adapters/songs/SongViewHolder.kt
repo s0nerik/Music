@@ -10,6 +10,7 @@ import android.widget.TextView
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
+import com.github.s0nerik.music.App
 import com.github.s0nerik.music.R
 import com.github.s0nerik.music.data.models.Song
 import com.github.s0nerik.music.ext.artistNameForUi
@@ -21,6 +22,7 @@ import javax.inject.Inject
 class SongViewHolder(view: View, adapter: FlexibleAdapter<*>) : FlexibleViewHolder(view, adapter) {
     init {
         ButterKnife.bind(this, view)
+        App.comp.inject(this)
     }
 
     @Inject
@@ -38,6 +40,8 @@ class SongViewHolder(view: View, adapter: FlexibleAdapter<*>) : FlexibleViewHold
     fun onContextMenuClicked(v: View) {
         val wrapper = ContextThemeWrapper(context, R.style.AppTheme)
         val menu = PopupMenu(wrapper, v)
+
+        menu.inflate(R.menu.songs_popup)
 
 //        if (player.isSongInQueue(song)) {
 //            menu.inflate(R.menu.songs_popup_in_queue)

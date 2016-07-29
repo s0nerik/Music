@@ -5,11 +5,12 @@ import butterknife.ButterKnife
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity
 
 abstract class BaseActivity : RxAppCompatActivity() {
-    protected abstract val layoutId: Int
+    protected open val layoutId: Int?
+        get() = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(layoutId)
+        if (layoutId != null) setContentView(layoutId!!)
         ButterKnife.bind(this)
     }
 }
