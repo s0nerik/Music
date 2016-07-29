@@ -7,20 +7,18 @@ import com.github.s0nerik.music.di.DaggerAppComponent
 import ru.noties.debug.Debug
 
 class App : Application() {
+    init {
+        comp = DaggerAppComponent.builder()
+                .appModule(AppModule(this))
+                .build()
+    }
+
     companion object {
         lateinit var comp: AppComponent
     }
 
     override fun onCreate() {
         super.onCreate()
-        initComponents()
-
         Debug.init(BuildConfig.DEBUG)
-    }
-
-    fun initComponents() {
-        comp = DaggerAppComponent.builder()
-                .appModule(AppModule(this))
-                .build()
     }
 }

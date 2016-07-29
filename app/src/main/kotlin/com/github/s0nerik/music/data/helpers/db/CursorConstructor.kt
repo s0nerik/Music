@@ -13,12 +13,10 @@ class CursorConstructor {
                     if (cursor.moveToFirst()) {
                         val indices = cursorGetter.projectionIndices()
 
-                        val produceItem = {
+                        do {
                             val item = factory.produce(cursor, indices)
                             if (check(item)) subscriber.onNext(item)
-                        }
-
-                        do { produceItem() } while (cursor.moveToNext())
+                        } while (cursor.moveToNext())
                     }
                 } finally {
                     cursor.close()
