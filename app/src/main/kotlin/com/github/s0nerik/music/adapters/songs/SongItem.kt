@@ -22,6 +22,22 @@ class SongItem(
     override fun filter(constraint: String): Boolean {
         val lowercaseConstraint = constraint.toLowerCase()
         return song.title.toLowerCase().contains(lowercaseConstraint)
-                || song.artistName?.toLowerCase()?.contains(lowercaseConstraint) as Boolean
+                || song.artistName.toLowerCase().contains(lowercaseConstraint)
+    }
+
+    companion object {
+        val SORTER_PROVIDERS = mapOf(
+                Pair<Int, (it: SongItem) -> Comparable<*>>(R.id.songs_sort_title, { it.song.title }),
+                Pair<Int, (it: SongItem) -> Comparable<*>>(R.id.songs_sort_artist, { it.song.artistName }),
+                Pair<Int, (it: SongItem) -> Comparable<*>>(R.id.songs_sort_album, { it.song.albumName })
+//                Pair<Int, (it: SongItem) -> Comparable<*>>(R.id.songs_sort_year, { it.song.album.year }),
+        )
+
+        val BUBBLE_TEXT_PROVIDERS = mapOf(
+                Pair<Int, (it: SongItem) -> String>(R.id.songs_sort_title, { it.song.title[0].toString() }),
+                Pair<Int, (it: SongItem) -> String>(R.id.songs_sort_artist, { it.song.artistName[0].toString() }),
+                Pair<Int, (it: SongItem) -> String>(R.id.songs_sort_album, { it.song.albumName[0].toString() })
+//                Pair<Int, (it: SongItem) -> String>(R.id.songs_sort_year, { it.song.album.year[0..3] })
+        )
     }
 }

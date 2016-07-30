@@ -16,10 +16,10 @@ data class Song(
         val duration: Int = 0,
         val title: String = "",
         val source: String = "",
-        val artistName: String? = null,
-        val albumName: String? = null,
-        val lyrics: String? = null,
-        val mimeType: String? = null
+        val artistName: String = "",
+        val albumName: String = "",
+        val lyrics: String = "",
+        val mimeType: String = ""
 ) : Serializable {
     companion object {
         val SUPPORTED_MIME_TYPES: List<String> = arrayOf("mp3", "m4a", "mp4", "aac")
