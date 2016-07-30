@@ -10,7 +10,7 @@ data class Artist(
         val id: Long = 0,
         val numberOfAlbums: Int = 0,
         val numberOfSongs: Int = 0,
-        val name: String? = null
+        val name: String = ""
 ) : Serializable {
     class Factory : CursorFactory<Artist> {
         override fun produce(cursor: Cursor, indices: Map<String, Int>): Artist {

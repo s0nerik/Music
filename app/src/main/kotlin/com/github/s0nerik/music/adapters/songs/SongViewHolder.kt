@@ -1,28 +1,28 @@
 package com.github.s0nerik.music.adapters.songs
 
 import android.content.Context
+import android.databinding.DataBindingUtil
 import android.support.v7.view.ContextThemeWrapper
 import android.support.v7.widget.PopupMenu
 import android.view.View
-import android.widget.ImageView
-import android.widget.RelativeLayout
-import android.widget.TextView
-import butterknife.BindView
-import butterknife.ButterKnife
 import butterknife.OnClick
 import com.github.s0nerik.music.App
 import com.github.s0nerik.music.R
 import com.github.s0nerik.music.data.models.Song
-import com.github.s0nerik.music.ext.artistNameForUi
-import com.github.s0nerik.music.ext.durationString
+import com.github.s0nerik.music.databinding.ItemSongsBinding
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.viewholders.FlexibleViewHolder
+import org.jetbrains.anko.onClick
+import org.jetbrains.anko.toast
 import javax.inject.Inject
 
 class SongViewHolder(view: View, adapter: FlexibleAdapter<*>) : FlexibleViewHolder(view, adapter) {
+    private val binding: ItemSongsBinding
+
     init {
-        ButterKnife.bind(this, view)
         App.comp.inject(this)
+        binding = DataBindingUtil.bind(view)
+        binding.contextMenu.onClick { onContextMenuClicked() }
     }
 
     @Inject
@@ -36,32 +36,27 @@ class SongViewHolder(view: View, adapter: FlexibleAdapter<*>) : FlexibleViewHold
         //        }
     }
 
-    @OnClick(R.id.contextMenu)
-    fun onContextMenuClicked(v: View) {
+    fun onContextMenuClicked() {
         val wrapper = ContextThemeWrapper(context, R.style.AppTheme)
-        val menu = PopupMenu(wrapper, v)
+        val menu = PopupMenu(wrapper, binding.contextMenu)
 
-        menu.inflate(R.menu.songs_popup)
-
-//        if (player.isSongInQueue(song)) {
-//            menu.inflate(R.menu.songs_popup_in_queue)
-//        } else {
-//            menu.inflate(R.menu.songs_popup)
-//        }
+//        player.isSongInQueue(song)
+        if (true) {
+            menu.inflate(R.menu.songs_popup_in_queue)
+        } else {
+            menu.inflate(R.menu.songs_popup)
+        }
 
         menu.setOnMenuItemClickListener({
             when (it.itemId) {
                 R.id.action_remove_from_queue -> {
-//                    player!!.invokeMethod("removeFromQueue", arrayOf<Any>(this.song))
-//                    val toast = Toast.invokeMethod("makeText", arrayOf<Any>(context, R.string.song_removed_from_queue, Toast.LENGTH_SHORT))
-//                    toast.show()
+                    context.toast(R.string.song_removed_from_queue)
+//                    player.removeFromQueue(song)
                     true
                 }
                 R.id.action_add_to_queue -> {
-//                    player!!.invokeMethod("addToQueue", arrayOf<Any>(this.song))
-//                    val toast = Toast.invokeMethod("makeText", arrayOf<Any>(context, R.string.song_added_to_queue, Toast.LENGTH_SHORT))
-//                    toast.show()
-//                    return true
+                    context.toast(R.string.song_added_to_queue)
+//                    player.addToQueue(song)
                     true
                 }
                 R.id.set_as_ringtone -> {
@@ -73,11 +68,12 @@ class SongViewHolder(view: View, adapter: FlexibleAdapter<*>) : FlexibleViewHold
             }
         })
 
-        val imageView = v as ImageView
-        val oldFilter = imageView.colorFilter
-        imageView.setColorFilter(context.resources.getColor(R.color.colorAccent, null))
-        menu.setOnDismissListener { imageView.colorFilter = oldFilter }
-        menu.show()
+        with(binding) {
+            val oldFilter = contextMenu.colorFilter
+            contextMenu.setColorFilter(context.resources.getColor(R.color.colorAccent, null))
+            menu.setOnDismissListener { contextMenu.colorFilter = oldFilter }
+            menu.show()
+        }
     }
 
     @OnClick(R.id.container)
@@ -87,20 +83,10 @@ class SongViewHolder(view: View, adapter: FlexibleAdapter<*>) : FlexibleViewHold
         updateSelectedState()
     }
 
-    @BindView(R.id.title) lateinit var title: TextView
-    @BindView(R.id.artist) lateinit var artist: TextView
-    @BindView(R.id.duration) lateinit var duration: TextView
-    @BindView(R.id.contextMenu) lateinit var contextMenu: ImageView
-    @BindView(R.id.container) lateinit var container: RelativeLayout
-
     var song: Song? = null
         set(song) {
             field = song!!
-
-            title.text = song.title
-            artist.text = song.artistNameForUi
-            duration.text = song.durationString
-
+            binding.song = field
             updateSelectedState()
         }
 }

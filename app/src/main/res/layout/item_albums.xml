@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+    <data>
+        <import type="com.github.s0nerik.music.ext.ModelExtensionsKt" />
+        <variable name="album" type="com.github.s0nerik.music.data.models.Album" />
+    </data>
+    <RelativeLayout
+        android:id="@+id/layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#d2d2d2"
+        android:orientation="horizontal"
+        >
+
+        <com.github.s0nerik.music.views.SquareWidthImageView
+            android:id="@+id/cover"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:scaleType="centerCrop"
+            tools:src="@drawable/no_cover"
+            android:src="@{album.albumArtPath}"
+            />
+
+        <View
+            android:id="@+id/shadow"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_above="@+id/bottom_bar"
+            />
+
+        <LinearLayout
+            android:id="@+id/bottom_bar"
+            android:layout_width="match_parent"
+            android:layout_height="68dp"
+            android:layout_alignBottom="@+id/cover"
+            android:background="#aa000000"
+            android:gravity="bottom"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#ffffff"
+                tools:text="Title"
+                android:text="@{album.title}"
+                />
+
+            <TextView
+                android:id="@+id/subtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:textColor="#fff"
+                tools:text="Subtitle"
+                android:text="@{album.artistName}"
+                />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+</layout>

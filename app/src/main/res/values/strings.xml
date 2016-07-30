@@ -8,6 +8,9 @@
     <string name="action_set_as_ringtone">Set as ringtone</string>
     <string name="action_play_next">Play next</string>
 
+    <string name="song_added_to_queue">Song added to the queue</string>
+    <string name="song_removed_from_queue">Song removed from queue</string>
+
     <string name="layout_manager_linear">android.support.v7.widget.LinearLayoutManager</string>
     <string name="layout_manager_grid">android.support.v7.widget.GridLayoutManager</string>
 </resources>

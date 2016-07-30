@@ -12,9 +12,9 @@ data class Album(
         val id: Long = 0,
         val year: Int = 0,
         val songsCount: Int = 0,
-        val title: String? = null,
-        val artistName: String? = null,
-        val albumArtPath: String? = null,
+        val title: String = "",
+        val artistName: String = "",
+        val albumArtPath: String = "",
         val artistId: Long = 0
 ) : Serializable {
     class Factory : CursorFactory<Album> {
