@@ -5,14 +5,14 @@ import com.github.s0nerik.music.adapters.songs.SongViewHolder
 import com.github.s0nerik.music.data.helpers.CollectionManager
 import com.github.s0nerik.music.data.helpers.db.cursor_getters.CursorGetter
 import com.github.s0nerik.music.screens.main.MainActivity
-import com.github.s0nerik.music.screens.splash.StartActivity
+import com.github.s0nerik.music.screens.splash.SplashActivity
 import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
 @Component(modules = arrayOf(AppModule::class))
 interface AppComponent {
-    fun inject(x: StartActivity)
+    fun inject(x: SplashActivity)
     fun inject(x: MainActivity)
 
     fun inject(x: CursorGetter)

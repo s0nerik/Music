@@ -12,7 +12,7 @@ import org.jetbrains.anko.intentFor
 import rx.schedulers.Schedulers
 import javax.inject.Inject
 
-class StartActivity : @Inject BaseActivity() {
+class SplashActivity : @Inject BaseActivity() {
     @Inject lateinit var collectionManager: CollectionManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
