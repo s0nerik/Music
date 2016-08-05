@@ -16,7 +16,7 @@
         android:orientation="horizontal"
         >
 
-        <com.github.s0nerik.music.views.SquareWidthImageView
+        <com.github.s0nerik.music.ui.views.SquareWidthImageView
             android:id="@+id/cover"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -29,11 +29,11 @@
             android:id="@+id/shadow"
             android:layout_width="match_parent"
             android:layout_height="2dp"
-            android:layout_above="@+id/bottom_bar"
+            android:layout_above="@+id/bottomBar"
             />
 
         <LinearLayout
-            android:id="@+id/bottom_bar"
+            android:id="@+id/bottomBar"
             android:layout_width="match_parent"
             android:layout_height="68dp"
             android:layout_alignBottom="@+id/cover"

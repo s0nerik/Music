@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+    <RelativeLayout
+        android:id="@+id/fragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:paddingTop="48dp"
+        android:visibility="gone"
+        tools:visibility="visible"
+        tools:layout_width="match_parent"
+        tools:layout_gravity="bottom"
+        tools:layout_marginBottom="48dp"
+        tools:background="#dddddd"
+        >
+
+        <View
+            android:id="@+id/mainProgressShadow"
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            android:background="@drawable/shadow_bottom_top"
+            android:layout_marginTop="24dp"
+            />
+
+        <View
+            android:id="@+id/circleProgressShadow"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="-16dp"
+            android:layout_marginRight="1dp"
+            android:background="@drawable/shadow_circle"
+            />
+
+        <ImageView
+            android:id="@+id/circleProgressBg"
+            android:layout_width="62dp"
+            android:layout_height="62dp"
+            android:src="@drawable/oval"
+            android:tint="@color/now_playing_progress_bar_bg"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="18dp"
+            android:layout_marginTop="2dp"
+            />
+
+        <ProgressBar
+            android:id="@+id/mainProgress"
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            tools:progress="200"
+            android:max="1000"
+            android:layout_marginTop="30dp"
+            android:progressDrawable="@drawable/now_playing_progress_drawable"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            />
+
+        <RelativeLayout
+            android:id="@+id/mainGroup"
+            android:paddingTop="33dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <ImageView
+                android:id="@+id/cover"
+                android:src="#000"
+                tools:src="#000"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignTop="@+id/layout"
+                android:layout_alignBottom="@+id/layout"
+                android:scaleType="centerCrop"
+                />
+
+            <LinearLayout
+                android:id="@+id/layout"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+
+                <TextView
+                    android:background="#88000000"
+                    android:id="@+id/shadow"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="2dp"
+                    android:paddingBottom="2dp"
+                    android:text="Now playing"
+                    android:textColor="#fff"
+                    android:textAllCaps="true"
+                    android:textSize="14sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    tools:text="Title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/title"
+
+                    android:textSize="20sp"
+                    android:textColor="#FFFFFF"
+                    android:layout_marginTop="8dp"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    />
+
+                <TextView
+                    tools:text="Subtitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/artist"
+
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textSize="16sp"
+                    android:textColor="#cccccc"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:layout_marginBottom="8dp"
+                    />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <FrameLayout
+            android:id="@+id/btnPlayPause"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            >
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/playbackFab"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:src="@drawable/ic_pause_24dp"
+                android:layout_gravity="center"
+
+                android:tint="@android:color/white"
+                app:backgroundTint="?attr/colorPrimary"
+                app:elevation="4dp"
+
+                app:fabSize="normal"
+                />
+
+            <com.github.rahatarmanahmed.cpv.CircularProgressView
+                android:id="@+id/circleProgress"
+                android:layout_width="66dp"
+                android:layout_height="66dp"
+                app:cpv_animAutostart="false"
+                app:cpv_indeterminate="false"
+                app:cpv_startAngle="180"
+                app:cpv_maxProgress="200"
+                app:cpv_animDuration="0"
+                app:cpv_animSwoopDuration="0"
+                app:cpv_animSyncDuration="0"
+                />
+
+        </FrameLayout>
+
+    </RelativeLayout>
+</layout>

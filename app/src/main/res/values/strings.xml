@@ -1,16 +1,41 @@
 <resources>
     <string name="app_name">Music</string>
 
-    <string name="unknown_artist">Unknown artist</string>
+    <string name="drawer_open">Open drawer</string>
+    <string name="drawer_close">Close drawer</string>
 
+    // MainActivity
+    <string name="stations_around">Stations around</string>
+
+    // SongsListFragment
+    <string name="no_songs_found">No songs found.</string>
+    <string name="unknown_artist">Unknown artist</string>
+    <string name="nothing_to_shuffle">There\'s nothing to shuffle</string>
+
+    // Song context menu
     <string name="action_add_to_queue">Add to playback queue</string>
     <string name="action_remove_from_queue">Remove from playback queue</string>
     <string name="action_set_as_ringtone">Set as ringtone</string>
     <string name="action_play_next">Play next</string>
 
+    // Toast texts
     <string name="song_added_to_queue">Song added to the queue</string>
     <string name="song_removed_from_queue">Song removed from queue</string>
 
+    // MainActivity's toolbar-related text
+    <string name="local_music">Local music</string>
+    <string name="action_search">Search</string>
+    <string name="action_sort">Sort</string>
+
+    // MainActivity tab titles
+    <string-array name="local_music_tabs">
+        <item>Songs</item>
+        <item>Artists</item>
+        <item>Albums</item>
+        <!--<item>Queue</item>-->
+    </string-array>
+
+    // RecyclerView layout managers
     <string name="layout_manager_linear">android.support.v7.widget.LinearLayoutManager</string>
     <string name="layout_manager_grid">android.support.v7.widget.GridLayoutManager</string>
 </resources>

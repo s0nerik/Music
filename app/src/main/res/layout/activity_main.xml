@@ -1,28 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
-    <data></data>
-    <RelativeLayout
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+    <android.support.v4.widget.DrawerLayout
+
+        android:id="@+id/drawerLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        >
+        android:fitsSystemWindows="true">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler"
+        <FrameLayout
+            android:id="@+id/container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layoutManager="@string/layout_manager_linear"
-            tools:listitem="@layout/item_songs"
-            />
+            android:layout_height="match_parent" />
 
-        <Button
-            android:id="@+id/btnSort"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_alignParentRight="true"
-            />
-        
-    </RelativeLayout>
+        <android.support.design.widget.NavigationView
+            android:id="@+id/navigation"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:maxWidth="256dp"
+            app:headerLayout="@layout/drawer_header"
+            app:menu="@menu/navigation" />
+
+    </android.support.v4.widget.DrawerLayout>
 </layout>

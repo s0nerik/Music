@@ -1,6 +1,8 @@
 package com.github.s0nerik.music
 
 import android.app.Application
+import com.chibatching.kotpref.Kotpref
+import com.facebook.rebound.BuildConfig
 import com.github.s0nerik.music.di.AppComponent
 import com.github.s0nerik.music.di.AppModule
 import com.github.s0nerik.music.di.DaggerAppComponent
@@ -20,5 +22,6 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         Debug.init(BuildConfig.DEBUG)
+        Kotpref.init(this)
     }
 }

@@ -12,6 +12,7 @@ import com.github.s0nerik.music.data.models.Song
 import com.github.s0nerik.music.databinding.ItemSongsBinding
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.viewholders.FlexibleViewHolder
+import kotlinx.android.synthetic.main.item_songs.view.*
 import org.jetbrains.anko.onClick
 import org.jetbrains.anko.toast
 import javax.inject.Inject

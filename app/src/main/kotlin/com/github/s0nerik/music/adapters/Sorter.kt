@@ -34,7 +34,7 @@ class Sorter<T>(
 
     private var orderAscending = true
 
-    private fun sortItems() {
+    fun sortItems() {
         if (orderAscending)
             sortableList.sortBy(sorters[sortActionId]!! as (T) -> Comparable<Any>)
         else

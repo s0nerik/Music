@@ -1,4 +1,4 @@
-package com.github.s0nerik.music.views
+package com.github.s0nerik.music.ui.views
 
 import android.content.Context
 import android.util.AttributeSet
