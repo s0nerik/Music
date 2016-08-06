@@ -80,8 +80,6 @@ class LocalMusicFragment : BaseBoundFragment<FragmentLocalMusicBinding>() {
         RxViewPager.pageSelections(pager)
                 .bindToLifecycle(this@LocalMusicFragment)
                 .subscribe { currentFragment = adapter.getItem(it) }
-
-//        childFragmentManager.beginTransaction().hide(nowPlayingFragment).commit()
     }
 
     protected fun initToolbar() {

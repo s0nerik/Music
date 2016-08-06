@@ -122,6 +122,15 @@
 
         </android.support.design.widget.CoordinatorLayout>
 
+        <com.github.s0nerik.music.ui.views.NowPlayingView
+            android:id="@+id/nowPlayingView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:visibility="gone"
+            tools:visibility="visible"
+            />
+
         <!--<fragment-->
             <!--android:name="com.github.s0nerik.music.screens.main.fragments.NowPlayingFragment"-->
             <!--android:id="@+id/nowPlayingFragment"-->
