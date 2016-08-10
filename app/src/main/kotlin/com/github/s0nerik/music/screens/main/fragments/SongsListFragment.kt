@@ -13,6 +13,7 @@ import com.github.s0nerik.music.data.models.Song
 import com.github.s0nerik.music.databinding.FragmentListSongsBinding
 import com.github.s0nerik.music.ext.hide
 import com.github.s0nerik.music.ext.show
+import com.github.s0nerik.music.players.LocalPlayer
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import kotlinx.android.synthetic.main.fragment_list_songs.*
@@ -26,19 +27,13 @@ class SongsListFragment : BaseBoundFragment<FragmentListSongsBinding>(), Sortabl
     @Inject
     lateinit var collectionManager: CollectionManager
 
-//    @Inject
-//    lateinit var player: LocalPlayer
+    @Inject
+    lateinit var player: LocalPlayer
 
     private var songs = mutableListOf<SongItem>()
     private var filteredSongs = mutableListOf<SongItem>()
 
-    protected var currentSong: Song? = null
-        set(value) {
-            field = value
-            adapter.toggleSelection(filteredSongs.map { it.song }.indexOf(currentSong))
-        }
-
-    protected var adapter = SongsListAdapter(filteredSongs)
+    private var adapter = SongsListAdapter(filteredSongs)
 
     private lateinit var sorter: Sorter<SongItem>
 
@@ -50,13 +45,24 @@ class SongsListFragment : BaseBoundFragment<FragmentListSongsBinding>(), Sortabl
         super.onCreate(savedInstanceState)
         sorter = Sorter(context, R.menu.sort_songs, R.id.songs_sort_title, adapter, filteredSongs, SongItem.SORTER_PROVIDERS, SongItem.BUBBLE_TEXT_PROVIDERS)
         adapter.mode = FlexibleAdapter.MODE_SINGLE
+        adapter.initializeListeners(FlexibleAdapter.OnItemClickListener {
+            player.setQueueAndPlay(filteredSongs.map { it.song }, it).subscribe()
+            true
+        })
+
+        player.songChanges()
+                .bindToLifecycle(this)
+                .subscribe {
+                    val index = filteredSongs.map { it.song }.indexOf(it)
+                    adapter.toggleSelection(index)
+                }
 
 //        RxBus.on(CurrentSongAvailableEvent).bindToLifecycle(this).subscribe(this.&onEvent)
 //        RxBus.on(PlaybackStartedEvent).bindToLifecycle(this).subscribe(this.&onEvent)
 //        RxBus.on(PlaybackPausedEvent).bindToLifecycle(this).subscribe(this.&onEvent)
 //        RxBus.on(ShouldShuffleSongsEvent).bindToLifecycle(this).subscribe(this.&onEvent)
 //        RxBus.on(FilterLocalMusicCommand).bindToLifecycle(this).subscribe(this.&onEvent)
-//        RxBus.on(RequestPlaySongCommand).bindToLifecycle(this).subscribe(this.&onEvent)
+//        RxBus.on(CRequestPlaySong).bindToLifecycle(this).subscribe(this.&onEvent)
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
@@ -86,15 +92,15 @@ class SongsListFragment : BaseBoundFragment<FragmentListSongsBinding>(), Sortabl
 //        }
 //    }
 
-    protected fun shuffleAll() {
+    private fun shuffleAll() {
         if (filteredSongs.size > 0) {
-//            RxBus.post(SetQueueAndPlayCommand(filteredSongs.map { it.song }, 0, true))
+//            RxBus.post(CSetQueueAndPlay(filteredSongs.map { it.song }, 0, true))
         } else {
             longToast(R.string.nothing_to_shuffle)
         }
     }
 
-    protected fun onSongsLoaded(loadedSongs: List<Song>) {
+    private fun onSongsLoaded(loadedSongs: List<Song>) {
         songs.clear()
         songs.addAll(loadedSongs.map { SongItem(it) })
 
@@ -116,18 +122,6 @@ class SongsListFragment : BaseBoundFragment<FragmentListSongsBinding>(), Sortabl
         }
     }
 
-//    protected fun onEvent(event: CurrentSongAvailableEvent) {
-//        currentSong = event.song
-//    }
-//
-//    protected fun onEvent(event: PlaybackStartedEvent) {
-//        currentSong = event.song
-//    }
-//
-//    protected fun onEvent(event: PlaybackPausedEvent) {
-//        //            adapter.updateEqualizerState(false)
-//    }
-//
 //    protected fun onEvent(event: ShouldShuffleSongsEvent) {
 //        shuffleAll()
 //    }
@@ -135,10 +129,5 @@ class SongsListFragment : BaseBoundFragment<FragmentListSongsBinding>(), Sortabl
 //    protected fun onEvent(cmd: FilterLocalMusicCommand) {
 //        adapter.searchText = cmd.constraint
 //        adapter.filterItems(filteredSongs)
-//    }
-//
-//    protected fun onEvent(cmd: RequestPlaySongCommand) {
-//        val queue = filteredSongs.map { it.song }
-//        RxBus.post(SetQueueAndPlayCommand(queue, queue.indexOf(cmd.song)))
 //    }
 }

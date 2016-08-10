@@ -17,10 +17,13 @@ package com.github.s0nerik.music.di
 import android.content.ContentResolver
 import android.content.Context
 import android.content.res.Resources
+import android.media.AudioManager
 import com.github.s0nerik.music.App
 import com.github.s0nerik.music.data.helpers.CollectionManager
+import com.github.s0nerik.music.players.LocalPlayer
 import dagger.Module
 import dagger.Provides
+import org.jetbrains.anko.audioManager
 import javax.inject.Singleton
 
 @Module
@@ -30,13 +33,13 @@ class AppModule(private val app: App) {
 //    fun provideBlurer(): Blurer {
 //        return Blurer()
 //    }
-//
-//    @Provides
-//    @Singleton
-//    fun provideLocalPlayer(): LocalPlayer {
-//        return LocalPlayer()
-//    }
-//
+
+    @Provides
+    @Singleton
+    fun provideLocalPlayer(): LocalPlayer {
+        return LocalPlayer(app)
+    }
+
 //    @Provides
 //    @Singleton
 //    fun provideStreamPlayer(): StreamPlayer {
@@ -119,6 +122,12 @@ class AppModule(private val app: App) {
     @Singleton
     fun provideCollectionManager(): CollectionManager {
         return CollectionManager()
+    }
+
+    @Provides
+    @Singleton
+    fun provideAudioManager(): AudioManager {
+        return app.audioManager
     }
 
 }

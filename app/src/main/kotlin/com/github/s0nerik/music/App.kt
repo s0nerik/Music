@@ -2,7 +2,6 @@ package com.github.s0nerik.music
 
 import android.app.Application
 import com.chibatching.kotpref.Kotpref
-import com.facebook.rebound.BuildConfig
 import com.github.s0nerik.music.di.AppComponent
 import com.github.s0nerik.music.di.AppModule
 import com.github.s0nerik.music.di.DaggerAppComponent

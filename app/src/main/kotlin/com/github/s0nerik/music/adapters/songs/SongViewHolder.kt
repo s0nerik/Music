@@ -1,33 +1,40 @@
 package com.github.s0nerik.music.adapters.songs
 
+import kotlinx.android.synthetic.main.item_songs.view.*
+
 import android.content.Context
 import android.databinding.DataBindingUtil
 import android.support.v7.view.ContextThemeWrapper
 import android.support.v7.widget.PopupMenu
 import android.view.View
-import butterknife.OnClick
 import com.github.s0nerik.music.App
 import com.github.s0nerik.music.R
+import com.github.s0nerik.music.commands.CRequestPlaySong
 import com.github.s0nerik.music.data.models.Song
 import com.github.s0nerik.music.databinding.ItemSongsBinding
+import com.github.s0nerik.music.ext.setAsRingtone
+import com.github.s0nerik.music.players.LocalPlayer
+import com.github.s0nerik.rxbus.RxBus
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.viewholders.FlexibleViewHolder
-import kotlinx.android.synthetic.main.item_songs.view.*
 import org.jetbrains.anko.onClick
 import org.jetbrains.anko.toast
 import javax.inject.Inject
 
 class SongViewHolder(view: View, adapter: FlexibleAdapter<*>) : FlexibleViewHolder(view, adapter) {
+    @Inject
+    lateinit var context: Context
+    @Inject
+    lateinit var player: LocalPlayer
+
     private val binding: ItemSongsBinding
 
     init {
         App.comp.inject(this)
         binding = DataBindingUtil.bind(view)
-        binding.contextMenu.onClick { onContextMenuClicked() }
+        itemView.contextMenu.onClick { onContextMenuClicked() }
+//        itemView.container.onClick { onClicked() }
     }
-
-    @Inject
-    lateinit var context: Context
 
     fun updateSelectedState() {
         //        if (mAdapter.isSelected(adapterPosition)) {
@@ -41,8 +48,7 @@ class SongViewHolder(view: View, adapter: FlexibleAdapter<*>) : FlexibleViewHold
         val wrapper = ContextThemeWrapper(context, R.style.AppTheme)
         val menu = PopupMenu(wrapper, binding.contextMenu)
 
-//        player.isSongInQueue(song)
-        if (true) {
+        if (player.queue.contains(song)) {
             menu.inflate(R.menu.songs_popup_in_queue)
         } else {
             menu.inflate(R.menu.songs_popup)
@@ -52,17 +58,16 @@ class SongViewHolder(view: View, adapter: FlexibleAdapter<*>) : FlexibleViewHold
             when (it.itemId) {
                 R.id.action_remove_from_queue -> {
                     context.toast(R.string.song_removed_from_queue)
-//                    player.removeFromQueue(song)
+                    player.queue.remove(song!!)
                     true
                 }
                 R.id.action_add_to_queue -> {
                     context.toast(R.string.song_added_to_queue)
-//                    player.addToQueue(song)
+                    player.queue.add(song!!)
                     true
                 }
                 R.id.set_as_ringtone -> {
-//                    Utils.invokeMethod("setSongAsRingtone", arrayOf<Any>(context, this.song))
-//                    return true
+                    song!!.setAsRingtone(context)
                     true
                 }
                 else -> false
@@ -77,12 +82,11 @@ class SongViewHolder(view: View, adapter: FlexibleAdapter<*>) : FlexibleViewHold
         }
     }
 
-    @OnClick(R.id.container)
-    fun onClicked() {
-//        RxBus.post(RequestPlaySongCommand(this.song) as Any)
-        mAdapter.toggleSelection(adapterPosition)
-        updateSelectedState()
-    }
+//    fun onClicked() {
+////        RxBus.post(CRequestPlaySong(song!!))
+//        mAdapter.toggleSelection(adapterPosition)
+//        updateSelectedState()
+//    }
 
     var song: Song? = null
         set(song) {

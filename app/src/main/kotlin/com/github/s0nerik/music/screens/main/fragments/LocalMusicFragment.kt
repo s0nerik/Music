@@ -59,7 +59,7 @@ class LocalMusicFragment : BaseBoundFragment<FragmentLocalMusicBinding>() {
 
     private fun initEventHandlers() {
 //        RxBus.on(PlaybackPausedEvent).bindToLifecycle(this).subscribe(::onEvent)
-//        RxBus.on(SongPlayingEvent).bindToLifecycle(this).subscribe(::onEvent)
+//        RxBus.on(EPlaybackProgress).bindToLifecycle(this).subscribe(::onEvent)
 //        RxBus.on(ChangeFabActionCommand).bindToLifecycle(this).subscribe(::onEvent)
 //        RxBus.on(PlaybackStartedEvent).bindToLifecycle(this).subscribe(::onEvent)
 //        RxBus.on(ShouldStartArtistInfoActivity).bindToLifecycle(this).subscribe(::onEvent)
@@ -159,7 +159,7 @@ class LocalMusicFragment : BaseBoundFragment<FragmentLocalMusicBinding>() {
 //        radialEqualizerViewSubscription!!.unsubscribe()
 //    }
 //
-//    private fun onEvent(e: SongPlayingEvent) {
+//    private fun onEvent(e: EPlaybackProgress) {
 //        //        radialEqualizerView.randomize()
 //        //        radialEqualizerView.value = (e.progress / (float) e.duration) * 100 as float
 //    }

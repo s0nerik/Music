@@ -80,10 +80,10 @@ class NowPlayingView @JvmOverloads constructor(
     }
 
     private fun initEventHandlers() {
-//        RxBus.on(SongChangedEvent).bindToLifecycle(this).subscribe(::onEvent)
+//        RxBus.on(ESongChanged).bindToLifecycle(this).subscribe(::onEvent)
 //        RxBus.on(PlaybackStartedEvent).bindToLifecycle(this).subscribe(::onEvent)
 //        RxBus.on(PlaybackPausedEvent).bindToLifecycle(this).subscribe(::onEvent)
-//        RxBus.on(SongPlayingEvent).bindToLifecycle(this).subscribe(::onEvent)
+//        RxBus.on(EPlaybackProgress).bindToLifecycle(this).subscribe(::onEvent)
     }
 
     fun show(): Observable<Int> {
@@ -143,7 +143,7 @@ class NowPlayingView @JvmOverloads constructor(
         circleProgressShadow.alpha = scale
     }
 
-//    private fun onEvent(event: SongChangedEvent) {
+//    private fun onEvent(event: ESongChanged) {
 //        setSongInfo(event.song)
 //    }
 //
@@ -165,7 +165,7 @@ class NowPlayingView @JvmOverloads constructor(
 //        radialEqualizerViewSubscription!!.unsubscribe()
 //    }
 //
-//    private fun onEvent(e: SongPlayingEvent) {
+//    private fun onEvent(e: EPlaybackProgress) {
 //        setProgress(e.progressPercent)
 //    }
 }

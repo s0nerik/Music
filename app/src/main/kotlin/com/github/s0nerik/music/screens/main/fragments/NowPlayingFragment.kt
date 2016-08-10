@@ -46,10 +46,10 @@ class NowPlayingFragment : BaseBoundFragment<FragmentNowPlayingBinding>() {
     }
 
     private fun initEventHandlers() {
-//        RxBus.on(SongChangedEvent).bindToLifecycle(this).subscribe(::onEvent)
+//        RxBus.on(ESongChanged).bindToLifecycle(this).subscribe(::onEvent)
 //        RxBus.on(PlaybackStartedEvent).bindToLifecycle(this).subscribe(::onEvent)
 //        RxBus.on(PlaybackPausedEvent).bindToLifecycle(this).subscribe(::onEvent)
-//        RxBus.on(SongPlayingEvent).bindToLifecycle(this).subscribe(::onEvent)
+//        RxBus.on(EPlaybackProgress).bindToLifecycle(this).subscribe(::onEvent)
     }
 
     fun show(fragmentManager: FragmentManager): Observable<Int> {
@@ -136,7 +136,7 @@ class NowPlayingFragment : BaseBoundFragment<FragmentNowPlayingBinding>() {
 //        player!!.invokeMethod("togglePause", arrayOfNulls<Any>(0))
     }
 
-//    private fun onEvent(event: SongChangedEvent) {
+//    private fun onEvent(event: ESongChanged) {
 //        setSongInfo(event.song)
 //    }
 //
@@ -158,7 +158,7 @@ class NowPlayingFragment : BaseBoundFragment<FragmentNowPlayingBinding>() {
 //        radialEqualizerViewSubscription!!.unsubscribe()
 //    }
 //
-//    private fun onEvent(e: SongPlayingEvent) {
+//    private fun onEvent(e: EPlaybackProgress) {
 //        setProgress(e.progressPercent)
 //    }
 

@@ -1,6 +1,5 @@
 package com.github.s0nerik.music.data.models
 
-import com.fernandocejas.frodo.annotation.RxLogObservable
 import com.github.s0nerik.music.data.helpers.db.CursorConstructor
 import com.github.s0nerik.music.data.helpers.db.cursor_getters.AlbumsCursorGetter
 import com.github.s0nerik.music.data.helpers.db.cursor_getters.ArtistsCursorGetter
@@ -62,7 +61,6 @@ class MusicCollectionImpl : MusicCollection, Serializable {
         return Observable.just(albums.filterValues { it.artistId == artist.id }.map { it.value })
     }
 
-    @RxLogObservable
     private fun loadAllSongs(): Observable<List<Song>> {
         return CursorConstructor.fromCursorGetter(Song.Factory(), SongsCursorGetter())
                 .doOnNext { songs[it.id] = it }

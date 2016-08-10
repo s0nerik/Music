@@ -35,6 +35,8 @@
         <!--<item>Queue</item>-->
     </string-array>
 
+    <string name="format_ringtone">%s is now your new ringtone!</string>
+
     // RecyclerView layout managers
     <string name="layout_manager_linear">android.support.v7.widget.LinearLayoutManager</string>
     <string name="layout_manager_grid">android.support.v7.widget.GridLayoutManager</string>
