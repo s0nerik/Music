@@ -75,7 +75,7 @@ class SongsListFragment : BaseBoundFragment<FragmentListSongsBinding>(), Sortabl
 
 //          fastScroller.hide()
         recycler.hide()
-        progress.show()
+//        progress.show()
         collectionManager.getSongs()
                 .bindToLifecycle(this@SongsListFragment)
                 .subscribe(
@@ -107,7 +107,6 @@ class SongsListFragment : BaseBoundFragment<FragmentListSongsBinding>(), Sortabl
         filteredSongs.clear()
         filteredSongs.addAll(songs)
 
-        binding.progress.show()
         updateSongsList()
 
 //        sorter.sortItems()

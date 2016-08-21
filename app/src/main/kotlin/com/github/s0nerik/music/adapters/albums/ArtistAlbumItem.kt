@@ -9,7 +9,7 @@ import com.github.s0nerik.music.data.models.Album
 
 import eu.davidea.flexibleadapter.FlexibleAdapter
 
-class ArtistAlbumItem(var album: Album?) : MediaStoreItem<ArtistAlbumViewHolder>() {
+class ArtistAlbumItem(var album: Album) : MediaStoreItem<ArtistAlbumViewHolder>() {
     override fun getLayoutRes() = R.layout.item_artists_album
 
     override fun createViewHolder(adapter: FlexibleAdapter<*>, inflater: LayoutInflater, parent: ViewGroup): ArtistAlbumViewHolder {
@@ -17,6 +17,6 @@ class ArtistAlbumItem(var album: Album?) : MediaStoreItem<ArtistAlbumViewHolder>
     }
 
     override fun bindViewHolder(adapter: FlexibleAdapter<*>, holder: ArtistAlbumViewHolder, position: Int, payloads: List<*>?) {
-        holder.album = album!!
+        holder.album = album
     }
 }

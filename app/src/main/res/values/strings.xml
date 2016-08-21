@@ -12,6 +12,12 @@
     <string name="unknown_artist">Unknown artist</string>
     <string name="nothing_to_shuffle">There\'s nothing to shuffle</string>
 
+    // AlbumsListFragment
+    <string name="no_albums_found">No albums found.</string>
+
+    // ArtistsListFragment
+    <string name="no_artists_found">No artists found.</string>
+
     // Song context menu
     <string name="action_add_to_queue">Add to playback queue</string>
     <string name="action_remove_from_queue">Remove from playback queue</string>
