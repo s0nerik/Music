@@ -102,5 +102,9 @@ dependencies {
     compile 'org.apache.commons:commons-lang3:3.3.2'
     compile 'org.apache.commons:commons-collections4:4.0'
 
+    // Parceler
+    compile 'org.parceler:parceler-api:1.1.5'
+    kapt 'org.parceler:parceler:1.1.5'
+
     compile 'com.google.android.exoplayer:exoplayer:r1.5.9'
 }

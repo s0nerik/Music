@@ -6,10 +6,7 @@ import com.github.s0nerik.music.adapters.songs.SongViewHolder
 import com.github.s0nerik.music.data.helpers.CollectionManager
 import com.github.s0nerik.music.data.helpers.db.cursor_getters.CursorGetter
 import com.github.s0nerik.music.receivers.PendingIntentReceiver
-import com.github.s0nerik.music.screens.main.fragments.ArtistsListFragment
-import com.github.s0nerik.music.screens.main.fragments.LocalMusicFragment
-import com.github.s0nerik.music.screens.main.fragments.NowPlayingFragment
-import com.github.s0nerik.music.screens.main.fragments.SongsListFragment
+import com.github.s0nerik.music.screens.main.fragments.*
 import com.github.s0nerik.music.screens.splash.SplashActivity
 import com.github.s0nerik.music.services.LocalPlayerService
 import com.github.s0nerik.music.ui.notifications.NowPlayingNotification
@@ -27,6 +24,7 @@ interface AppComponent {
     fun inject(x: LocalMusicFragment)
     fun inject(x: SongsListFragment)
     fun inject(x: ArtistsListFragment)
+    fun inject(x: AlbumsListFragment)
     fun inject(x: NowPlayingFragment)
 
     // Adapters

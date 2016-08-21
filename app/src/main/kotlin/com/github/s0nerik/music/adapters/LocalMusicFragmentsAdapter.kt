@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
 import com.github.s0nerik.music.App
 import com.github.s0nerik.music.R
+import com.github.s0nerik.music.screens.main.fragments.AlbumsListFragment
 import com.github.s0nerik.music.screens.main.fragments.ArtistsListFragment
 import com.github.s0nerik.music.screens.main.fragments.SongsListFragment
 import javax.inject.Inject
@@ -17,8 +18,8 @@ class LocalMusicFragmentsAdapter(fm: FragmentManager) : FragmentStatePagerAdapte
     private val names: Array<String>
     private val fragments = arrayOf<Fragment>(
             SongsListFragment(),
-            ArtistsListFragment()
-//            AlbumsListFragment()
+            ArtistsListFragment(),
+            AlbumsListFragment()
     )
 
     init {
@@ -35,7 +36,7 @@ class LocalMusicFragmentsAdapter(fm: FragmentManager) : FragmentStatePagerAdapte
     }
 
     override fun getCount(): Int {
-        return 2
+        return 3
 //        return names.size
     }
 }
