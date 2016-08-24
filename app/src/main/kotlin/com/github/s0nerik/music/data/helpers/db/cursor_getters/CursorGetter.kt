@@ -5,7 +5,6 @@ import android.database.Cursor
 import android.net.Uri
 import com.github.s0nerik.music.App
 import com.github.s0nerik.music.data.helpers.db.SortOrder
-import java.util.*
 import javax.inject.Inject
 
 abstract class CursorGetter {
@@ -23,7 +22,7 @@ abstract class CursorGetter {
     protected abstract val sortOrder: SortOrder
 
     fun projectionIndices(): Map<String, Int> {
-        val indices = HashMap<String, Int>()
+        val indices = mutableMapOf<String, Int>()
 
         for (i in 0..projection.size - 1) {
             indices[projection[i]] = i

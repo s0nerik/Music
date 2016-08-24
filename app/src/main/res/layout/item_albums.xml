@@ -22,7 +22,7 @@
             android:layout_height="0dp"
             android:scaleType="centerCrop"
             tools:src="@drawable/no_cover"
-            android:src="@{album.albumArtPath}"
+            app:coverSrc='@{"file://"+album.albumArtPath}'
             />
 
         <View

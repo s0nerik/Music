@@ -1,6 +1,7 @@
 package com.github.s0nerik.music.data.helpers.db
 
 import com.github.s0nerik.music.data.helpers.db.cursor_getters.CursorGetter
+import ru.noties.debug.Debug
 import rx.Observable
 
 class CursorConstructor {
@@ -18,6 +19,8 @@ class CursorConstructor {
                             if (check(item)) subscriber.onNext(item)
                         } while (cursor.moveToNext())
                     }
+                } catch (t: Throwable) {
+                    Debug.e(t)
                 } finally {
                     cursor.close()
                     subscriber.onCompleted()

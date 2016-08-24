@@ -21,10 +21,10 @@ data class Album(
         override fun produce(cursor: Cursor, indices: Map<String, Int>): Album {
             return Album(
                     id = cursor.getLong(indices[BaseColumns._ID]!!),
-                    title = cursor.getString(indices[ALBUM]!!),
-                    artistName = cursor.getString(indices[ARTIST]!!),
+                    title = cursor.getString(indices[ALBUM]!!) ?: "",
+                    artistName = cursor.getString(indices[ARTIST]!!) ?: "",
                     year = cursor.getInt(indices[FIRST_YEAR]!!),
-                    albumArtPath = cursor.getString(indices[ALBUM_ART]!!),
+                    albumArtPath = cursor.getString(indices[ALBUM_ART]!!) ?: "",
                     songsCount = cursor.getInt(indices[NUMBER_OF_SONGS]!!),
                     artistId = cursor.getLong(indices[ARTIST_ID]!!)
             )

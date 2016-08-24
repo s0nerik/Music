@@ -9,9 +9,9 @@ import rx.Observable
 import java.io.Serializable
 
 class MusicCollectionImpl : MusicCollection, Serializable {
-    val songs: MutableMap<Long, Song> = mutableMapOf()
-    val albums: MutableMap<Long, Album> = mutableMapOf()
-    val artists: MutableMap<Long, Artist> = mutableMapOf()
+    private val songs: MutableMap<Long, Song> = mutableMapOf()
+    private val albums: MutableMap<Long, Album> = mutableMapOf()
+    private val artists: MutableMap<Long, Artist> = mutableMapOf()
 
     override fun initFromMediaStore(): Observable<MusicCollection> {
         return loadAllSongs()
