@@ -1,38 +1,24 @@
 package com.github.s0nerik.music.adapters.albums
 
+import android.databinding.DataBindingUtil
 import android.view.View
-import com.github.s0nerik.music.adapters.albums.AlbumViewHolder
 import com.github.s0nerik.music.data.models.Album
-import com.github.s0nerik.music.ext.hide
-import com.github.s0nerik.music.ext.show
+import com.github.s0nerik.music.databinding.ItemArtistAlbumsBinding
 import eu.davidea.flexibleadapter.FlexibleAdapter
-import kotlinx.android.synthetic.main.item_artists_album.view.*
+import eu.davidea.viewholders.FlexibleViewHolder
 
-class ArtistAlbumViewHolder(view: View, adapter: FlexibleAdapter<*>) : AlbumViewHolder(view, adapter) {
-    override var album: Album?
-        get() = super.album
+class ArtistAlbumViewHolder(view: View, adapter: FlexibleAdapter<*>) : FlexibleViewHolder(view, adapter) {
+    private val binding: ItemArtistAlbumsBinding
+
+    init {
+        binding = DataBindingUtil.bind(view)
+    }
+
+    var album: Album? = null
         set(album) {
-            super.album = album!!
-            with (itemView) {
-                subtitle.text = if (album.year > 0) "${album.year} • ${album.songsCount} songs" else "${album.songsCount} songs"
-
-                shadowTop.hide()
-                shadowBottom.hide()
-
-                val item = mAdapter.getItem(adapterPosition)
-                val parent = mAdapter.getExpandableOf(item)
-
-                if (parent?.isExpanded as Boolean) {
-                    shadowBottom.show()
-
-                    val childPos = parent.subItems.indexOf(item)
-                    if (childPos == 0) {
-                        shadowTop.show()
-                    }
-//                    else if (childPos == parent.subItems.size() - 1) {
-//                        shadowBottom.show()
-//                    }
-                }
-            }
+            field = album!!
+            binding.album = field
+            binding.item = mAdapter.getItem(adapterPosition)
+            binding.parent = mAdapter.getExpandableOf(binding.item)
         }
 }

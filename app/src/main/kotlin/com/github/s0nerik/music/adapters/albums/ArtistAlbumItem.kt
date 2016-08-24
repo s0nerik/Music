@@ -10,7 +10,7 @@ import com.github.s0nerik.music.data.models.Album
 import eu.davidea.flexibleadapter.FlexibleAdapter
 
 class ArtistAlbumItem(var album: Album) : MediaStoreItem<ArtistAlbumViewHolder>() {
-    override fun getLayoutRes() = R.layout.item_artists_album
+    override fun getLayoutRes() = R.layout.item_artist_albums
 
     override fun createViewHolder(adapter: FlexibleAdapter<*>, inflater: LayoutInflater, parent: ViewGroup): ArtistAlbumViewHolder {
         return ArtistAlbumViewHolder(inflater.inflate(layoutRes, parent, false), adapter)

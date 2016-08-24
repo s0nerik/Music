@@ -9,7 +9,7 @@ import eu.davidea.viewholders.FlexibleViewHolder
 import kotlinx.android.synthetic.main.item_albums.view.*
 import org.jetbrains.anko.onClick
 
-open class AlbumViewHolder(view: View, adapter: FlexibleAdapter<*>) : FlexibleViewHolder(view, adapter) {
+class AlbumViewHolder(view: View, adapter: FlexibleAdapter<*>) : FlexibleViewHolder(view, adapter) {
     private val binding: ItemAlbumsBinding
 
     init {
@@ -21,7 +21,7 @@ open class AlbumViewHolder(view: View, adapter: FlexibleAdapter<*>) : FlexibleVi
         }
     }
 
-    open var album: Album? = null
+    var album: Album? = null
         set(album) {
             field = album!!
             binding.album = field
