@@ -8,11 +8,11 @@ import com.github.s0nerik.music.data.helpers.CollectionManager
 import com.github.s0nerik.music.screens.main.MainActivity
 import com.tbruyelle.rxpermissions.RxPermissions
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
-import org.jetbrains.anko.intentFor
+import org.jetbrains.anko.startActivity
 import rx.schedulers.Schedulers
 import javax.inject.Inject
 
-class SplashActivity : @Inject BaseActivity() {
+class SplashActivity : BaseActivity() {
     @Inject lateinit var collectionManager: CollectionManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,7 +24,7 @@ class SplashActivity : @Inject BaseActivity() {
                 .bindToLifecycle(this)
                 .subscribeOn(Schedulers.io())
                 .subscribe {
-                    startActivity(intentFor<MainActivity>())
+                    startActivity<MainActivity>()
                     finish()
                 }
     }
