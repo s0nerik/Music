@@ -3,10 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/itemLayout"
-    android:background="?attr/selectableItemBackground"
+    android:background="@color/md_white_1000"
     android:minHeight="72dp"
     android:layout_width="match_parent"
-    android:layout_height="72dp" >
+    android:layout_height="72dp"
+    android:elevation="12dp"
+    >
 
     <ImageView
         android:id="@+id/imageView"

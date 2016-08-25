@@ -5,7 +5,7 @@ apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion 24
-    buildToolsVersion "24.0.1"
+    buildToolsVersion "24.0.2"
     defaultConfig {
         applicationId "com.github.s0nerik.music"
         minSdkVersion 21
@@ -24,7 +24,7 @@ android {
         }
     }
     sourceSets {
-        main.java.srcDirs += 'src/main/kotlin'
+        main.kotlin.srcDirs += 'src/main/java'
     }
     dataBinding {
         enabled = true

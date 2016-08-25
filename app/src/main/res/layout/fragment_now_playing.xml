@@ -19,7 +19,7 @@
         <View
             android:id="@+id/mainProgressShadow"
             android:layout_width="match_parent"
-            android:layout_height="8dp"
+            android:layout_height="24dp"
             android:background="@drawable/shadow_bottom_top"
             android:layout_marginTop="24dp"
             />
