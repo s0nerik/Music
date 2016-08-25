@@ -2,15 +2,14 @@ package com.github.s0nerik.music.adapters.artists
 
 import android.view.View
 import com.amulyakhare.textdrawable.TextDrawable
-import com.amulyakhare.textdrawable.util.ColorGenerator
 import com.github.s0nerik.music.data.models.Artist
-
+import com.github.s0nerik.music.ext.color
 import eu.davidea.flexibleadapter.FlexibleAdapter
-import eu.davidea.viewholders.ExpandableViewHolder
+import eu.davidea.viewholders.FlexibleViewHolder
 import kotlinx.android.synthetic.main.item_artists.view.*
 import org.apache.commons.lang3.text.WordUtils
 
-class ArtistViewHolder(view: View, adapter: FlexibleAdapter<*>) : ExpandableViewHolder(view, adapter) {
+class ArtistViewHolder(view: View, adapter: FlexibleAdapter<*>) : FlexibleViewHolder(view, adapter) {
     var artist: Artist? = null
         set(artist) {
             field = artist!!
@@ -29,8 +28,7 @@ class ArtistViewHolder(view: View, adapter: FlexibleAdapter<*>) : ExpandableView
                     .toUpperCase()
                     .fontSize(fontSize.toInt())
                     .endConfig()
-                    .buildRound(WordUtils.capitalize(shortName),
-                            ColorGenerator.DEFAULT.getColor(artistName))
+                    .buildRound(WordUtils.capitalize(shortName), artist.color)
 
             with (itemView) {
                 title.text = artistName

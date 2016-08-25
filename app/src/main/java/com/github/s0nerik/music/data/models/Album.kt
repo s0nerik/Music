@@ -6,8 +6,10 @@ import android.provider.MediaStore.Audio.AlbumColumns.*
 import android.provider.MediaStore.Audio.AudioColumns.ALBUM
 import android.provider.MediaStore.Audio.AudioColumns.ARTIST_ID
 import com.github.s0nerik.music.data.helpers.db.CursorFactory
+import org.parceler.Parcel
 import java.io.Serializable
 
+@Parcel
 data class Album(
         val id: Long = 0,
         val year: Int = 0,

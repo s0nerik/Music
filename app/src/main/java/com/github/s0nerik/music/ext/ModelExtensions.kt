@@ -7,6 +7,7 @@ import android.media.RingtoneManager
 import android.net.Uri
 import android.provider.MediaStore
 import android.widget.Toast
+import com.amulyakhare.textdrawable.util.ColorGenerator
 import com.github.s0nerik.music.App
 import com.github.s0nerik.music.R
 import com.github.s0nerik.music.data.models.Album
@@ -68,6 +69,12 @@ val Artist.all: Observable<List<Artist>>
 
 val Artist.albums: Observable<List<Album>>
     get() = App.comp.getCollectionManager().getAlbums(this)
+
+val Artist.songs: Observable<List<Song>>
+    get() = App.comp.getCollectionManager().getSongs(this)
+
+val Artist.color: Int
+    get() = ColorGenerator.DEFAULT.getColor(name)
 
 //endregion
 

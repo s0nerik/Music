@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+    <data>
+        <import type="android.view.View"/>
+        <variable name="album" type="com.github.s0nerik.music.data.models.Album" />
+    </data>
+    <android.support.v7.widget.CardView
+        android:layout_width="160dp"
+        android:layout_height="216dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        tools:layout_gravity="center"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+            <com.github.s0nerik.music.ui.views.SquareWidthImageView
+                android:id="@+id/cover"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginBottom="8dp"
+                app:coverSrc='@{"file://"+album.albumArtPath}'
+                tools:src="@drawable/no_cover"
+                />
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:shadowColor="#000000"
+                android:shadowDx="0.5"
+                android:shadowDy="1"
+                android:shadowRadius="4"
+                android:layout_below="@+id/cover"
+                android:textSize="16sp"
+                android:textColor="@color/md_grey_800"
+                android:text="@{album.title}"
+                android:maxLines="1"
+                android:ellipsize="marquee"
+                tools:text="Title"
+                />
+
+            <TextView
+                android:id="@+id/subtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:shadowColor="#000000"
+                android:shadowDx="0.5"
+                android:shadowDy="1"
+                android:shadowRadius="4"
+                android:textColor="@color/md_grey_600"
+                android:layout_below="@+id/title"
+                android:text='@{album.year > 0 ? String.format("%s • %s songs", album.year, album.songsCount) : String.format("%s songs", album.songsCount)}'
+                android:textSize="14sp"
+                android:maxLines="1"
+                android:ellipsize="marquee"
+                tools:text="Subtitle"
+                />
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+</layout>

@@ -9,8 +9,10 @@ import android.webkit.MimeTypeMap
 import com.github.s0nerik.music.App
 import com.github.s0nerik.music.R
 import com.github.s0nerik.music.data.helpers.db.CursorFactory
+import org.parceler.Parcel
 import java.io.Serializable
 
+@Parcel
 data class Song(
         val id: Long = 0,
         val artistId: Long = 0,

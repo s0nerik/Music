@@ -5,7 +5,6 @@ import android.view.View
 import com.github.s0nerik.music.App
 import com.github.s0nerik.music.R
 import com.github.s0nerik.music.adapters.Sorter
-import com.github.s0nerik.music.adapters.albums.ArtistAlbumItem
 import com.github.s0nerik.music.adapters.artists.ArtistItem
 import com.github.s0nerik.music.adapters.artists.ArtistsAdapter
 import com.github.s0nerik.music.adapters.songs.SongItem
@@ -15,9 +14,9 @@ import com.github.s0nerik.music.data.models.Artist
 import com.github.s0nerik.music.databinding.FragmentListArtistsBinding
 import com.github.s0nerik.music.ext.hide
 import com.github.s0nerik.music.ext.show
-
+import com.github.s0nerik.music.screens.main.ArtistActivity
+import eu.davidea.flexibleadapter.FlexibleAdapter
 import kotlinx.android.synthetic.main.fragment_list_artists.*
-
 import javax.inject.Inject
 
 class ArtistsListFragment : BaseBoundFragment<FragmentListArtistsBinding>(), SortableFragment {
@@ -48,6 +47,11 @@ class ArtistsListFragment : BaseBoundFragment<FragmentListArtistsBinding>(), Sor
         recycler.adapter = adapter
         recycler.setHasFixedSize(true)
 
+        adapter.initializeListeners(FlexibleAdapter.OnItemClickListener {
+            ArtistActivity.start(activity, adapter.getItem(it).artist)
+            true
+        })
+
         loadArtists()
     }
 
@@ -63,7 +67,7 @@ class ArtistsListFragment : BaseBoundFragment<FragmentListArtistsBinding>(), Sor
         this.artists.clear()
         this.artists.addAll(artists.map {
             val item = ArtistItem(it)
-            item.subItems = collectionManager.getAlbums(it).toBlocking().first().map { ArtistAlbumItem(it) }
+//            item.subItems = collectionManager.getAlbums(it).toBlocking().first().map { ArtistAlbumItem(it) }
             item
         })
 

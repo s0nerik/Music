@@ -3,14 +3,12 @@ package com.github.s0nerik.music.adapters.artists
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.github.s0nerik.music.R
-import com.github.s0nerik.music.adapters.MediaStoreExpandableItem
-import com.github.s0nerik.music.adapters.albums.ArtistAlbumItem
+import com.github.s0nerik.music.adapters.MediaStoreItem
 import com.github.s0nerik.music.data.models.Artist
-
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.items.IFilterable
 
-class ArtistItem(var artist: Artist) : MediaStoreExpandableItem<ArtistViewHolder, ArtistAlbumItem>(), IFilterable {
+class ArtistItem(var artist: Artist) : MediaStoreItem<ArtistViewHolder>(), IFilterable {
 
     override fun getLayoutRes() = R.layout.item_artists
 
