@@ -26,27 +26,53 @@
                 android:layout_height="match_parent"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
                 app:contentScrim="?attr/colorPrimary"
-                app:title="@{artist.name}"
                 app:collapsedTitleTextAppearance="@style/ArtistTitle.Collapsed"
                 app:expandedTitleTextAppearance="@style/ArtistTitle.Expanded"
                 android:fitsSystemWindows="true"
                 >
-                <com.github.s0nerik.music.ui.views.SquareWidthImageView
-                    android:id="@+id/photo"
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/albumsRecycler"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:scaleType="centerCrop"
-                    android:src="@color/md_pink_800"
+                    android:layout_height="308dp"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:paddingTop="72dp"
+                    android:paddingBottom="16dp"
+                    android:clipToPadding="false"
+                    android:background="@color/md_grey_800"
+                    app:layout_collapseMode="parallax"
+                    app:layoutManager="@string/layout_manager_linear_horizontal"
+                    tools:listitem="@layout/item_recycler_artist_albums"
                     />
 
                 <com.github.s0nerik.music.ui.views.TintableMenuToolbar
                     android:id="@+id/mainToolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
+                    android:background="?attr/colorPrimary"
+                    android:elevation="4dp"
+                    app:titleTextColor="#000"
+                    app:title="@{artist.name}"
                     app:menuItemTint="#fff"
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                     app:layout_collapseMode="pin"
                     />
+                <!--<com.github.s0nerik.music.ui.views.SquareWidthImageView-->
+                    <!--android:id="@+id/photo"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="0dp"-->
+                    <!--android:scaleType="centerCrop"-->
+                    <!--android:src="@color/md_pink_800"-->
+                    <!--/>-->
+
+                <!--<com.github.s0nerik.music.ui.views.TintableMenuToolbar-->
+                    <!--android:id="@+id/mainToolbar"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="?attr/actionBarSize"-->
+                    <!--app:menuItemTint="#fff"-->
+                    <!--app:popupTheme="@style/ThemeOverlay.AppCompat.Light"-->
+                    <!--app:layout_collapseMode="pin"-->
+                    <!--/>-->
             </android.support.design.widget.CollapsingToolbarLayout>
         </android.support.design.widget.AppBarLayout>
 
@@ -67,26 +93,25 @@
                 android:layout_height="wrap_content"
                 >
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/albumsRecycler"
-                    android:layout_width="match_parent"
-                    android:layout_height="252dp"
-                    android:paddingLeft="8dp"
-                    android:paddingRight="8dp"
-                    android:paddingTop="16dp"
-                    android:paddingBottom="16dp"
-                    android:clipToPadding="false"
-                    android:layout_gravity="bottom"
-                    android:background="@color/md_grey_800"
-                    app:layoutManager="@string/layout_manager_linear_horizontal"
-                    tools:listitem="@layout/item_recycler_artist_albums"
-                    />
+                <!--<android.support.v7.widget.RecyclerView-->
+                    <!--android:id="@+id/albumsRecycler"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="252dp"-->
+                    <!--android:paddingLeft="8dp"-->
+                    <!--android:paddingRight="8dp"-->
+                    <!--android:paddingTop="16dp"-->
+                    <!--android:paddingBottom="16dp"-->
+                    <!--android:clipToPadding="false"-->
+                    <!--android:layout_gravity="bottom"-->
+                    <!--android:background="@color/md_grey_800"-->
+                    <!--app:layoutManager="@string/layout_manager_linear_horizontal"-->
+                    <!--tools:listitem="@layout/item_recycler_artist_albums"-->
+                    <!--/>-->
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/songsRecycler"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/albumsRecycler"
                     app:layoutManager="@string/layout_manager_linear"
                     tools:listitem="@layout/item_songs"
                     />

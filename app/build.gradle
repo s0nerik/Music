@@ -3,6 +3,10 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 //apply plugin: 'com.fernandocejas.frodo'
 
+kapt {
+    generateStubs = true
+}
+
 android {
     compileSdkVersion 24
     buildToolsVersion "24.0.2"
@@ -25,16 +29,17 @@ android {
     }
     sourceSets {
         main.kotlin.srcDirs += 'src/main/java'
+        debug.kotlin.srcDirs += 'src/main/java'
+        release.kotlin.srcDirs += 'src/main/java'
+        main.java.srcDirs += 'src/main/kotlin'
+        debug.java.srcDirs += 'src/debug/kotlin'
+        release.java.srcDirs += 'src/release/kotlin'
     }
     dataBinding {
         enabled = true
     }
 
     defaultPublishConfig "debug"
-}
-
-kapt {
-    generateStubs = true
 }
 
 dependencies {
@@ -46,12 +51,6 @@ dependencies {
 
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
-    // Anko
-    compile "org.jetbrains.anko:anko-sdk21:$anko_version"
-    compile "org.jetbrains.anko:anko-appcompat-v7:$anko_version"
-    compile "org.jetbrains.anko:anko-design:$anko_version"
-    compile "org.jetbrains.anko:anko-recyclerview-v7:$anko_version"
-
     // Support libs
     compile "com.android.support:appcompat-v7:$support_version"
     compile "com.android.support:support-v4:$support_version"
@@ -60,6 +59,15 @@ dependencies {
     compile "com.android.support:palette-v7:$support_version"
     compile "com.android.support:design:$support_version"
     compile "com.android.support:percent:$support_version"
+
+    // Anko
+    compile "org.jetbrains.anko:anko-sdk21:$anko_version"
+    compile "org.jetbrains.anko:anko-appcompat-v7:$anko_version"
+    compile "org.jetbrains.anko:anko-support-v4:$anko_version"
+    compile "org.jetbrains.anko:anko-recyclerview-v7:$anko_version"
+    compile "org.jetbrains.anko:anko-cardview-v7:$anko_version"
+    compile "org.jetbrains.anko:anko-design:$anko_version"
+    compile "org.jetbrains.anko:anko-percent:$anko_version"
 
     // Data binding
     kapt 'com.android.databinding:compiler:2.2.0-beta2'

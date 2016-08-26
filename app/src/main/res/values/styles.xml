@@ -1,22 +1,4 @@
 <resources>
-
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-    </style>
-
-    <style name="AppTheme.TranslucentStatusBar">
-        <item name="android:windowBackground">@android:color/white</item>
-        <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
-    </style>
-
-    <style name="AppTheme.SplashActivity" parent="AppTheme.TranslucentStatusBar">
-        <item name="android:windowBackground">@drawable/splash</item>
-    </style>
-
     <style name="NotificationControlBtn">
         <item name="android:paddingTop">12dp</item>
         <item name="android:paddingBottom">12dp</item>
@@ -25,16 +7,4 @@
         <item name="android:layout_weight">1</item>
         <!--<item name="android:background">@drawable/selector_notification_button_bg</item>-->
     </style>
-
-    <style name="ArtistTitle" />
-    <style name="ArtistTitle.Expanded">
-        <item name="android:textColor">#0fff</item>
-        <!--<item name="android:textSize">0sp</item>-->
-        <item name="android:layout_height">0dp</item>
-        <item name="android:layout_width">0dp</item>
-    </style>
-    <style name="ArtistTitle.Collapsed">
-        <item name="android:textColor">#fff</item>
-    </style>
-
 </resources>

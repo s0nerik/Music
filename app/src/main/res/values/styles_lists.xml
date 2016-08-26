@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="ItemText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">16dp</item>
+        <item name="android:layout_marginRight">16dp</item>
+        <!--<item name="android:shadowColor">#000</item>-->
+        <!--<item name="android:shadowDx">0.5</item>-->
+        <!--<item name="android:shadowDy">1</item>-->
+        <!--<item name="android:shadowRadius">1</item>-->
+    </style>
+
+    <style name="ItemText.SingleLine">
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="ItemText.Title" parent="ItemText.SingleLine">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/md_grey_900</item>
+    </style>
+
+    <style name="ItemText.Subtitle" parent="ItemText.SingleLine">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/md_grey_800</item>
+    </style>
+</resources>
