@@ -39,7 +39,7 @@
                     android:paddingTop="16dp"
                     android:paddingBottom="16dp"
                     android:clipToPadding="false"
-                    android:background="@color/md_grey_800"
+                    android:background="@color/md_grey_300"
                     app:layout_collapseMode="parallax"
                     app:layoutManager="@string/layout_manager_linear_horizontal"
                     tools:listitem="@layout/item_recycler_artist_albums"
@@ -50,6 +50,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/albumsRecycler"
+                    android:elevation="12dp"
+                    android:background="#fff"
                     app:layoutManager="@string/layout_manager_linear"
                     tools:listitem="@layout/item_songs"
                     />
