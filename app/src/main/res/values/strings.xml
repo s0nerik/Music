@@ -41,6 +41,8 @@
         <!--<item>Queue</item>-->
     </string-array>
 
+    <string name="activity_artist_songs">songs</string>
+
     <string name="format_ringtone">%s is now your new ringtone!</string>
 
     // RecyclerView layout managers

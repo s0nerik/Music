@@ -76,6 +76,9 @@ val Artist.songs: Observable<List<Song>>
 val Artist.color: Int
     get() = ColorGenerator.DEFAULT.getColor(name)
 
+val Artist.quickDescription: String
+    get() = "$numberOfAlbums albums, $numberOfSongs songs"
+
 //endregion
 
 //region Album extensions
