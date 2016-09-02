@@ -13,6 +13,50 @@
         android:layout_height="match_parent"
         android:clipChildren="false"
         >
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/nestedScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:focusableInTouchMode="false"
+            android:overScrollMode="never"
+            android:clipChildren="false"
+            app:behavior_overlapTop="0dp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            >
+
+            <android.support.percent.PercentRelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+
+                <!--<android.support.v7.widget.RecyclerView-->
+                <!--android:id="@+id/albumsRecycler"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="252dp"-->
+                <!--android:paddingLeft="8dp"-->
+                <!--android:paddingRight="8dp"-->
+                <!--android:paddingTop="16dp"-->
+                <!--android:paddingBottom="16dp"-->
+                <!--android:clipToPadding="false"-->
+                <!--android:layout_gravity="bottom"-->
+                <!--android:background="@color/md_grey_800"-->
+                <!--app:layoutManager="@string/layout_manager_linear_horizontal"-->
+                <!--tools:listitem="@layout/item_recycler_artist_albums"-->
+                <!--/>-->
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/songsRecycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layoutManager="@string/layout_manager_linear"
+                    tools:listitem="@layout/item_songs"
+                    />
+
+            </android.support.percent.PercentRelativeLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+
         <android.support.design.widget.AppBarLayout
             android:id="@+id/mainAppbar"
             android:layout_width="match_parent"
@@ -75,50 +119,6 @@
                     <!--/>-->
             </android.support.design.widget.CollapsingToolbarLayout>
         </android.support.design.widget.AppBarLayout>
-
-        <android.support.v4.widget.NestedScrollView
-            android:id="@+id/nestedScrollView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:focusableInTouchMode="false"
-            android:overScrollMode="never"
-            android:clipChildren="false"
-            app:behavior_overlapTop="0dp"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            >
-
-            <android.support.percent.PercentRelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                >
-
-                <!--<android.support.v7.widget.RecyclerView-->
-                    <!--android:id="@+id/albumsRecycler"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="252dp"-->
-                    <!--android:paddingLeft="8dp"-->
-                    <!--android:paddingRight="8dp"-->
-                    <!--android:paddingTop="16dp"-->
-                    <!--android:paddingBottom="16dp"-->
-                    <!--android:clipToPadding="false"-->
-                    <!--android:layout_gravity="bottom"-->
-                    <!--android:background="@color/md_grey_800"-->
-                    <!--app:layoutManager="@string/layout_manager_linear_horizontal"-->
-                    <!--tools:listitem="@layout/item_recycler_artist_albums"-->
-                    <!--/>-->
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/songsRecycler"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layoutManager="@string/layout_manager_linear"
-                    tools:listitem="@layout/item_songs"
-                    />
-
-            </android.support.percent.PercentRelativeLayout>
-
-        </android.support.v4.widget.NestedScrollView>
 
     </android.support.design.widget.CoordinatorLayout>
 </layout>
