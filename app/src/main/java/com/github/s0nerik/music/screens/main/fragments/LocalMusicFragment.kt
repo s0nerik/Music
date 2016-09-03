@@ -100,8 +100,6 @@ class LocalMusicFragment : BaseBoundFragment<FragmentLocalMusicBinding>() {
             }
         }
 
-//            MenuTint.on(toolbar.menu).setMenuItemIconColor(resources.getColor(R.color.md_white_1000)).apply(activity)
-
         initSearchView()
 
         RxBus.post(toolbar)

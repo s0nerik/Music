@@ -112,7 +112,7 @@
                 android:tint="?colorAccent"
 
                 app:elevation="4dp"
-                app:backgroundTint="?attr/colorPrimary"
+                app:backgroundTint="?colorPrimary"
 
                 app:layout_anchor="@id/pager"
                 app:layout_anchorGravity="bottom|right|end"

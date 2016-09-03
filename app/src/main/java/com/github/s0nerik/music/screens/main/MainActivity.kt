@@ -13,18 +13,26 @@ import com.github.s0nerik.music.MainPrefs
 import com.github.s0nerik.music.R
 import com.github.s0nerik.music.base.BaseBoundActivity
 import com.github.s0nerik.music.databinding.ActivityMainBinding
+import com.github.s0nerik.music.ext.observeOnMainThread
 import com.github.s0nerik.music.screens.main.fragments.LocalMusicFragment
+import com.github.s0nerik.rxbus.RxBus
+import com.trello.rxlifecycle.kotlin.bindToLifecycle
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.audioManager
 
 class MainActivity : BaseBoundActivity<ActivityMainBinding>() {
     override val layoutId = R.layout.activity_main
 
+    var drawerToggle: ActionBarDrawerToggle? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        App.comp.inject(this)
 
-//        RxBus.on(Toolbar::class.java).bindToLifecycle(this).subscribe(::onEvent)
+        RxBus.on(Toolbar::class.java)
+                .bindToLifecycle(this)
+                .observeOnMainThread()
+                .subscribe { onEvent(it) }
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
@@ -71,16 +79,17 @@ class MainActivity : BaseBoundActivity<ActivityMainBinding>() {
     // region Event handlers
 
     private fun onEvent(toolbar: Toolbar) {
-        val drawerToggle = ActionBarDrawerToggle(
+        drawerToggle?.let { drawerLayout.removeDrawerListener(it) }
+        drawerToggle = ActionBarDrawerToggle(
                 this@MainActivity,
                 drawerLayout,
                 toolbar,
                 R.string.drawer_open,
                 R.string.drawer_close
         )
-        drawerLayout.setDrawerListener(drawerToggle)
+        drawerLayout.addDrawerListener(drawerToggle!!)
 //            drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, Gravity.LEFT)
-        drawerToggle.syncState()
+        drawerToggle!!.syncState()
     }
 
     // endregion
