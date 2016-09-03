@@ -4,6 +4,7 @@ import android.databinding.DataBindingUtil
 import android.view.View
 import com.github.s0nerik.music.data.models.Album
 import com.github.s0nerik.music.databinding.ItemAlbumsBinding
+import com.github.s0nerik.music.screens.main.AlbumActivity
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.viewholders.FlexibleViewHolder
 import kotlinx.android.synthetic.main.item_albums.view.*
@@ -16,7 +17,7 @@ class AlbumViewHolder(view: View, adapter: FlexibleAdapter<*>) : FlexibleViewHol
         binding = DataBindingUtil.bind(view)
         with (itemView) {
             layout.onClick {
-//                context.startActivity<AlbumInfoActivity>("album" to album)
+                AlbumActivity.start(context, album!!)
             }
         }
     }

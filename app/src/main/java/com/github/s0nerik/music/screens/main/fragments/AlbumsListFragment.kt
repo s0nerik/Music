@@ -46,6 +46,11 @@ class AlbumsListFragment : BaseFragment(), SortableFragment {
         adapter = AlbumsAdapter(albums)
         recycler.adapter = adapter
 
+//        adapter.initializeListeners(FlexibleAdapter.OnItemClickListener {
+//            AlbumActivity.start(activity, albums[it].album)
+//            true
+//        })
+
         loadAlbums()
     }
 
