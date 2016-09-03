@@ -24,12 +24,15 @@
             android:layout_centerVertical="true"
             android:paddingTop="16dp"
             android:paddingBottom="16dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:layout_toRightOf="@+id/vuMeter"
+            android:layout_toLeftOf="@+id/duration"
             >
             <TextView
                 android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="16dp"
                 android:textColor="#000"
                 android:textSize="16sp"
                 android:gravity="center_vertical"
@@ -41,7 +44,6 @@
                 android:id="@+id/subtitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="16dp"
                 android:textColor="#666"
                 android:textSize="14sp"
                 android:text="@{song.artistNameForUi}"
@@ -72,16 +74,23 @@
             app:srcCompat="@drawable/ic_more_vert_black_24dp"
             />
 
-        <!--<es.claucookie.miniequalizerlibrary.EqualizerView-->
-        <!--android:id="@+id/playIcon"-->
-        <!--tools:visibility="visible"-->
-        <!--android:visibility="gone"-->
-        <!--android:layout_width="32dp"-->
-        <!--android:layout_height="32dp"-->
-        <!--android:layout_centerVertical="true"-->
-        <!--android:layout_marginLeft="16dp"-->
-        <!--app:foregroundColor="@android:color/black"-->
-        <!--app:animDuration="3500" />-->
+        <io.gresse.hugo.vumeterlibrary.VuMeterView
+            android:id="@+id/vuMeter"
+            android:layout_width='0dp'
+            android:layout_height='0dp'
+            android:layout_marginLeft="16dp"
+            android:layout_centerVertical="true"
+            android:visibility="gone"
+            app:squareSize="@{big ? @dimen/vumeter_size_big : @dimen/vumeter_size_small}"
+            app:vumeter_stopSize="2dp"
+            app:vumeter_speed="4"
+            app:vumeter_blockNumber="4"
+            app:vumeter_blockSpacing="1dp"
+            app:vumeter_startOff="false"
+            tools:visibility="visible"
+            tools:layout_width='24dp'
+            tools:layout_height='24dp'
+            />
 
     </RelativeLayout>
 </layout>

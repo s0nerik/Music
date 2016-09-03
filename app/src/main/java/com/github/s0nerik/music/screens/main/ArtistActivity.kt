@@ -42,6 +42,8 @@ class ArtistActivity : BaseBoundActivity<ActivityArtistBinding>() {
         songsRecycler.setHasFixedSize(true)
         songsRecycler.isNestedScrollingEnabled = false
         (songsRecycler.layoutManager as LinearLayoutManager).isAutoMeasureEnabled = true
+
+        songsAdapter.addSelection(0)
     }
 
     companion object {

@@ -47,6 +47,7 @@ class SongsListFragment : BaseBoundFragment<FragmentListSongsBinding>(), Sortabl
         adapter.mode = FlexibleAdapter.MODE_SINGLE
         adapter.initializeListeners(FlexibleAdapter.OnItemClickListener {
             player.setQueueAndPlay(filteredSongs.map { it.song }, it).subscribe()
+            adapter.toggleSelection(it)
             true
         })
 

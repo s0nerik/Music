@@ -10,7 +10,9 @@ import com.github.s0nerik.music.App
 import com.github.s0nerik.music.R
 import com.github.s0nerik.music.data.models.Song
 import com.github.s0nerik.music.databinding.ItemSongsBinding
+import com.github.s0nerik.music.ext.hide
 import com.github.s0nerik.music.ext.setAsRingtone
+import com.github.s0nerik.music.ext.show
 import com.github.s0nerik.music.players.LocalPlayer
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.viewholders.FlexibleViewHolder
@@ -44,11 +46,13 @@ class SongViewHolder(
     }
 
     fun updateSelectedState() {
-        //        if (mAdapter.isSelected(adapterPosition)) {
-        //            playIcon.show()
-        //        } else {
-        //            playIcon.hide()
-        //        }
+        with(binding) {
+            if (mAdapter.isSelected(adapterPosition)) {
+                vuMeter.show()
+            } else {
+                vuMeter.hide()
+            }
+        }
     }
 
     fun onContextMenuClicked() {
