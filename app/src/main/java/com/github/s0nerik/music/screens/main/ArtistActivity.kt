@@ -3,9 +3,7 @@ package com.github.s0nerik.music.screens.main
 import android.content.Context
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.LinearLayoutManager.HORIZONTAL
 import com.github.s0nerik.music.R
-import com.github.s0nerik.music.adapters.albums.AlbumsAdapter
 import com.github.s0nerik.music.adapters.albums.ArtistAlbumItem
 import com.github.s0nerik.music.adapters.albums.ArtistAlbumsAdapter
 import com.github.s0nerik.music.adapters.songs.SongItem
@@ -39,7 +37,7 @@ class ArtistActivity : BaseBoundActivity<ActivityArtistBinding>() {
         albumsRecycler.isNestedScrollingEnabled = false
 
         songsList.clear()
-        songsList += binding.artist.songs.toBlocking().first().map { SongItem(it) }
+        songsList += binding.artist.songs.toBlocking().first().map { SongItem(it, false) }
         songsRecycler.adapter = songsAdapter
         songsRecycler.setHasFixedSize(true)
         songsRecycler.isNestedScrollingEnabled = false

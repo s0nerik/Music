@@ -9,10 +9,11 @@ import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.items.IFilterable
 
 class SongItem(
-        val song: Song
+        val song: Song,
+        val big: Boolean = true
 ) : MediaStoreItem<SongViewHolder>(song.id), IFilterable {
     override fun createViewHolder(adapter: FlexibleAdapter<*>, inflater: LayoutInflater, parent: ViewGroup): SongViewHolder {
-        return SongViewHolder(inflater.inflate(R.layout.item_songs, parent, false), adapter)
+        return SongViewHolder(big, inflater, parent, adapter)
     }
 
     override fun bindViewHolder(adapter: FlexibleAdapter<*>, holder: SongViewHolder, position: Int, payloads: List<*>) {

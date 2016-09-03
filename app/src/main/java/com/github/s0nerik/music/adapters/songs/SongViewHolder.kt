@@ -1,27 +1,33 @@
 package com.github.s0nerik.music.adapters.songs
 
-import kotlinx.android.synthetic.main.item_songs.view.*
-
 import android.content.Context
 import android.databinding.DataBindingUtil
 import android.support.v7.view.ContextThemeWrapper
 import android.support.v7.widget.PopupMenu
-import android.view.View
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import com.github.s0nerik.music.App
 import com.github.s0nerik.music.R
-import com.github.s0nerik.music.commands.CRequestPlaySong
 import com.github.s0nerik.music.data.models.Song
 import com.github.s0nerik.music.databinding.ItemSongsBinding
 import com.github.s0nerik.music.ext.setAsRingtone
 import com.github.s0nerik.music.players.LocalPlayer
-import com.github.s0nerik.rxbus.RxBus
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.viewholders.FlexibleViewHolder
+import kotlinx.android.synthetic.main.item_songs.view.*
 import org.jetbrains.anko.onClick
 import org.jetbrains.anko.toast
 import javax.inject.Inject
 
-class SongViewHolder(view: View, adapter: FlexibleAdapter<*>) : FlexibleViewHolder(view, adapter) {
+class SongViewHolder(
+        val big: Boolean,
+        inflater: LayoutInflater,
+        parent: ViewGroup,
+        adapter: FlexibleAdapter<*>
+) : FlexibleViewHolder(
+        inflater.inflate(R.layout.item_songs, parent, false),
+        adapter
+) {
     @Inject
     lateinit var context: Context
     @Inject
@@ -31,7 +37,8 @@ class SongViewHolder(view: View, adapter: FlexibleAdapter<*>) : FlexibleViewHold
 
     init {
         App.comp.inject(this)
-        binding = DataBindingUtil.bind(view)
+        binding = DataBindingUtil.bind(itemView)
+        binding.big = big
         itemView.contextMenu.onClick { onContextMenuClicked() }
 //        itemView.container.onClick { onClicked() }
     }
