@@ -14,6 +14,10 @@
         android:layout_height="wrap_content"
         android:background="#d2d2d2"
         android:orientation="horizontal"
+        android:paddingLeft="1dp"
+        android:paddingRight="1dp"
+        android:paddingTop="1dp"
+        android:paddingBottom="1dp"
         tools:layout_width="180dp"
         tools:layout_height="180dp"
         >
