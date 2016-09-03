@@ -2,7 +2,6 @@ package com.github.s0nerik.music.screens.main
 
 import android.content.Context
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
 import com.github.s0nerik.music.R
 import com.github.s0nerik.music.adapters.songs.SongItem
 import com.github.s0nerik.music.adapters.songs.SongsListAdapter
