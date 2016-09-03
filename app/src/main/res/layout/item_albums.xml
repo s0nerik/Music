@@ -14,6 +14,8 @@
         android:layout_height="wrap_content"
         android:background="#d2d2d2"
         android:orientation="horizontal"
+        tools:layout_width="180dp"
+        tools:layout_height="180dp"
         >
 
         <com.github.s0nerik.music.ui.views.SquareWidthImageView
@@ -35,11 +37,13 @@
         <LinearLayout
             android:id="@+id/bottomBar"
             android:layout_width="match_parent"
-            android:layout_height="68dp"
+            android:layout_height="56dp"
             android:layout_alignBottom="@+id/cover"
             android:background="#aa000000"
-            android:gravity="bottom"
+            android:gravity="center_vertical"
             android:orientation="vertical"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
             >
 
             <TextView
@@ -47,18 +51,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="#ffffff"
-                tools:text="Title"
                 android:text="@{album.title}"
+                android:textSize="16sp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                tools:text="Title"
+                style="@style/Base.TextAppearance.AppCompat.SearchResult.Title"
                 />
 
             <TextView
                 android:id="@+id/subtitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
                 android:textColor="#fff"
-                tools:text="Subtitle"
                 android:text="@{album.artistName}"
+                android:textSize="12sp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                tools:text="Subtitle"
+                style="@style/Base.TextAppearance.AppCompat.SearchResult.Subtitle"
                 />
 
         </LinearLayout>
