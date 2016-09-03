@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+    <data>
+        <variable
+            name="album"
+            type="com.github.s0nerik.music.data.models.Album"
+            />
+    </data>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <ImageView
+            android:id="@+id/cover"
+            android:layout_width="108dp"
+            android:layout_height="108dp"
+            android:scaleType="centerCrop"
+            android:visibility="gone"
+            tools:src="@drawable/no_cover"
+            />
+
+        <ImageView
+            android:id="@+id/icAlbum"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_margin="8dp"
+            android:layout_toEndOf="@+id/cover"
+            android:scaleType="center"
+            android:src="@drawable/album"
+            />
+
+        <ImageView
+            android:id="@+id/icArtist"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_margin="8dp"
+            android:layout_toEndOf="@+id/cover"
+            android:layout_below="@+id/icAlbum"
+            android:scaleType="center"
+            android:src="@drawable/account"
+            />
+
+        <ImageView
+            android:id="@+id/icYear"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_margin="8dp"
+            android:layout_toEndOf="@+id/cover"
+            android:layout_below="@+id/icArtist"
+            android:scaleType="center"
+            android:src="@drawable/calendar"
+            />
+
+        <TextView
+            android:id="@+id/albumName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/icAlbum"
+            android:layout_alignBottom="@+id/icAlbum"
+            android:layout_toEndOf="@+id/icAlbum"
+            android:gravity="center_vertical"
+            android:textSize="14sp"
+            tools:text="All Hope Is Gone"
+            />
+        <TextView
+            android:id="@+id/artist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/icArtist"
+            android:layout_alignBottom="@+id/icArtist"
+            android:layout_toEndOf="@+id/icArtist"
+            android:gravity="center_vertical"
+            android:textSize="14sp"
+            tools:text="Slipknot"
+            />
+        <TextView
+            android:id="@+id/year"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/icYear"
+            android:layout_alignBottom="@+id/icYear"
+            android:layout_toEndOf="@+id/icYear"
+            android:gravity="center_vertical"
+            android:textSize="14sp"
+            tools:text="2010"
+            />
+
+    </RelativeLayout>
+</layout>
