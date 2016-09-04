@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="PlaybackSeekBar">
+        <!--<item name="android:progressDrawable">@drawable/apptheme_scrubber_progress_horizontal_holo_light</item>-->
+        <!--<item name="android:indeterminateDrawable">@drawable/apptheme_scrubber_progress_horizontal_holo_light</item>-->
+        <item name="android:minHeight">13dip</item>
+        <item name="android:maxHeight">13dip</item>
+        <!--<item name="android:thumb">@drawable/dummy_32dp</item>-->
+    </style>
+
+    <style name="PlaybackControlButton">
+        <item name="android:clipChildren">false</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="PlaybackControlButtonIcon">
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:tint">#fff</item>
+    </style>
+
+    <style name="PlaybackControlButtonBg">
+        <item name="android:layout_gravity">center</item>
+        <item name="android:background">?selectableItemBackgroundBorderless</item>
+        <item name="android:layout_width">72dp</item>
+        <item name="android:layout_height">72dp</item>
+    </style>
+
+    <style name="PlaybackToolbar" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:textColorPrimary">#fff</item>
+        <item name="colorControlNormal">#fff</item>
+        <item name="colorControlHighlight">#3fff</item>
+    </style>
+
+</resources>

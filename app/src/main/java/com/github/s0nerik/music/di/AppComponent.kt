@@ -5,6 +5,7 @@ import com.github.s0nerik.music.adapters.LocalMusicFragmentsAdapter
 import com.github.s0nerik.music.adapters.songs.SongViewHolder
 import com.github.s0nerik.music.data.helpers.CollectionManager
 import com.github.s0nerik.music.data.helpers.db.cursor_getters.CursorGetter
+import com.github.s0nerik.music.players.LocalPlayer
 import com.github.s0nerik.music.receivers.PendingIntentReceiver
 import com.github.s0nerik.music.screens.main.fragments.*
 import com.github.s0nerik.music.screens.splash.SplashActivity
@@ -42,4 +43,5 @@ interface AppComponent {
 
     fun getCollectionManager(): CollectionManager
     fun getResources(): Resources
+    fun getLocalPlayer(): LocalPlayer
 }

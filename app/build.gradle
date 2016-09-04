@@ -93,7 +93,7 @@ dependencies {
     compile 'com.facebook.rebound:rebound:0.3.8'
     compile 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.0'
     compile 'io.gresse.hugo.vumeterlibrary:vumeterlibrary:1.0.15'
-    compile 'com.github.500px:500px-android-blur:c8bc82cea7'
+    compile 'com.github.s0nerik:500px-android-blur:27db6fcc6b'
 
     // Image loading
     compile 'com.github.bumptech.glide:glide:3.6.1'

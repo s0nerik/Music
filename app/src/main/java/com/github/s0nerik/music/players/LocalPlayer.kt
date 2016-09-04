@@ -110,10 +110,10 @@ class LocalPlayer(
         context.startService(Intent(context, LocalPlayerService::class.java))
     }
 
-    val shuffle: Boolean
+    override var shuffle: Boolean = false
         get() = queue.shuffled
 
-    var repeat: Boolean = false
+    override var repeat: Boolean = false
         get
         set(flag) {
             field = flag

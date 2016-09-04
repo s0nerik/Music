@@ -1,5 +1,6 @@
 package com.github.s0nerik.music.data.models
 
+import android.content.ContentUris
 import android.database.Cursor
 import android.net.Uri
 import android.provider.BaseColumns._ID
@@ -40,6 +41,8 @@ data class Song(
             seconds -= minutes * 60
             return "$minutes:${String.format("%02d", seconds)}"
         }
+
+    val albumArtUri = ContentUris.withAppendedId(ARTWORK_URI, albumId)!!
 
     companion object {
         val SUPPORTED_MIME_TYPES: List<String> = arrayOf("mp3", "m4a", "mp4", "aac")

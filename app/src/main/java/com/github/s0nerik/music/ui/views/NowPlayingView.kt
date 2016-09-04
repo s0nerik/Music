@@ -13,8 +13,7 @@ import com.facebook.rebound.SpringSystem
 import com.github.s0nerik.music.R
 import com.github.s0nerik.music.data.models.Song
 import com.github.s0nerik.music.events.EPlaybackStateChanged
-import com.github.s0nerik.music.ext.albumArtUri
-import com.github.s0nerik.music.screens.main.MainActivity
+import com.github.s0nerik.music.screens.playback.PlaybackActivity
 import com.github.s0nerik.rxbus.RxBus
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
 import jp.wasabeef.glide.transformations.BlurTransformation
@@ -74,8 +73,8 @@ class NowPlayingView @JvmOverloads constructor(
 
         listOf(layout, cover).forEach {
             it.onClick {
-                with(context){ startActivity(intentFor<MainActivity>()) }
-//                with(context){ startActivity(intentFor<LocalPlaybackActivity>()) }
+//                with(context){ startActivity(intentFor<MainActivity>()) }
+                with(context){ startActivity(intentFor<PlaybackActivity>()) }
             }
         }
 

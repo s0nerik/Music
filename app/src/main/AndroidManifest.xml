@@ -59,6 +59,12 @@
             android:theme="@style/AppTheme.AlbumActivity"
             />
 
+        <activity
+            android:name=".screens.playback.PlaybackActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme"
+            />
+
     </application>
 
 </manifest>

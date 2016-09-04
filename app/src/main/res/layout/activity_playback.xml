@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+    <data>
+        <import type="com.github.s0nerik.music.ext.ModelExtensionsKt" />
+        <variable
+            name="song"
+            type="com.github.s0nerik.music.data.models.Song"
+            />
+    </data>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <ImageView
+            android:id="@+id/background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:src="@android:color/black"
+            app:coverSrc='@{song.albumArtUri}'
+            />
+
+        <com.fivehundredpx.android.blur.BlurringView
+            android:id="@+id/blurView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:blurRadius="12"
+            app:downsampleFactor="6"
+            app:overlayColor="#8000"
+            />
+
+        <FrameLayout
+            android:id="@+id/albumArtLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/toolbar"
+            android:layout_above="@+id/bottomBar"
+            android:padding="32dp"
+            >
+            <com.github.s0nerik.music.ui.views.SquareWidthImageView
+                android:id="@+id/cover"
+                android:src="@drawable/no_cover"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:layout_gravity="center"
+                android:elevation="8dp"
+                app:coverSrc='@{song.albumArtUri}'
+                />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/currentTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/bottomBar"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="10dp"
+            android:gravity="center"
+            android:padding="3dp"
+            android:shadowColor="#000000"
+
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="2"
+            android:textColor="@android:color/white"
+
+            tools:text="0:00"
+            />
+
+        <TextView
+            android:id="@+id/endTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/bottomBar"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:gravity="center"
+            android:padding="3dp"
+            android:shadowColor="#000000"
+
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="2"
+            android:text="@{song.durationString}"
+            android:textColor="@android:color/white"
+
+            tools:text="3:00"
+            />
+
+        <LinearLayout
+            android:id="@+id/bottomBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipChildren="false"
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical"
+            >
+
+            <SeekBar
+                android:id="@+id/seekBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:max="1000"
+                tools:progress="500"
+                style="@style/PlaybackSeekBar"
+                />
+
+            <include layout="@layout/part_playback_control_buttons" />
+
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone"
+            tools:visibility="visible"
+            />
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:title="@{song.title}"
+            app:subtitle="@{song.artistNameForUi}"
+            app:theme="@style/PlaybackToolbar"
+            />
+
+    </RelativeLayout>
+</layout>

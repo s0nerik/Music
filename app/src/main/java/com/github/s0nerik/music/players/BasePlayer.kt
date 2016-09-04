@@ -43,6 +43,9 @@ abstract class BasePlayer(
         }
     }
 
+    abstract var shuffle: Boolean
+    abstract var repeat: Boolean
+
     private var progressNotifierSubscription: Subscription? = null
 
     init {
