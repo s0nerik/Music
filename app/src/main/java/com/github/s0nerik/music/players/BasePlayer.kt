@@ -20,6 +20,7 @@ import com.google.android.exoplayer.upstream.DefaultAllocator
 import com.google.android.exoplayer.upstream.DefaultUriDataSource
 import org.jetbrains.anko.audioManager
 import rx.Observable
+import rx.Subscription
 import rx.android.schedulers.AndroidSchedulers
 import rx.subjects.BehaviorSubject
 import java.util.concurrent.TimeUnit
@@ -42,18 +43,25 @@ abstract class BasePlayer(
         }
     }
 
+    private var progressNotifierSubscription: Subscription? = null
+
     init {
         playerSubject.subscribe {
             when (it) {
                 RxExoPlayer.PlayerEvent.STARTED -> {
                     gainAudioFocus()
                     RxBus.post(EPlaybackStateChanged(EPlaybackStateChanged.Type.STARTED, currentSong!!, innerPlayer.currentPosition))
+                    progressNotifierSubscription = playbackProgress().subscribe {
+                        RxBus.post(EPlaybackStateChanged(EPlaybackStateChanged.Type.PROGRESS, currentSong!!, innerPlayer.currentPosition, innerPlayer.duration))
+                    }
                 }
                 RxExoPlayer.PlayerEvent.PAUSED -> {
+                    progressNotifierSubscription?.unsubscribe()
                     RxBus.post(EPlaybackStateChanged(EPlaybackStateChanged.Type.PAUSED, currentSong!!, innerPlayer.currentPosition))
                     abandonAudioFocus()
                 }
                 RxExoPlayer.PlayerEvent.ENDED, RxExoPlayer.PlayerEvent.IDLE -> {
+                    progressNotifierSubscription?.unsubscribe()
                     abandonAudioFocus()
                 }
                 else -> { }
@@ -84,6 +92,7 @@ abstract class BasePlayer(
 
     fun playbackProgress() =
             Observable.interval(NOTIFY_INTERVAL, TimeUnit.MILLISECONDS)
+                    .onBackpressureLatest()
                     .observeOn(AndroidSchedulers.mainThread())
                     .map { currentPosition }
 

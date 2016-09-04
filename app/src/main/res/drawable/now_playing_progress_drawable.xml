@@ -3,7 +3,7 @@
 
     <item android:id="@android:id/background">
         <shape>
-            <solid android:color="@color/now_playing_progress_bar_bg" />
+            <solid android:color="@color/nowPlayingProgressBarBg" />
         </shape>
     </item>
 
@@ -24,7 +24,7 @@
     <item android:id="@android:id/progress">
         <clip>
             <shape>
-                <solid android:color="@color/now_playing_progress_bar_color" />
+                <solid android:color="@color/nowPlayingProgressBarColor" />
             </shape>
         </clip>
     </item>

@@ -12,8 +12,11 @@ import com.facebook.rebound.SpringConfig
 import com.facebook.rebound.SpringSystem
 import com.github.s0nerik.music.R
 import com.github.s0nerik.music.data.models.Song
+import com.github.s0nerik.music.events.EPlaybackStateChanged
 import com.github.s0nerik.music.ext.albumArtUri
 import com.github.s0nerik.music.screens.main.MainActivity
+import com.github.s0nerik.rxbus.RxBus
+import com.trello.rxlifecycle.kotlin.bindToLifecycle
 import jp.wasabeef.glide.transformations.BlurTransformation
 import kotlinx.android.synthetic.main.fragment_now_playing.view.*
 import org.jetbrains.anko.intentFor
@@ -79,11 +82,15 @@ class NowPlayingView @JvmOverloads constructor(
 //        playbackFab.onClick { player.togglePause() }
     }
 
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        initEventHandlers()
+    }
+
     private fun initEventHandlers() {
-//        RxBus.on(ESongChanged).bindToLifecycle(this).subscribe(::onEvent)
-//        RxBus.on(PlaybackStartedEvent).bindToLifecycle(this).subscribe(::onEvent)
-//        RxBus.on(PlaybackPausedEvent).bindToLifecycle(this).subscribe(::onEvent)
-//        RxBus.on(EPlaybackProgress).bindToLifecycle(this).subscribe(::onEvent)
+        RxBus.on(EPlaybackStateChanged::class.java)
+                .bindToLifecycle(this)
+                .subscribe { onEvent(it) }
     }
 
     fun show(): Observable<Int> {
@@ -143,30 +150,20 @@ class NowPlayingView @JvmOverloads constructor(
         circleProgressShadow.alpha = scale
     }
 
-//    private fun onEvent(event: ESongChanged) {
-//        setSongInfo(event.song)
-//    }
-//
-//    private fun onEvent(e: PlaybackStartedEvent) {
-//        (playbackFab as ImageView).setImageResource(R.drawable.ic_pause_24dp)
-//
-//        //        radialEqualizerViewSubscription?.unsubscribe()
-//        //
-//        //        radialEqualizerViewSubscription = Observable.interval(200, TimeUnit.MILLISECONDS)
-//        //                .observeOn(AndroidSchedulers.mainThread())
-//        //                .subscribe {
-//        //            radialEqualizerView.randomize()
-//        //        }
-//    }
-//
-//    private fun onEvent(e: PlaybackPausedEvent) {
-//        (playbackFab as ImageView).setImageResource(R.drawable.ic_play_arrow_24dp)
-//
-//        radialEqualizerViewSubscription!!.unsubscribe()
-//    }
-//
-//    private fun onEvent(e: EPlaybackProgress) {
-//        setProgress(e.progressPercent)
-//    }
+    private fun onEvent(e: EPlaybackStateChanged) {
+        when(e.type) {
+            EPlaybackStateChanged.Type.STARTED -> {
+                song = e.song
+                playbackFab.setImageResource(R.drawable.ic_pause_24dp)
+            }
+            EPlaybackStateChanged.Type.PAUSED -> {
+                playbackFab.setImageResource(R.drawable.ic_play_arrow_black_24dp)
+            }
+            EPlaybackStateChanged.Type.PROGRESS -> {
+                progress = e.progressPercent
+            }
+            EPlaybackStateChanged.Type.STOPPED -> TODO()
+        }
+    }
 }
 

@@ -42,6 +42,10 @@ android {
     }
 
     defaultPublishConfig "debug"
+
+    configurations.all {
+        resolutionStrategy.force 'com.google.code.findbugs:jsr305:3.0.1'
+    }
 }
 
 dependencies {
@@ -89,7 +93,6 @@ dependencies {
     compile 'com.facebook.rebound:rebound:0.3.8'
     compile 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.0'
     compile 'io.gresse.hugo.vumeterlibrary:vumeterlibrary:1.0.15'
-//    compile 'com.eightbitlab:blurview:1.2.0'
     compile 'com.github.500px:500px-android-blur:c8bc82cea7'
 
     // Image loading
@@ -99,14 +102,15 @@ dependencies {
 
     // Rx
     compile 'io.reactivex:rxandroid:1.2.1'
-    compile 'io.reactivex:rxjava:1.1.6'
+    compile 'io.reactivex:rxjava:1.1.9'
     compile 'com.tbruyelle.rxpermissions:rxpermissions:0.7.0@aar'
     compile "com.jakewharton.rxbinding:rxbinding-recyclerview-v7:$rxbinding_version"
     compile "com.jakewharton.rxbinding:rxbinding-design:$rxbinding_version"
     compile "com.jakewharton.rxbinding:rxbinding-support-v4:$rxbinding_version"
-    compile 'com.trello:rxlifecycle:0.6.1'
-    compile 'com.trello:rxlifecycle-components:0.6.1'
-    compile 'com.trello:rxlifecycle-kotlin:0.6.1'
+    compile "com.trello:rxlifecycle:$rxlifecycle_version"
+    compile "com.trello:rxlifecycle-android:$rxlifecycle_version"
+    compile "com.trello:rxlifecycle-components:$rxlifecycle_version"
+    compile "com.trello:rxlifecycle-kotlin:$rxlifecycle_version"
     compile 'com.github.s0nerik:rxbus:1.0.0'
     compile 'com.github.s0nerik:rxlist:1.0.0'
     compile 'com.github.s0nerik:rxlist-binder:1.0.0'

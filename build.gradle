@@ -6,6 +6,7 @@ buildscript {
     ext.support_version = '24.2.0'
     ext.dagger_version = '2.5'
     ext.rxbinding_version = '0.4.0'
+    ext.rxlifecycle_version = '0.7.0'
 
     repositories {
         jcenter()
