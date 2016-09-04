@@ -8,7 +8,7 @@ import android.os.IBinder
 import com.github.s0nerik.music.App
 import com.github.s0nerik.music.commands.*
 import com.github.s0nerik.music.events.EControlButton
-import com.github.s0nerik.music.events.EPlaybackChanged
+import com.github.s0nerik.music.events.EPlaybackStateChanged
 import com.github.s0nerik.music.players.LocalPlayer
 import com.github.s0nerik.music.ui.notifications.NowPlayingNotification
 import com.github.s0nerik.rxbus.RxBus
@@ -49,7 +49,7 @@ class LocalPlayerService : Service() {
         RxBus.on(CPlaySongAtPosition::class.java).subscribe { onEvent(it) }
         RxBus.on(CEnqueue::class.java).subscribe { onEvent(it) }
         RxBus.on(EControlButton::class.java).subscribe { onEvent(it) }
-        RxBus.on(EPlaybackChanged::class.java).subscribe { onEvent(it) }
+        RxBus.on(EPlaybackStateChanged::class.java).subscribe { onEvent(it) }
 
 //        RxBus.post new CurrentSongAvailableEvent(player.currentSong)
     }
@@ -128,10 +128,10 @@ class LocalPlayerService : Service() {
 //        }
     }
 
-    private fun onEvent(e: EPlaybackChanged) {
-        if (e.type == EPlaybackChanged.Type.STARTED)
+    private fun onEvent(e: EPlaybackStateChanged) {
+        if (e.type == EPlaybackStateChanged.Type.STARTED)
             makeForeground(true)
-        else if (e.type == EPlaybackChanged.Type.PAUSED)
+        else if (e.type == EPlaybackStateChanged.Type.PAUSED)
             makeForeground(false)
     }
 

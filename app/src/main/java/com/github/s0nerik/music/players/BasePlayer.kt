@@ -5,7 +5,7 @@ import android.media.AudioManager
 import android.media.AudioManager.*
 import android.net.Uri
 import com.github.s0nerik.music.data.models.Song
-import com.github.s0nerik.music.events.EPlaybackChanged
+import com.github.s0nerik.music.events.EPlaybackStateChanged
 import com.github.s0nerik.music.ext.sourceUri
 import com.github.s0nerik.music.helpers.DelayMeasurer
 import com.github.s0nerik.rxbus.RxBus
@@ -47,10 +47,10 @@ abstract class BasePlayer(
             when (it) {
                 RxExoPlayer.PlayerEvent.STARTED -> {
                     gainAudioFocus()
-                    RxBus.post(EPlaybackChanged(EPlaybackChanged.Type.STARTED, currentSong!!, innerPlayer.currentPosition))
+                    RxBus.post(EPlaybackStateChanged(EPlaybackStateChanged.Type.STARTED, currentSong!!, innerPlayer.currentPosition))
                 }
                 RxExoPlayer.PlayerEvent.PAUSED -> {
-                    RxBus.post(EPlaybackChanged(EPlaybackChanged.Type.PAUSED, currentSong!!, innerPlayer.currentPosition))
+                    RxBus.post(EPlaybackStateChanged(EPlaybackStateChanged.Type.PAUSED, currentSong!!, innerPlayer.currentPosition))
                     abandonAudioFocus()
                 }
                 RxExoPlayer.PlayerEvent.ENDED, RxExoPlayer.PlayerEvent.IDLE -> {

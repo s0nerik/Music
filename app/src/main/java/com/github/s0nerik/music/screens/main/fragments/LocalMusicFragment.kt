@@ -3,13 +3,18 @@ package com.github.s0nerik.music.screens.main.fragments
 import android.animation.ValueAnimator
 import android.content.Intent
 import android.os.Bundle
+import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.Fragment
 import android.view.View
+import android.view.animation.Animation
+import android.view.animation.Transformation
+import android.widget.RelativeLayout
 import com.github.s0nerik.music.App
 import com.github.s0nerik.music.R
 import com.github.s0nerik.music.adapters.LocalMusicFragmentsAdapter
 import com.github.s0nerik.music.base.BaseBoundFragment
 import com.github.s0nerik.music.databinding.FragmentLocalMusicBinding
+import com.github.s0nerik.music.events.EPlaybackStateChanged
 import com.github.s0nerik.rxbus.RxBus
 import com.jakewharton.rxbinding.support.v4.view.RxViewPager
 import com.jakewharton.rxbinding.widget.RxTextView
@@ -58,6 +63,7 @@ class LocalMusicFragment : BaseBoundFragment<FragmentLocalMusicBinding>() {
     }
 
     private fun initEventHandlers() {
+        RxBus.on(EPlaybackStateChanged::class.java).bindToLifecycle(this).subscribe { onEvent(it) }
 //        RxBus.on(PlaybackPausedEvent).bindToLifecycle(this).subscribe(::onEvent)
 //        RxBus.on(EPlaybackProgress).bindToLifecycle(this).subscribe(::onEvent)
 //        RxBus.on(ChangeFabActionCommand).bindToLifecycle(this).subscribe(::onEvent)
@@ -153,15 +159,6 @@ class LocalMusicFragment : BaseBoundFragment<FragmentLocalMusicBinding>() {
 
 //    // region Event handlers
 //
-//    private fun onEvent(e: PlaybackPausedEvent) {
-//        radialEqualizerViewSubscription!!.unsubscribe()
-//    }
-//
-//    private fun onEvent(e: EPlaybackProgress) {
-//        //        radialEqualizerView.randomize()
-//        //        radialEqualizerView.value = (e.progress / (float) e.duration) * 100 as float
-//    }
-//
 //    private fun onEvent(c: ChangeFabActionCommand) {
 //        if (!canShowFab) return
 //
@@ -171,38 +168,34 @@ class LocalMusicFragment : BaseBoundFragment<FragmentLocalMusicBinding>() {
 //            fab.show()
 //        }
 //    }
-//
-//    private fun onEvent(e: PlaybackStartedEvent) {
-//        if (canShowFab) {
-//            fab.hide(object : FloatingActionButton.OnVisibilityChangedListener() {
-//                override fun onHidden(fab: FloatingActionButton?) {
-//                    nowPlayingFragment.show(childFragmentManager)
-//                            .subscribe {
-//                                with(binding) {
-//                                    val a = object : Animation() {
-//                                        override fun applyTransformation(interpolatedTime: Float, t: Transformation) {
-//                                            val params = coordinator.layoutParams as RelativeLayout.LayoutParams
-//                                            params.bottomMargin = (it * interpolatedTime).toInt()
-//                                            coordinator.layoutParams = params
-//                                        }
-//                                    }
-//
-//                                    a.duration = 150
-//                                    coordinator.startAnimation(a)
-//                                }
-//                            }
-//
-//                }
-//            })
-//            canShowFab = false
-//        }
-//    }
-//
-//    private fun onEvent(event: ShouldStartArtistInfoActivity) {
-//        val intent = Intent(activity, ArtistInfoActivity)
-//        intent.putExtra("artist", event.artist)
-//        startActivity(intent)
-//    }
-//
+
+    private fun onEvent(e: EPlaybackStateChanged) {
+        if (e.type == EPlaybackStateChanged.Type.STARTED) {
+            if (canShowFab) {
+                fab.hide(object : FloatingActionButton.OnVisibilityChangedListener() {
+                    override fun onHidden(fab: FloatingActionButton?) {
+                        nowPlayingView.show()
+                                .subscribe {
+                                    with(binding) {
+                                        val a = object : Animation() {
+                                            override fun applyTransformation(interpolatedTime: Float, t: Transformation) {
+                                                val params = coordinator.layoutParams as RelativeLayout.LayoutParams
+                                                params.bottomMargin = (it * interpolatedTime).toInt()
+                                                coordinator.layoutParams = params
+                                            }
+                                        }
+
+                                        a.duration = 150
+                                        coordinator.startAnimation(a)
+                                    }
+                                }
+
+                    }
+                })
+                canShowFab = false
+            }
+        }
+    }
+
 //    // endregion
 }

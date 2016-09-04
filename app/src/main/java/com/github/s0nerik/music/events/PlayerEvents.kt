@@ -2,7 +2,7 @@ package com.github.s0nerik.music.events
 
 import com.github.s0nerik.music.data.models.Song
 
-class EPlaybackChanged(
+class EPlaybackStateChanged(
         val type: Type,
         val song: Song,
         val time: Long
