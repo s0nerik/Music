@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import butterknife.ButterKnife
 import com.trello.rxlifecycle.components.support.RxFragment
 
 abstract class BaseFragment : RxFragment() {
@@ -14,7 +13,7 @@ abstract class BaseFragment : RxFragment() {
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view = inflater!!.inflate(layoutId, container, false)
-        ButterKnife.bind(this, view)
+//        ButterKnife.bind(this, view)
         return view
     }
 }

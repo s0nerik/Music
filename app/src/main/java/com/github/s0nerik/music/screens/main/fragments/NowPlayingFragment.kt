@@ -4,7 +4,6 @@ import android.graphics.Rect
 import android.os.Bundle
 import android.support.v4.app.FragmentManager
 import android.view.View
-import butterknife.OnClick
 import com.bumptech.glide.Glide
 import com.facebook.rebound.SimpleSpringListener
 import com.facebook.rebound.Spring
@@ -15,7 +14,6 @@ import com.github.s0nerik.music.R
 import com.github.s0nerik.music.base.BaseBoundFragment
 import com.github.s0nerik.music.data.models.Song
 import com.github.s0nerik.music.databinding.FragmentNowPlayingBinding
-import com.github.s0nerik.music.ext.albumArtUri
 import com.github.s0nerik.music.ext.hide
 import com.github.s0nerik.music.ext.show
 import jp.wasabeef.glide.transformations.BlurTransformation
@@ -124,17 +122,17 @@ class NowPlayingFragment : BaseBoundFragment<FragmentNowPlayingBinding>() {
         title.text = song.title
     }
 
-    @OnClick(R.id.layout, R.id.cover)
-    fun onLayoutClicked() {
+//    @OnClick(R.id.layout, R.id.cover)
+//    fun onLayoutClicked() {
 //        val intent = Intent(activity, LocalPlaybackActivity)
 //        startActivity(intent)
 //        activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left_long_alpha)
-    }
+//    }
 
-    @OnClick(R.id.playbackFab)
-    fun onFabClicked() {
+//    @OnClick(R.id.playbackFab)
+//    fun onFabClicked() {
 //        player!!.invokeMethod("togglePause", arrayOfNulls<Any>(0))
-    }
+//    }
 
 //    private fun onEvent(event: ESongChanged) {
 //        setSongInfo(event.song)
