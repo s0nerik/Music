@@ -41,6 +41,11 @@ android {
         enabled = true
     }
 
+    dexOptions {
+        dexInProcess = true
+        preDexLibraries = true
+    }
+
     defaultPublishConfig "debug"
 
     configurations.all {
