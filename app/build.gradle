@@ -91,8 +91,6 @@ dependencies {
 
     // UI
     compile 'eu.davidea:flexible-adapter:5.0.0-b7'
-    compile 'com.jakewharton:butterknife:8.2.1'
-    kapt 'com.jakewharton:butterknife-compiler:8.2.1'
     compile 'com.github.renaudcerrato:ToggleDrawable:1.0.2'
     compile 'com.github.rahatarmanahmed:circularprogressview:2.5.0'
     compile 'com.facebook.rebound:rebound:0.3.8'

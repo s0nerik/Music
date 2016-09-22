@@ -35,25 +35,17 @@
             app:overlayColor="#8000"
             />
 
-        <FrameLayout
-            android:id="@+id/albumArtLayout"
+        <android.support.v4.view.ViewPager
+            android:id="@+id/songsViewPager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/toolbar"
-            android:layout_above="@+id/bottomBar"
-            android:padding="32dp"
-            >
-            <com.github.s0nerik.music.ui.views.SquareWidthImageView
-                android:id="@+id/cover"
-                android:src="@drawable/no_cover"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:layout_gravity="center"
-                android:elevation="8dp"
-                app:coverSrc='@{song.albumArtUri}'
-                />
-        </FrameLayout>
+            android:clipToPadding="false"
+            android:overScrollMode="never"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:paddingLeft="48dp"
+            android:paddingRight="48dp"
+            />
 
         <TextView
             android:id="@+id/currentTime"

@@ -106,6 +106,14 @@ class LocalPlayer(
                 .concatMap { prepare(it) }
     }
 
+    fun playNextSong(): Observable<*> {
+        return prepareNextSong().concatMap { start() }
+    }
+
+    fun playPrevSong(): Observable<*> {
+        return preparePrevSong().concatMap { start() }
+    }
+
     override fun startService(context: Context) {
         context.startService(Intent(context, LocalPlayerService::class.java))
     }
