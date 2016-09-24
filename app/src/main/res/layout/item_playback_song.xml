@@ -31,7 +31,7 @@
                     android:id="@+id/cover"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    app:coverSrc='@{song.albumArtUri}'
+                    app:glideImageSrc='@{song.albumArtUri}'
                     android:src="@drawable/no_cover"
                     />
 

@@ -28,7 +28,7 @@
             android:layout_height="0dp"
             android:scaleType="centerCrop"
             tools:src="@drawable/no_cover"
-            app:coverSrc='@{"file://"+album.albumArtPath}'
+            app:glideImageSrc='@{"file://"+album.albumArtPath}'
             />
 
         <View

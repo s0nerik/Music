@@ -23,7 +23,8 @@
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
             android:src="@android:color/black"
-            app:coverSrc='@{song.albumArtUri}'
+            app:glideImageSrc='@{song.albumArtUri}'
+            app:glideConfig='@{"playbackBg"}'
             />
 
         <com.fivehundredpx.android.blur.BlurringView
