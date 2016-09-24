@@ -35,7 +35,7 @@
             app:overlayColor="#8000"
             />
 
-        <android.support.v4.view.ViewPager
+        <com.github.s0nerik.music.ui.views.FixedTransformerViewPager
             android:id="@+id/songsViewPager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
