@@ -2,10 +2,10 @@ package com.github.s0nerik.music
 
 import android.app.Application
 import com.chibatching.kotpref.Kotpref
+import com.github.s0nerik.glide_bindingadapter.GlideBindingConfig
 import com.github.s0nerik.music.di.AppComponent
 import com.github.s0nerik.music.di.AppModule
 import com.github.s0nerik.music.di.DaggerAppComponent
-import com.github.s0nerik.music.glide_bindingadapter.GlideBindingConfig
 import ru.noties.debug.Debug
 
 class App : Application() {
