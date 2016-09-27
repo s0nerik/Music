@@ -28,15 +28,15 @@ class App : Application() {
     }
 
     private fun registerGlideConfigs() {
-        GlideBindingConfig.registerProvider("playbackBg", {
-            it.centerCrop()
+        GlideBindingConfig.registerProvider("playbackBg", { iv, request ->
+            request.centerCrop()
                     .placeholder(R.color.md_black_1000)
                     .error(R.drawable.no_cover)
                     .skipMemoryCache(true)
         })
 
-        GlideBindingConfig.registerProvider("song", {
-            it.centerCrop()
+        GlideBindingConfig.registerProvider("song", { iv, request ->
+            request.centerCrop()
                     .placeholder(R.color.md_black_1000)
                     .error(R.drawable.no_cover)
         })
