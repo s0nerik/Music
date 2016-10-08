@@ -28,12 +28,14 @@ class App : Application() {
     }
 
     private fun registerGlideConfigs() {
-        GlideBindingConfig.registerProvider("playbackBg", { iv, request ->
-            request.centerCrop()
-                    .placeholder(R.color.md_black_1000)
-                    .error(R.drawable.no_cover)
-                    .skipMemoryCache(true)
-        })
+//        GlideBindingConfig.registerProvider("playbackBg", { iv, request ->
+//            val old = iv.drawable
+//            request.asBitmap().centerCrop()
+////                    .skipMemoryCache(true)
+//                    .placeholder(old ?: ColorDrawable(ContextCompat.getColor(this, R.color.md_black_1000)))
+//                    .error(R.drawable.no_cover)
+//                    .crossFade(2500)
+//        })
 
         GlideBindingConfig.registerProvider("song", { iv, request ->
             request.centerCrop()

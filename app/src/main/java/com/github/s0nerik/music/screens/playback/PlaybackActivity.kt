@@ -1,10 +1,21 @@
 package com.github.s0nerik.music.screens.playback
 
+import android.databinding.BindingAdapter
+import android.graphics.Bitmap
 import android.graphics.Color
+import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
 import android.graphics.drawable.TransitionDrawable
+import android.net.Uri
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.support.v4.view.ViewPager
+import android.view.ViewTreeObserver
+import android.widget.ImageView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.animation.GlideAnimation
+import com.bumptech.glide.request.target.BitmapImageViewTarget
 import com.github.s0nerik.music.App
 import com.github.s0nerik.music.R
 import com.github.s0nerik.music.adapters.playback_songs.PlaybackSongItem
@@ -23,6 +34,7 @@ import kotlinx.android.synthetic.main.activity_playback.*
 import kotlinx.android.synthetic.main.part_playback_control_buttons.*
 import org.jetbrains.anko.dip
 import org.jetbrains.anko.onClick
+import ru.noties.debug.Debug
 import rx.Observable
 import java.util.concurrent.TimeUnit
 
@@ -135,4 +147,39 @@ class PlaybackActivity : BaseBoundActivity<ActivityPlaybackBinding>() {
             EPlaybackStateChanged.Type.STOPPED -> TODO()
         }
     }
+}
+
+@BindingAdapter("bind:playbackBgUri")
+fun setPlaybackBgUri(iv: ImageView, uri: Uri) {
+    Debug.d("setPlaybackBgUri: $uri")
+    var previousDrawable: Drawable = ColorDrawable(ContextCompat.getColor(iv.context, R.color.md_black_1000))
+    if (iv.drawable is TransitionDrawable) {
+        previousDrawable = (iv.drawable as TransitionDrawable).getDrawable(1)
+    }
+    Glide.with(iv.context)
+            .load(uri)
+            .asBitmap()
+            .placeholder(previousDrawable)
+            .dontAnimate()
+//            .skipMemoryCache(true)
+            .into(object : BitmapImageViewTarget(iv) {
+                override fun setResource(resource: Bitmap?) {
+                    val newDrawable =
+                            if (resource != null)
+                                BitmapDrawable(iv.context.resources, resource)
+                            else
+                                ColorDrawable(ContextCompat.getColor(iv.context, R.color.md_black_1000))
+
+                    val newTransitionDrawable = TransitionDrawable(arrayOf(previousDrawable, newDrawable))
+//                    newTransitionDrawable.isCrossFadeEnabled = true
+                    iv.setImageDrawable(newTransitionDrawable)
+                    iv.viewTreeObserver.addOnPreDrawListener(object: ViewTreeObserver.OnPreDrawListener {
+                        override fun onPreDraw(): Boolean {
+                            iv.viewTreeObserver.removeOnPreDrawListener(this)
+                            newTransitionDrawable.startTransition(500)
+                            return true
+                        }
+                    })
+                }
+            })
 }
