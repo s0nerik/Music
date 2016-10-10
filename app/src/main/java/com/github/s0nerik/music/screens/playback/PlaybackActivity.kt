@@ -31,7 +31,6 @@ import com.github.s0nerik.rxbus.RxBus
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
 import kotlinx.android.synthetic.main.activity_playback.*
 import kotlinx.android.synthetic.main.part_playback_control_buttons.*
-import org.jetbrains.anko.dip
 import org.jetbrains.anko.onClick
 import ru.noties.debug.Debug
 import rx.Observable
@@ -51,6 +50,9 @@ class PlaybackActivity : BaseBoundActivity<ActivityPlaybackBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         player = App.comp.getLocalPlayer()
+        @Suppress("MISSING_DEPENDENCY_CLASS")
+        binding.player = player
+
         if (savedInstanceState == null) {
             val blackDrawables = arrayOf(ColorDrawable(Color.BLACK), ColorDrawable(Color.BLACK))
 
@@ -61,15 +63,10 @@ class PlaybackActivity : BaseBoundActivity<ActivityPlaybackBinding>() {
             bgDrawable.isCrossFadeEnabled = true
         }
 
-        songItems.clear()
-        songItems.addAll(player.queue.queue.map(::PlaybackSongItem))
-        songsAdapter.notifyDataSetChanged()
+        updateSongsList()
 
         songsViewPager.adapter = songsAdapter
-        songsViewPager.pageMargin = dip(0)
-        songsViewPager.offscreenPageLimit = 2
         songsViewPager.setPageTransformer(false, PlaybackSongsPageTransformer())
-        songsViewPager.currentItem = player.queue.currentIndex
         songsViewPager.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
             override fun onPageSelected(position: Int) {
                 if (player.queue.currentIndex != position) {
@@ -83,8 +80,17 @@ class PlaybackActivity : BaseBoundActivity<ActivityPlaybackBinding>() {
         btnNext.onClick { player.playNextSong().subscribe() }
         btnPrev.onClick { player.playPrevSong().subscribe() }
         btnPlayPause.onClick { player.togglePause().subscribe() }
-        btnShuffle.onClick { player.queue.shuffle(true) }
+        btnShuffle.onClick {
+            player.queue.shuffle(true)
+            updateSongsList()
+        }
         btnRepeat.onClick { player.repeat = !player.repeat }
+    }
+
+    private fun updateSongsList() {
+        songItems.clear()
+        songItems.addAll(player.queue.queue.map(::PlaybackSongItem))
+        songsAdapter.notifyDataSetChanged()
     }
 
     override fun onResume() {
@@ -103,8 +109,6 @@ class PlaybackActivity : BaseBoundActivity<ActivityPlaybackBinding>() {
     fun setSongInfo(song: Song) {
         @Suppress("MISSING_DEPENDENCY_CLASS")
         binding.song = song
-
-        songsViewPager.setCurrentItem(player.queue.currentIndex, true)
 
         Observable.interval(16, TimeUnit.MILLISECONDS)
                 .take(3, TimeUnit.SECONDS)

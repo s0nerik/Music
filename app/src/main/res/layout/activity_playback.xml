@@ -10,6 +10,10 @@
             name="song"
             type="com.github.s0nerik.music.data.models.Song"
             />
+        <variable
+            name="player"
+            type="com.github.s0nerik.music.players.LocalPlayer"
+            />
     </data>
     <RelativeLayout
         android:layout_width="match_parent"
@@ -44,6 +48,8 @@
             android:paddingBottom="16dp"
             android:paddingLeft="48dp"
             android:paddingRight="48dp"
+            app:offscreenPageLimit='@{2}'
+            app:currentItem='@{player.getQueue().observableCurrentIndex}'
             />
 
         <TextView

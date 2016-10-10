@@ -25,4 +25,7 @@ class PlaybackSongsListAdapter(
         return binding.root
     }
 
+    override fun getItemPosition(`object`: Any?): Int {
+        return POSITION_NONE
+    }
 }

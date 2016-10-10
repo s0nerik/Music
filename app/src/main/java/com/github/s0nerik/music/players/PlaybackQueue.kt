@@ -1,16 +1,21 @@
 package com.github.s0nerik.music.players
 
+import android.databinding.ObservableField
 import com.github.s0nerik.music.data.models.Song
 import com.github.s0nerik.music.events.EQueueChanged
 import com.github.s0nerik.music.ext.shuffle
 import com.github.s0nerik.music.helpers.Stack
-import com.github.s0nerik.rxbus.RxBus
 import ru.noties.debug.Debug
 import rx.Observable
+import rx.subjects.PublishSubject
+import kotlin.properties.Delegates
 
 class PlaybackQueue(
         val queue: MutableList<Song> = mutableListOf<Song>()
 ) : Collection<Song> {
+    private val eventsSubject = PublishSubject.create<EQueueChanged>().toSerialized()
+    val events: Observable<EQueueChanged> = eventsSubject
+
     override fun contains(element: Song) = queue.contains(element)
     override fun containsAll(elements: Collection<Song>) = queue.containsAll(elements)
     override fun isEmpty() = queue.isEmpty()
@@ -21,9 +26,10 @@ class PlaybackQueue(
     // Needed only for proper shuffling
     private val played = Stack<Song>()
 
-    var currentIndex = -1
-        get
-        private set
+    val observableCurrentIndex = ObservableField(-1)
+    var currentIndex: Int by Delegates.observable(-1, { kProperty, old, new ->
+        observableCurrentIndex.set(new)
+    })
 
     val currentSong: Song?
         get() = queue.getOrNull(currentIndex)
@@ -34,28 +40,28 @@ class PlaybackQueue(
 
     fun add(vararg songs: Song) {
         queue += songs
-        RxBus.post(EQueueChanged(EQueueChanged.Type.SONGS_ADDED, songs.asList()))
+        eventsSubject.onNext(EQueueChanged(EQueueChanged.Type.SONGS_ADDED, songs.asList()))
     }
 
     fun add(pos: Int, vararg songs: Song) {
         queue.addAll(pos, songs.asList())
-        RxBus.post(EQueueChanged(EQueueChanged.Type.SONGS_ADDED, songs.asList()))
+        eventsSubject.onNext(EQueueChanged(EQueueChanged.Type.SONGS_ADDED, songs.asList()))
     }
 
     fun addAll(songs: Collection<Song>) {
         queue += songs
-        RxBus.post(EQueueChanged(EQueueChanged.Type.SONGS_ADDED, songs.toList()))
+        eventsSubject.onNext(EQueueChanged(EQueueChanged.Type.SONGS_ADDED, songs.toList()))
     }
 
     fun remove(vararg songs: Song) {
         queue -= songs
-        RxBus.post(EQueueChanged(EQueueChanged.Type.SONGS_REMOVED, songs.toList()))
+        eventsSubject.onNext(EQueueChanged(EQueueChanged.Type.SONGS_REMOVED, songs.toList()))
     }
 
     fun clear() {
         currentIndex = -1
         queue.clear()
-        RxBus.post(EQueueChanged(EQueueChanged.Type.CLEARED))
+        eventsSubject.onNext(EQueueChanged(EQueueChanged.Type.CLEARED))
     }
 
     fun shuffle(exceptPlayed: Boolean = false) {
@@ -76,7 +82,7 @@ class PlaybackQueue(
         }
 
         shuffled = true
-        RxBus.post(EQueueChanged(EQueueChanged.Type.SHUFFLED, queue))
+        eventsSubject.onNext(EQueueChanged(EQueueChanged.Type.SHUFFLED, queue))
     }
 
     /**
