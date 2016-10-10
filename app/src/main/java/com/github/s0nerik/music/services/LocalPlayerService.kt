@@ -12,6 +12,7 @@ import com.github.s0nerik.music.events.EPlaybackStateChanged
 import com.github.s0nerik.music.players.LocalPlayer
 import com.github.s0nerik.music.ui.notifications.NowPlayingNotification
 import com.github.s0nerik.rxbus.RxBus
+import ru.noties.debug.Debug
 import rx.subscriptions.CompositeSubscription
 import javax.inject.Inject
 
@@ -69,7 +70,7 @@ class LocalPlayerService : Service() {
 
     // region Event handlers
     private fun onEvent(cmd: CChangePauseState) {
-//        player.setPaused(cmd.pause).subscribe()
+        player.setPaused(cmd.pause).subscribe()
         //        Observable observable
         //
         //        if (server.started)
@@ -90,9 +91,9 @@ class LocalPlayerService : Service() {
     }
 
     private fun onEvent(cmd: CSeekTo) {
-//        player.seekTo(cmd.position).subscribe {
-//            Debug.d("Player sought to: $it")
-//        }
+        player.seekTo(cmd.position).subscribe {
+            Debug.d("Player sought to: $it")
+        }
     }
 
     private fun onEvent(cmd: CSetQueueAndPlay) {
@@ -100,19 +101,22 @@ class LocalPlayerService : Service() {
         player.queue.addAll(cmd.queue)
         if (cmd.shuffle) player.queue.shuffle()
 
-//        Observable.concat(player.prepare(cmd.position), player.start())
-//                .subscribe { Debug.d("LocalPlayer prepared and started playback") }
+        player.prepare(cmd.position)
+                .flatMap { player.start() }
+                .subscribe { Debug.d("LocalPlayer prepared and started playback") }
     }
 
     private fun onEvent(cmd: CPlaySongAtPosition) {
-//        val prepare = when (cmd.positionType) {
-//            CPlaySongAtPosition.PositionType.NEXT -> player.prepareNextSong()
-//            CPlaySongAtPosition.PositionType.PREVIOUS -> player.preparePrevSong()
-//            CPlaySongAtPosition.PositionType.EXACT -> player.prepare(cmd.position)
-//        }
-//
-//        prepare.concatMap { player.start() }
-//                .subscribe()
+        val prepare = when (cmd.positionType) {
+            CPlaySongAtPosition.PositionType.NEXT -> player.prepareNextSong()
+            CPlaySongAtPosition.PositionType.PREVIOUS -> player.preparePrevSong()
+            CPlaySongAtPosition.PositionType.EXACT -> player.prepare(cmd.position)
+        }
+
+        player.reset()
+                .flatMap { prepare }
+                .concatMap { player.start() }
+                .subscribe()
     }
 
     private fun onEvent(cmd: CEnqueue) {

@@ -71,12 +71,15 @@ abstract class BasePlayer(
             }
         }
 
+        playerSubject.filter { it == PlayerEvent.PREPARING }
+                .take(1)
+                .subscribe { startService(context) }
+
 //        errorSubject.subscribe {
 //            Debug.e(it)
 //            abandonAudioFocus()
 //        }
 
-        startService(context)
     }
 
     abstract fun startService(context: Context)

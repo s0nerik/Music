@@ -30,6 +30,8 @@
         android:screenOrientation="portrait"
         >
 
+        <service android:name=".services.LocalPlayerService" />
+
         <activity
             android:name=".screens.splash.SplashActivity"
             android:label="@string/app_name"

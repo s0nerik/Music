@@ -14,13 +14,14 @@ import android.support.v4.view.ViewPager
 import android.view.ViewTreeObserver
 import android.widget.ImageView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.animation.GlideAnimation
 import com.bumptech.glide.request.target.BitmapImageViewTarget
 import com.github.s0nerik.music.App
 import com.github.s0nerik.music.R
 import com.github.s0nerik.music.adapters.playback_songs.PlaybackSongItem
 import com.github.s0nerik.music.adapters.playback_songs.PlaybackSongsListAdapter
 import com.github.s0nerik.music.base.BaseBoundActivity
+import com.github.s0nerik.music.commands.CChangePauseState
+import com.github.s0nerik.music.commands.CPlaySongAtPosition
 import com.github.s0nerik.music.data.models.Song
 import com.github.s0nerik.music.databinding.ActivityPlaybackBinding
 import com.github.s0nerik.music.events.EPlaybackStateChanged
@@ -70,17 +71,27 @@ class PlaybackActivity : BaseBoundActivity<ActivityPlaybackBinding>() {
         songsViewPager.pageMargin = dip(0)
         songsViewPager.offscreenPageLimit = 2
         songsViewPager.setPageTransformer(false, PlaybackSongsPageTransformer())
+        songsViewPager.currentItem = player.queue.currentIndex
         songsViewPager.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
+            private var lastPosition = 0
             override fun onPageSelected(position: Int) {
-                setSongInfo(songItems[position].song)
+                val diff = position - lastPosition
+                if (diff > 0) {
+                    RxBus.post(CPlaySongAtPosition(CPlaySongAtPosition.PositionType.NEXT))
+                } else if (diff < 0) {
+                    RxBus.post(CPlaySongAtPosition(CPlaySongAtPosition.PositionType.PREVIOUS))
+                } else if (diff != 0) {
+                    RxBus.post(CPlaySongAtPosition(CPlaySongAtPosition.PositionType.EXACT, position))
+                }
+                lastPosition = position
             }
         })
 
         blurView.setBlurredView(background)
 
-        btnNext.onClick { player.playNextSong().subscribe() }
-        btnPrev.onClick { player.playPrevSong().subscribe() }
-        btnPlayPause.onClick { player.togglePause().subscribe() }
+        btnNext.onClick { RxBus.post(CPlaySongAtPosition(CPlaySongAtPosition.PositionType.NEXT)) }
+        btnPrev.onClick { RxBus.post(CPlaySongAtPosition(CPlaySongAtPosition.PositionType.PREVIOUS)) }
+        btnPlayPause.onClick { RxBus.post(CChangePauseState(!player.isPaused)) }
         btnShuffle.onClick { player.queue.shuffle(true) }
         btnRepeat.onClick { player.repeat = !player.repeat }
     }
