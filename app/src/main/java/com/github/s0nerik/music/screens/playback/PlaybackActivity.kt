@@ -20,8 +20,6 @@ import com.github.s0nerik.music.R
 import com.github.s0nerik.music.adapters.playback_songs.PlaybackSongItem
 import com.github.s0nerik.music.adapters.playback_songs.PlaybackSongsListAdapter
 import com.github.s0nerik.music.base.BaseBoundActivity
-import com.github.s0nerik.music.commands.CChangePauseState
-import com.github.s0nerik.music.commands.CPlaySongAtPosition
 import com.github.s0nerik.music.data.models.Song
 import com.github.s0nerik.music.databinding.ActivityPlaybackBinding
 import com.github.s0nerik.music.events.EPlaybackStateChanged
@@ -73,25 +71,18 @@ class PlaybackActivity : BaseBoundActivity<ActivityPlaybackBinding>() {
         songsViewPager.setPageTransformer(false, PlaybackSongsPageTransformer())
         songsViewPager.currentItem = player.queue.currentIndex
         songsViewPager.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
-            private var lastPosition = 0
             override fun onPageSelected(position: Int) {
-                val diff = position - lastPosition
-                if (diff > 0) {
-                    RxBus.post(CPlaySongAtPosition(CPlaySongAtPosition.PositionType.NEXT))
-                } else if (diff < 0) {
-                    RxBus.post(CPlaySongAtPosition(CPlaySongAtPosition.PositionType.PREVIOUS))
-                } else if (diff != 0) {
-                    RxBus.post(CPlaySongAtPosition(CPlaySongAtPosition.PositionType.EXACT, position))
+                if (player.queue.currentIndex != position) {
+                    player.playSong(position).subscribe()
                 }
-                lastPosition = position
             }
         })
 
         blurView.setBlurredView(background)
 
-        btnNext.onClick { RxBus.post(CPlaySongAtPosition(CPlaySongAtPosition.PositionType.NEXT)) }
-        btnPrev.onClick { RxBus.post(CPlaySongAtPosition(CPlaySongAtPosition.PositionType.PREVIOUS)) }
-        btnPlayPause.onClick { RxBus.post(CChangePauseState(!player.isPaused)) }
+        btnNext.onClick { player.playNextSong().subscribe() }
+        btnPrev.onClick { player.playPrevSong().subscribe() }
+        btnPlayPause.onClick { player.togglePause().subscribe() }
         btnShuffle.onClick { player.queue.shuffle(true) }
         btnRepeat.onClick { player.repeat = !player.repeat }
     }
@@ -112,6 +103,9 @@ class PlaybackActivity : BaseBoundActivity<ActivityPlaybackBinding>() {
     fun setSongInfo(song: Song) {
         @Suppress("MISSING_DEPENDENCY_CLASS")
         binding.song = song
+
+        songsViewPager.setCurrentItem(player.queue.currentIndex, true)
+
         Observable.interval(16, TimeUnit.MILLISECONDS)
                 .take(3, TimeUnit.SECONDS)
                 .observeOnMainThread()

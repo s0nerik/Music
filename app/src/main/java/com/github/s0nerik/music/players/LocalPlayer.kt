@@ -106,12 +106,28 @@ class LocalPlayer(
                 .concatMap { prepare(it) }
     }
 
+    fun playSong(song: Song): Observable<*> {
+        return reset()
+                .flatMap { prepare(queue.indexOf(song)) }
+                .flatMap { start() }
+    }
+
+    fun playSong(index: Int): Observable<*> {
+        return reset()
+                .flatMap { prepare(index) }
+                .flatMap { start() }
+    }
+
     fun playNextSong(): Observable<*> {
-        return prepareNextSong().concatMap { start() }
+        return reset()
+                .flatMap { prepareNextSong() }
+                .flatMap { start() }
     }
 
     fun playPrevSong(): Observable<*> {
-        return preparePrevSong().concatMap { start() }
+        return reset()
+                .flatMap { preparePrevSong() }
+                .flatMap { start() }
     }
 
     override fun startService(context: Context) {
