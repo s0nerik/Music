@@ -14,6 +14,10 @@
             name="player"
             type="com.github.s0nerik.music.players.LocalPlayer"
             />
+        <variable
+            name="playerController"
+            type="com.github.s0nerik.music.players.PlayerController"
+            />
     </data>
     <RelativeLayout
         android:layout_width="match_parent"
@@ -109,7 +113,10 @@
                 style="@style/PlaybackSeekBar"
                 />
 
-            <include layout="@layout/part_playback_control_buttons" />
+            <include
+                layout="@layout/part_playback_control_buttons"
+                app:playerController="@{playerController}"
+                />
 
         </LinearLayout>
 

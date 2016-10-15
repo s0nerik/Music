@@ -25,12 +25,12 @@ import com.github.s0nerik.music.events.EPlaybackStateChanged
 import com.github.s0nerik.music.ext.currentPositionInMinutes
 import com.github.s0nerik.music.ext.observeOnMainThread
 import com.github.s0nerik.music.players.LocalPlayer
+import com.github.s0nerik.music.players.PlayerController
 import com.github.s0nerik.music.ui.views.PlaybackSongsPageTransformer
 import com.github.s0nerik.rxbus.RxBus
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
 import kotlinx.android.synthetic.main.activity_playback.*
 import kotlinx.android.synthetic.main.part_playback_control_buttons.*
-import org.jetbrains.anko.onClick
 import ru.noties.debug.Debug
 import rx.Observable
 import java.util.concurrent.TimeUnit
@@ -48,6 +48,10 @@ class PlaybackActivity : BaseBoundActivity<ActivityPlaybackBinding>() {
         player = App.comp.getLocalPlayer()
         @Suppress("MISSING_DEPENDENCY_CLASS")
         binding.player = player
+        @Suppress("MISSING_DEPENDENCY_CLASS")
+        binding.playerController = PlayerController(player)
+
+        player.queue.events.bindToLifecycle(this).subscribe { updateSongsList() }
 
         updateSongsList()
 
@@ -62,15 +66,6 @@ class PlaybackActivity : BaseBoundActivity<ActivityPlaybackBinding>() {
         })
 
         blurView.setBlurredView(background)
-
-        btnNext.onClick { player.playNextSong().subscribe() }
-        btnPrev.onClick { player.playPrevSong().subscribe() }
-        btnPlayPause.onClick { player.togglePause().subscribe() }
-        btnShuffle.onClick {
-            player.queue.shuffle(true)
-            updateSongsList()
-        }
-        btnRepeat.onClick { player.repeat = !player.repeat }
     }
 
     private fun updateSongsList() {
@@ -122,8 +117,8 @@ class PlaybackActivity : BaseBoundActivity<ActivityPlaybackBinding>() {
         setSongInfo(player.currentSong!!)
         currentTime.text = player.currentPositionInMinutes
         setPlayButton(player.isPlaying)
-        setShuffleButton(player.shuffle)
-        setRepeatButton(player.repeat)
+        setShuffleButton(player.getShuffle())
+        setRepeatButton(player.getRepeat())
     }
 
     private fun onEvent(e: EPlaybackStateChanged) {

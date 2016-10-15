@@ -134,13 +134,17 @@ class LocalPlayer(
         context.startService(Intent(context, LocalPlayerService::class.java))
     }
 
-    override var shuffle: Boolean = false
-        get() = queue.shuffled
+    override fun shuffle(exceptPlayed: Boolean): Observable<*> =
+            Observable.defer {
+                queue.shuffle(exceptPlayed)
+                Observable.just(getShuffle())
+            }
+    override fun getShuffle(): Boolean = queue.shuffled
 
-    override var repeat: Boolean = false
-        get
-        set(flag) {
-            field = flag
-            RxBus.post(EPlayerStateChanged(shuffle, repeat))
-        }
+    private var repeat: Boolean = false
+    override fun getRepeat(): Boolean = repeat
+    override fun setRepeat(repeat: Boolean): Observable<*> =
+            Observable.just(repeat)
+                    .doOnSubscribe { this.repeat = repeat }
+                    .doOnNext { RxBus.post(EPlayerStateChanged(getShuffle(), repeat)) }
 }

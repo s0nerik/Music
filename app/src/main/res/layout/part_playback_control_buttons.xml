@@ -1,89 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/controls"
-    android:layout_width="match_parent"
-    android:layout_height="?actionBarSize"
-    android:clipChildren="false"
-    android:weightSum="5"
-    tools:visibility="visible"
     >
-
-    <FrameLayout
-        android:id="@+id/btnShuffle"
-        style="@style/PlaybackControlButton"
+    <data>
+        <variable
+            name="playerController"
+            type="com.github.s0nerik.music.players.PlayerController"
+            />
+    </data>
+    <LinearLayout
+        android:id="@+id/controls"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:clipChildren="false"
+        android:weightSum="5"
+        tools:background="@color/md_grey_800"
+        tools:visibility="visible"
         >
 
-        <View style="@style/PlaybackControlButtonBg" />
+        <FrameLayout
+            android:id="@+id/btnShuffle"
+            android:onClick="@{() -> playerController.shuffle(true)}"
+            style="@style/PlaybackControlButton"
+            >
 
-        <ImageView
-            android:id="@+id/btnShuffleIcon"
-            android:src="@drawable/ic_shuffle_black_24dp"
-            style="@style/PlaybackControlButtonIcon"
-            />
+            <View style="@style/PlaybackControlButtonBg" />
 
-    </FrameLayout>
+            <ImageView
+                android:id="@+id/btnShuffleIcon"
+                style="@style/PlaybackControlButtonIcon"
+                android:src="@drawable/ic_shuffle_black_24dp" />
 
-    <FrameLayout
-        android:id="@+id/btnPrev"
-        style="@style/PlaybackControlButton"
-        >
+        </FrameLayout>
 
-        <View style="@style/PlaybackControlButtonBg" />
+        <FrameLayout
+            android:id="@+id/btnPrev"
+            android:onClick="@{() -> playerController.playPrev()}"
+            style="@style/PlaybackControlButton"
+            >
 
-        <ImageView
-            android:id="@+id/btnPrevIcon"
-            android:src="@drawable/ic_skip_previous_black_24dp"
-            style="@style/PlaybackControlButtonIcon"
-            />
+            <View style="@style/PlaybackControlButtonBg" />
 
-    </FrameLayout>
+            <ImageView
+                android:id="@+id/btnPrevIcon"
+                style="@style/PlaybackControlButtonIcon"
+                android:src="@drawable/ic_skip_previous_black_24dp" />
 
-    <!--style="@style/PlaybackControlButton"-->
+        </FrameLayout>
 
-    <FrameLayout
-        android:id="@+id/btnPlayPause"
-        style="@style/PlaybackControlButton"
-        >
+        <!--style="@style/PlaybackControlButton"-->
 
-        <View style="@style/PlaybackControlButtonBg" />
-        
-        <ImageView
-            android:id="@+id/btnPlayPauseIcon"
-            style="@style/PlaybackControlButtonIcon"
-            tools:src="@drawable/ic_pause_black_24dp"
-            />
+        <FrameLayout
+            android:id="@+id/btnPlayPause"
+            android:onClick="@{() -> playerController.togglePause()}"
+            style="@style/PlaybackControlButton"
+            >
 
-    </FrameLayout>
+            <View style="@style/PlaybackControlButtonBg" />
 
-    <FrameLayout
-        android:id="@+id/btnNext"
-        style="@style/PlaybackControlButton"
-        >
+            <ImageView
+                android:id="@+id/btnPlayPauseIcon"
+                style="@style/PlaybackControlButtonIcon"
+                tools:src="@drawable/ic_pause_black_24dp" />
 
-        <View style="@style/PlaybackControlButtonBg" />
+        </FrameLayout>
 
-        <ImageView
-            android:id="@+id/btnNextIcon"
-            style="@style/PlaybackControlButtonIcon"
-            android:src="@drawable/ic_skip_next_black_24dp"
-            />
-    </FrameLayout>
+        <FrameLayout
+            android:id="@+id/btnNext"
+            android:onClick="@{() -> playerController.playNext()}"
+            style="@style/PlaybackControlButton"
+            >
 
-    <FrameLayout
-        android:id="@+id/btnRepeat"
-        style="@style/PlaybackControlButton"
-        >
+            <View style="@style/PlaybackControlButtonBg" />
 
-        <View style="@style/PlaybackControlButtonBg" />
+            <ImageView
+                android:id="@+id/btnNextIcon"
+                style="@style/PlaybackControlButtonIcon"
+                android:src="@drawable/ic_skip_next_black_24dp" />
+        </FrameLayout>
 
-        <ImageView
-            android:id="@+id/btnRepeatIcon"
-            style="@style/PlaybackControlButtonIcon"
-            android:src="@drawable/ic_repeat_black_24dp"
-            />
-    </FrameLayout>
+        <FrameLayout
+            android:id="@+id/btnRepeat"
+            android:onClick="@{() -> playerController.toggleRepeat()}"
+            style="@style/PlaybackControlButton"
+            >
 
-</LinearLayout>
+            <View style="@style/PlaybackControlButtonBg" />
+
+            <ImageView
+                android:id="@+id/btnRepeatIcon"
+                style="@style/PlaybackControlButtonIcon"
+                android:src="@drawable/ic_repeat_black_24dp" />
+        </FrameLayout>
+
+    </LinearLayout>
+</layout>
