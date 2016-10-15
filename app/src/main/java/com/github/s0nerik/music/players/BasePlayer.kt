@@ -83,6 +83,8 @@ abstract class BasePlayer(
     }
 
     abstract fun startService(context: Context)
+    abstract fun playNextSong(): Observable<*>
+    abstract fun playPrevSong(): Observable<*>
 
     fun songChanges() : Observable<Song> {
         return currentSongSubject.skip(1).distinctUntilChanged()

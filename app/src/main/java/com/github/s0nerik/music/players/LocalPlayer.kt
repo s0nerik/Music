@@ -118,13 +118,13 @@ class LocalPlayer(
                 .flatMap { start() }
     }
 
-    fun playNextSong(): Observable<*> {
+    override fun playNextSong(): Observable<*> {
         return reset()
                 .flatMap { prepareNextSong() }
                 .flatMap { start() }
     }
 
-    fun playPrevSong(): Observable<*> {
+    override fun playPrevSong(): Observable<*> {
         return reset()
                 .flatMap { preparePrevSong() }
                 .flatMap { start() }
