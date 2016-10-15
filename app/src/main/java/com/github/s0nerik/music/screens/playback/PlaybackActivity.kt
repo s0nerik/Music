@@ -2,7 +2,6 @@ package com.github.s0nerik.music.screens.playback
 
 import android.databinding.BindingAdapter
 import android.graphics.Bitmap
-import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
@@ -41,9 +40,6 @@ class PlaybackActivity : BaseBoundActivity<ActivityPlaybackBinding>() {
 
     lateinit var player: LocalPlayer
 
-    lateinit var bgDrawable: TransitionDrawable
-    lateinit var coverDrawable: TransitionDrawable
-
     private val songItems = mutableListOf<PlaybackSongItem>()
     private val songsAdapter = PlaybackSongsListAdapter(this, songItems)
 
@@ -52,16 +48,6 @@ class PlaybackActivity : BaseBoundActivity<ActivityPlaybackBinding>() {
         player = App.comp.getLocalPlayer()
         @Suppress("MISSING_DEPENDENCY_CLASS")
         binding.player = player
-
-        if (savedInstanceState == null) {
-            val blackDrawables = arrayOf(ColorDrawable(Color.BLACK), ColorDrawable(Color.BLACK))
-
-            coverDrawable = TransitionDrawable(blackDrawables)
-            coverDrawable.isCrossFadeEnabled = true
-
-            bgDrawable = TransitionDrawable(blackDrawables)
-            bgDrawable.isCrossFadeEnabled = true
-        }
 
         updateSongsList()
 
