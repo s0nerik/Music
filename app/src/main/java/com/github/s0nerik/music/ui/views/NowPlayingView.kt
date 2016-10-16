@@ -25,28 +25,13 @@ class NowPlayingView @JvmOverloads constructor(
         defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
-    private lateinit var binding: FragmentNowPlayingBinding
+    private var binding: FragmentNowPlayingBinding
 
     var playerController: PlayerController? = null
         set(value) {
             @Suppress("MISSING_DEPENDENCY_CLASS")
             binding.playerController = value
         }
-
-//    var song: Song = Song()
-//        set(value) {
-//            field = value
-//            Glide.with(cover.context)
-//                    .load(song.albumArtUri)
-//                    .bitmapTransform(BlurTransformation(cover.context, Glide.get(cover.context).bitmapPool))
-//                    .placeholder(R.color.md_black_1000)
-//                    .error(R.drawable.no_cover)
-//                    .crossFade()
-//                    .into(cover)
-//
-//            artist.text = song.artistNameForUi
-//            title.text = song.title
-//        }
 
     var progress: Float = 0f
         get
@@ -71,7 +56,6 @@ class NowPlayingView @JvmOverloads constructor(
 
     init {
         binding = FragmentNowPlayingBinding.inflate(context.layoutInflater)
-//        binding.playerController = playerController
         addView(binding.root)
 
         listOf(layout, cover).forEach {
@@ -80,17 +64,6 @@ class NowPlayingView @JvmOverloads constructor(
             }
         }
     }
-
-//    override fun onAttachedToWindow() {
-//        super.onAttachedToWindow()
-//        initEventHandlers()
-//    }
-//
-//    private fun initEventHandlers() {
-//        RxBus.on(EPlaybackStateChanged::class.java)
-//                .bindToLifecycle(this)
-//                .subscribe { onEvent(it) }
-//    }
 
     fun show(): Observable<Int> {
         return Observable.create({
@@ -148,22 +121,6 @@ class NowPlayingView @JvmOverloads constructor(
         circleProgressShadow.scaleY = scale
         circleProgressShadow.alpha = scale
     }
-
-//    private fun onEvent(e: EPlaybackStateChanged) {
-//        when(e.type) {
-//            EPlaybackStateChanged.Type.STARTED -> {
-//                song = e.song
-//                playbackFab.setImageResource(R.drawable.ic_pause_24dp)
-//            }
-//            EPlaybackStateChanged.Type.PAUSED -> {
-//                playbackFab.setImageResource(R.drawable.ic_play_arrow_black_24dp)
-//            }
-//            EPlaybackStateChanged.Type.PROGRESS -> {
-//                progress = e.progressPercent
-//            }
-//            EPlaybackStateChanged.Type.STOPPED -> TODO()
-//        }
-//    }
 }
 
 @BindingAdapter("nowPlayingProgressPercent")
