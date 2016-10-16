@@ -108,7 +108,7 @@ dependencies {
     // Rx
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'io.reactivex:rxjava:1.1.9'
-    compile 'com.tbruyelle.rxpermissions:rxpermissions:0.7.0@aar'
+    compile 'com.tbruyelle.rxpermissions:rxpermissions:0.7.1@aar'
     compile "com.jakewharton.rxbinding:rxbinding-recyclerview-v7:$rxbinding_version"
     compile "com.jakewharton.rxbinding:rxbinding-design:$rxbinding_version"
     compile "com.jakewharton.rxbinding:rxbinding-support-v4:$rxbinding_version"
