@@ -72,6 +72,7 @@
             android:shadowRadius="2"
             android:textColor="@android:color/white"
 
+            android:text="@{player.observablePositionInMinutes}"
             tools:text="0:00"
             />
 

@@ -1,10 +1,14 @@
 package com.github.s0nerik.music.players
 
 import android.content.Context
+import android.databinding.ObservableField
+import android.databinding.ObservableLong
 import android.media.AudioManager.*
 import android.net.Uri
 import com.github.s0nerik.music.data.models.Song
 import com.github.s0nerik.music.events.EPlaybackStateChanged
+import com.github.s0nerik.music.ext.currentPositionInMinutes
+import com.github.s0nerik.music.ext.durationInMinutes
 import com.github.s0nerik.music.ext.sourceUri
 import com.github.s0nerik.music.helpers.DelayMeasurer
 import com.github.s0nerik.rxbus.RxBus
@@ -41,6 +45,12 @@ abstract class BasePlayer(
         }
     }
 
+    val observablePosition: ObservableLong = ObservableLong(currentPosition)
+    val observablePositionInMinutes: ObservableField<String> = ObservableField(currentPositionInMinutes)
+
+    val observableDuration: ObservableLong = ObservableLong(duration)
+    val observableDurationInMinutes: ObservableField<String> = ObservableField(durationInMinutes)
+
     private var progressNotifierSubscription: Subscription? = null
 
     init {
@@ -48,8 +58,12 @@ abstract class BasePlayer(
             when (it) {
                 PlayerEvent.STARTED -> {
                     gainAudioFocus()
+                    observableDuration.set(duration)
+                    observableDurationInMinutes.set(durationInMinutes)
                     RxBus.post(EPlaybackStateChanged(EPlaybackStateChanged.Type.STARTED, currentSong!!, innerPlayer.currentPosition))
                     progressNotifierSubscription = playbackProgress().subscribe {
+                        observablePosition.set(it)
+                        observablePositionInMinutes.set(currentPositionInMinutes)
                         RxBus.post(EPlaybackStateChanged(EPlaybackStateChanged.Type.PROGRESS, currentSong!!, innerPlayer.currentPosition, innerPlayer.duration))
                     }
                 }

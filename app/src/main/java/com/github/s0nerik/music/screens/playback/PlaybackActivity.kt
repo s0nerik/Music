@@ -115,7 +115,6 @@ class PlaybackActivity : BaseBoundActivity<ActivityPlaybackBinding>() {
 
     private fun initView() {
         setSongInfo(player.currentSong!!)
-        currentTime.text = player.currentPositionInMinutes
         setPlayButton(player.isPlaying)
         setShuffleButton(player.getShuffle())
         setRepeatButton(player.getRepeat())
