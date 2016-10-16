@@ -85,7 +85,7 @@
                 android:layout_height="match_parent"
                 android:layout_alignTop="@+id/cover"
                 android:layout_alignBottom="@+id/cover"
-                app:realtimeBlurRadius="20dp"
+                app:realtimeBlurRadius="36dp"
                 app:realtimeDownsampleFactor="6"
                 app:realtimeOverlayColor="#8000"
                 />

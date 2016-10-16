@@ -37,7 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/bottomBar"
-            app:realtimeBlurRadius="12dp"
+            app:realtimeBlurRadius="36dp"
             app:realtimeDownsampleFactor="6"
             app:realtimeOverlayColor="#8000"
             />
