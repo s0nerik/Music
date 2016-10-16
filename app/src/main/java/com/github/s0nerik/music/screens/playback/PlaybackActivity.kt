@@ -9,7 +9,6 @@ import android.graphics.drawable.TransitionDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
-import android.view.ViewTreeObserver
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.BitmapImageViewTarget
@@ -61,15 +60,24 @@ class PlaybackActivity : BaseBoundActivity<ActivityPlaybackBinding>() {
 fun setPlaybackBgUri(iv: ImageView, uri: Uri?) {
     Debug.d("setPlaybackBgUri: $uri")
     var previousDrawable: Drawable = ColorDrawable(ContextCompat.getColor(iv.context, R.color.md_black_1000))
-    if (iv.drawable is TransitionDrawable) {
-        previousDrawable = (iv.drawable as TransitionDrawable).getDrawable(1)
+    (iv.drawable as? TransitionDrawable)?.apply {
+        previousDrawable = getDrawable(1)
     }
     Glide.with(iv.context)
             .load(uri)
             .asBitmap()
             .placeholder(previousDrawable)
+            .error(R.drawable.no_cover)
             .dontAnimate()
             .into(object : BitmapImageViewTarget(iv) {
+                override fun onLoadFailed(e: Exception?, errorDrawable: Drawable?) {
+                    val newDrawable = errorDrawable ?: ColorDrawable(ContextCompat.getColor(iv.context, R.color.md_black_1000))
+
+                    val newTransitionDrawable = TransitionDrawable(arrayOf(previousDrawable, newDrawable))
+                    iv.setImageDrawable(newTransitionDrawable)
+                    newTransitionDrawable.startTransition(500)
+                }
+
                 override fun setResource(resource: Bitmap?) {
                     val newDrawable =
                             if (resource != null)
@@ -79,13 +87,7 @@ fun setPlaybackBgUri(iv: ImageView, uri: Uri?) {
 
                     val newTransitionDrawable = TransitionDrawable(arrayOf(previousDrawable, newDrawable))
                     iv.setImageDrawable(newTransitionDrawable)
-                    iv.viewTreeObserver.addOnPreDrawListener(object: ViewTreeObserver.OnPreDrawListener {
-                        override fun onPreDraw(): Boolean {
-                            iv.viewTreeObserver.removeOnPreDrawListener(this)
-                            newTransitionDrawable.startTransition(500)
-                            return true
-                        }
-                    })
+                    newTransitionDrawable.startTransition(500)
                 }
             })
 }
