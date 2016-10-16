@@ -1,24 +1,22 @@
 package com.github.s0nerik.music.ui.views
 
 import android.content.Context
+import android.databinding.BindingAdapter
 import android.graphics.Rect
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
-import com.bumptech.glide.Glide
 import com.facebook.rebound.SimpleSpringListener
 import com.facebook.rebound.Spring
 import com.facebook.rebound.SpringConfig
 import com.facebook.rebound.SpringSystem
-import com.github.s0nerik.music.R
-import com.github.s0nerik.music.data.models.Song
-import com.github.s0nerik.music.events.EPlaybackStateChanged
+import com.github.s0nerik.music.App
+import com.github.s0nerik.music.databinding.FragmentNowPlayingBinding
+import com.github.s0nerik.music.players.PlayerController
 import com.github.s0nerik.music.screens.playback.PlaybackActivity
-import com.github.s0nerik.rxbus.RxBus
-import com.trello.rxlifecycle.kotlin.bindToLifecycle
-import jp.wasabeef.glide.transformations.BlurTransformation
 import kotlinx.android.synthetic.main.fragment_now_playing.view.*
 import org.jetbrains.anko.intentFor
+import org.jetbrains.anko.layoutInflater
 import org.jetbrains.anko.onClick
 import rx.Observable
 
@@ -28,20 +26,27 @@ class NowPlayingView @JvmOverloads constructor(
         defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
-    var song: Song = Song()
-        set(value) {
-            field = value
-            Glide.with(cover.context)
-                    .load(song.albumArtUri)
-                    .bitmapTransform(BlurTransformation(cover.context, Glide.get(cover.context).bitmapPool))
-                    .placeholder(R.color.md_black_1000)
-                    .error(R.drawable.no_cover)
-                    .crossFade()
-                    .into(cover)
+    private lateinit var binding: FragmentNowPlayingBinding
 
-            artist.text = song.artistNameForUi
-            title.text = song.title
+    var playerController: PlayerController? = null
+        set(value) {
+            binding.playerController = value
         }
+
+//    var song: Song = Song()
+//        set(value) {
+//            field = value
+//            Glide.with(cover.context)
+//                    .load(song.albumArtUri)
+//                    .bitmapTransform(BlurTransformation(cover.context, Glide.get(cover.context).bitmapPool))
+//                    .placeholder(R.color.md_black_1000)
+//                    .error(R.drawable.no_cover)
+//                    .crossFade()
+//                    .into(cover)
+//
+//            artist.text = song.artistNameForUi
+//            title.text = song.title
+//        }
 
     var progress: Float = 0f
         get
@@ -64,33 +69,28 @@ class NowPlayingView @JvmOverloads constructor(
             }
         }
 
-    override fun onFinishInflate() {
-        super.onFinishInflate()
-    }
-
     init {
-        addView(inflate(context, R.layout.fragment_now_playing, null))
+        binding = FragmentNowPlayingBinding.inflate(context.layoutInflater)
+//        binding.playerController = playerController
+        addView(binding.root)
 
         listOf(layout, cover).forEach {
             it.onClick {
-//                with(context){ startActivity(intentFor<MainActivity>()) }
                 with(context){ startActivity(intentFor<PlaybackActivity>()) }
             }
         }
-
-//        playbackFab.onClick { player.togglePause() }
     }
 
-    override fun onAttachedToWindow() {
-        super.onAttachedToWindow()
-        initEventHandlers()
-    }
-
-    private fun initEventHandlers() {
-        RxBus.on(EPlaybackStateChanged::class.java)
-                .bindToLifecycle(this)
-                .subscribe { onEvent(it) }
-    }
+//    override fun onAttachedToWindow() {
+//        super.onAttachedToWindow()
+//        initEventHandlers()
+//    }
+//
+//    private fun initEventHandlers() {
+//        RxBus.on(EPlaybackStateChanged::class.java)
+//                .bindToLifecycle(this)
+//                .subscribe { onEvent(it) }
+//    }
 
     fun show(): Observable<Int> {
         return Observable.create({
@@ -149,20 +149,24 @@ class NowPlayingView @JvmOverloads constructor(
         circleProgressShadow.alpha = scale
     }
 
-    private fun onEvent(e: EPlaybackStateChanged) {
-        when(e.type) {
-            EPlaybackStateChanged.Type.STARTED -> {
-                song = e.song
-                playbackFab.setImageResource(R.drawable.ic_pause_24dp)
-            }
-            EPlaybackStateChanged.Type.PAUSED -> {
-                playbackFab.setImageResource(R.drawable.ic_play_arrow_black_24dp)
-            }
-            EPlaybackStateChanged.Type.PROGRESS -> {
-                progress = e.progressPercent
-            }
-            EPlaybackStateChanged.Type.STOPPED -> TODO()
-        }
-    }
+//    private fun onEvent(e: EPlaybackStateChanged) {
+//        when(e.type) {
+//            EPlaybackStateChanged.Type.STARTED -> {
+//                song = e.song
+//                playbackFab.setImageResource(R.drawable.ic_pause_24dp)
+//            }
+//            EPlaybackStateChanged.Type.PAUSED -> {
+//                playbackFab.setImageResource(R.drawable.ic_play_arrow_black_24dp)
+//            }
+//            EPlaybackStateChanged.Type.PROGRESS -> {
+//                progress = e.progressPercent
+//            }
+//            EPlaybackStateChanged.Type.STOPPED -> TODO()
+//        }
+//    }
 }
 
+@BindingAdapter("nowPlayingProgressPercent")
+fun setNowPlayingProgressPercent(view: NowPlayingView, progress: Float) {
+    view.progress = progress
+}

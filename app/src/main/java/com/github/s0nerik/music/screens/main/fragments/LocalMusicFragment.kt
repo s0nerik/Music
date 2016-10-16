@@ -15,6 +15,7 @@ import com.github.s0nerik.music.adapters.LocalMusicFragmentsAdapter
 import com.github.s0nerik.music.base.BaseBoundFragment
 import com.github.s0nerik.music.databinding.FragmentLocalMusicBinding
 import com.github.s0nerik.music.events.EPlaybackStateChanged
+import com.github.s0nerik.music.players.PlayerController
 import com.github.s0nerik.rxbus.RxBus
 import com.jakewharton.rxbinding.support.v4.view.RxViewPager
 import com.jakewharton.rxbinding.widget.RxTextView
@@ -73,6 +74,8 @@ class LocalMusicFragment : BaseBoundFragment<FragmentLocalMusicBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.playerController = PlayerController(App.comp.getLocalPlayer())
+
         initToolbar()
 
         val adapter = LocalMusicFragmentsAdapter(childFragmentManager)

@@ -4,6 +4,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     >
+    <data>
+        <variable
+            name="playerController"
+            type="com.github.s0nerik.music.players.PlayerController"
+            />
+    </data>
     <RelativeLayout
         android:id="@+id/fragment"
         android:layout_width="match_parent"
@@ -65,13 +71,23 @@
 
             <ImageView
                 android:id="@+id/cover"
-                android:src="#000"
                 tools:src="#000"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_alignTop="@+id/layout"
                 android:layout_alignBottom="@+id/layout"
                 android:scaleType="centerCrop"
+                app:playbackBgUri="@{playerController.currentSong.albumArtUri}"
+                />
+
+            <com.github.mmin18.widget.RealtimeBlurView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignTop="@+id/cover"
+                android:layout_alignBottom="@+id/cover"
+                app:realtimeBlurRadius="20dp"
+                app:realtimeDownsampleFactor="6"
+                app:realtimeOverlayColor="#8000"
                 />
 
             <LinearLayout
@@ -101,6 +117,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/title"
 
+                    android:text="@{playerController.currentSong.title}"
                     android:textSize="20sp"
                     android:textColor="#FFFFFF"
                     android:layout_marginTop="8dp"
@@ -114,6 +131,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/artist"
 
+                    android:text="@{playerController.currentSong.artistNameForUi}"
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:textSize="16sp"
@@ -133,13 +151,14 @@
             android:layout_marginRight="16dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="@{(v) -> playerController.togglePause()}"
             >
 
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/playbackFab"
                 android:layout_width="56dp"
                 android:layout_height="56dp"
-                android:src="@drawable/ic_pause_24dp"
+                android:src="@{playerController.isPlaying ? @drawable/ic_pause_24dp : @drawable/ic_play_arrow_black_24dp}"
                 android:layout_gravity="center"
 
                 android:tint="@color/nowPlayingFabTint"
@@ -147,6 +166,8 @@
                 app:elevation="4dp"
 
                 app:fabSize="normal"
+
+                tools:src="@drawable/ic_pause_24dp"
                 />
 
             <com.github.rahatarmanahmed.cpv.CircularProgressView

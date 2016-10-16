@@ -58,7 +58,7 @@ class PlaybackActivity : BaseBoundActivity<ActivityPlaybackBinding>() {
 }
 
 @BindingAdapter("playbackBgUri")
-fun setPlaybackBgUri(iv: ImageView, uri: Uri) {
+fun setPlaybackBgUri(iv: ImageView, uri: Uri?) {
     Debug.d("setPlaybackBgUri: $uri")
     var previousDrawable: Drawable = ColorDrawable(ContextCompat.getColor(iv.context, R.color.md_black_1000))
     if (iv.drawable is TransitionDrawable) {

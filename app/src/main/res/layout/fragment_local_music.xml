@@ -3,6 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     >
+    <data>
+        <variable
+            name="playerController"
+            type="com.github.s0nerik.music.players.PlayerController"
+            />
+    </data>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -128,6 +134,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:visibility="invisible"
+            app:playerController="@{playerController}"
+            app:nowPlayingProgressPercent="@{playerController.progressPercent}"
             tools:visibility="visible"
             />
 
