@@ -44,22 +44,10 @@ class PlaybackActivity : BaseBoundActivity<ActivityPlaybackBinding>() {
 
         player.queue.events.bindToLifecycle(this).subscribe { updateSongsList() }
 
-//        player.songChanges()
-//                .switchMap {
-//                    Observable.interval(16, TimeUnit.MILLISECONDS)
-//                            .take(3, TimeUnit.SECONDS)
-//                            .observeOnMainThread()
-//                            .doOnNext { blurView.invalidate() }
-//                }
-//                .bindToLifecycle(this)
-//                .subscribe()
-
         updateSongsList()
 
         songsViewPager.adapter = songsAdapter
         songsViewPager.setPageTransformer(false, PlaybackSongsPageTransformer())
-
-//        blurView.setBlurredView(background)
     }
 
     private fun updateSongsList() {
@@ -81,7 +69,6 @@ fun setPlaybackBgUri(iv: ImageView, uri: Uri) {
             .asBitmap()
             .placeholder(previousDrawable)
             .dontAnimate()
-//            .skipMemoryCache(true)
             .into(object : BitmapImageViewTarget(iv) {
                 override fun setResource(resource: Bitmap?) {
                     val newDrawable =
@@ -91,7 +78,6 @@ fun setPlaybackBgUri(iv: ImageView, uri: Uri) {
                                 ColorDrawable(ContextCompat.getColor(iv.context, R.color.md_black_1000))
 
                     val newTransitionDrawable = TransitionDrawable(arrayOf(previousDrawable, newDrawable))
-//                    newTransitionDrawable.isCrossFadeEnabled = true
                     iv.setImageDrawable(newTransitionDrawable)
                     iv.viewTreeObserver.addOnPreDrawListener(object: ViewTreeObserver.OnPreDrawListener {
                         override fun onPreDraw(): Boolean {

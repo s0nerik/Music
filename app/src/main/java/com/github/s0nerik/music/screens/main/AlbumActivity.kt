@@ -12,7 +12,6 @@ import com.github.s0nerik.music.ext.hide
 import com.github.s0nerik.music.ext.show
 import com.github.s0nerik.music.ext.songs
 import kotlinx.android.synthetic.main.activity_album.*
-import kotlinx.android.synthetic.main.activity_album.view.*
 import org.jetbrains.anko.onClick
 import org.jetbrains.anko.startActivity
 import org.parceler.Parcels
@@ -25,16 +24,16 @@ class AlbumActivity : BaseBoundActivity<ActivityAlbumBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding.album = Parcels.unwrap<Album>(intent?.getParcelableExtra("album"))
+        val album = Parcels.unwrap<Album>(intent?.getParcelableExtra("album"))
+        @Suppress("MISSING_DEPENDENCY_CLASS")
+        binding.album = album
 
         songsList.clear()
-        songsList += binding.album.songs.toBlocking().first().map { SongItem(it, false) }
+        songsList += album.songs.toBlocking().first().map { SongItem(it, false) }
         songsRecycler.adapter = songsAdapter
         songsRecycler.setHasFixedSize(true)
 
         songsAdapter.addSelection(0)
-
-//        blurView.setBlurredView(image)
 
         btnBack.onClick { onBackPressed() }
         btnMenu.onClick {  }
@@ -44,7 +43,6 @@ class AlbumActivity : BaseBoundActivity<ActivityAlbumBinding>() {
         super.onResume()
 
         appBarLayout.addOnOffsetChangedListener { appBarLayout, i ->
-//            val radius = Math.sqrt(Math.abs(i.toDouble())).toInt()
             val radius = Math.sqrt(Math.abs(i.toDouble()))
             if (radius > 0) {
                 blurView.show()
