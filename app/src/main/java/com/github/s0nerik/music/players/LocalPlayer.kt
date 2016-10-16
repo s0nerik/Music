@@ -11,7 +11,7 @@ import rx.Observable
 
 class LocalPlayer(
         context: Context
-) : BasePlayer(context) {
+) : BaseBoundPlayer(context) {
 
     val queue: PlaybackQueue = PlaybackQueue()
 //    var server: WebSocketMessageServer? = null
@@ -137,6 +137,7 @@ class LocalPlayer(
     override fun shuffle(exceptPlayed: Boolean): Observable<*> =
             Observable.defer {
                 queue.shuffle(exceptPlayed)
+                observableShuffleState.set(getShuffle())
                 Observable.just(getShuffle())
             }
     override fun getShuffle(): Boolean = queue.shuffled
@@ -146,5 +147,8 @@ class LocalPlayer(
     override fun setRepeat(repeat: Boolean): Observable<*> =
             Observable.just(repeat)
                     .doOnSubscribe { this.repeat = repeat }
-                    .doOnNext { RxBus.post(EPlayerStateChanged(getShuffle(), repeat)) }
+                    .doOnNext {
+                        observableRepeatState.set(it)
+                        RxBus.post(EPlayerStateChanged(getShuffle(), repeat))
+                    }
 }

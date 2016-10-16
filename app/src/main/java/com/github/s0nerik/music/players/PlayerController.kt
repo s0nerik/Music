@@ -4,11 +4,14 @@ import com.github.s0nerik.music.ext.addTo
 import rx.subscriptions.CompositeSubscription
 
 class PlayerController(
-        val player: BasePlayer,
+        val player: BaseBoundPlayer,
         private val disposable: CompositeSubscription = CompositeSubscription()
 ) {
     val isPlaying = player.observablePlayingState
     val progressPercent = player.observableProgressPercent
+    val currentSong = player.observableCurrentSong
+    val isShuffle = player.observableShuffleState
+    val isRepeat = player.observableRepeatState
 
     fun play() { player.setPaused(false).subscribe().addTo(disposable) }
     fun pause() { player.setPaused(true).subscribe().addTo(disposable) }

@@ -7,10 +7,6 @@
     <data>
         <import type="com.github.s0nerik.music.ext.ModelExtensionsKt" />
         <variable
-            name="song"
-            type="com.github.s0nerik.music.data.models.Song"
-            />
-        <variable
             name="player"
             type="com.github.s0nerik.music.players.LocalPlayer"
             />
@@ -30,7 +26,7 @@
             android:layout_height="match_parent"
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
-            app:playbackBgUri='@{song.albumArtUri}'
+            app:playbackBgUri='@{playerController.currentSong.albumArtUri}'
             />
 
         <com.fivehundredpx.android.blur.BlurringView
@@ -90,7 +86,7 @@
             android:shadowDx="0"
             android:shadowDy="0"
             android:shadowRadius="2"
-            android:text="@{song.durationString}"
+            android:text="@{playerController.currentSong.durationString}"
             android:textColor="@android:color/white"
 
             tools:text="3:00"
@@ -135,8 +131,8 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:title="@{song.title}"
-            app:subtitle="@{song.artistNameForUi}"
+            app:title="@{playerController.currentSong.title}"
+            app:subtitle="@{playerController.currentSong.artistNameForUi}"
             app:theme="@style/PlaybackToolbar"
             />
 

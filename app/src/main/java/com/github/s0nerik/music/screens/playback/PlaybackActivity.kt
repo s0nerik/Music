@@ -19,17 +19,13 @@ import com.github.s0nerik.music.R
 import com.github.s0nerik.music.adapters.playback_songs.PlaybackSongItem
 import com.github.s0nerik.music.adapters.playback_songs.PlaybackSongsListAdapter
 import com.github.s0nerik.music.base.BaseBoundActivity
-import com.github.s0nerik.music.data.models.Song
 import com.github.s0nerik.music.databinding.ActivityPlaybackBinding
-import com.github.s0nerik.music.events.EPlaybackStateChanged
 import com.github.s0nerik.music.ext.observeOnMainThread
 import com.github.s0nerik.music.players.LocalPlayer
 import com.github.s0nerik.music.players.PlayerController
 import com.github.s0nerik.music.ui.views.PlaybackSongsPageTransformer
-import com.github.s0nerik.rxbus.RxBus
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
 import kotlinx.android.synthetic.main.activity_playback.*
-import kotlinx.android.synthetic.main.part_playback_control_buttons.*
 import ru.noties.debug.Debug
 import rx.Observable
 import java.util.concurrent.TimeUnit
@@ -52,6 +48,16 @@ class PlaybackActivity : BaseBoundActivity<ActivityPlaybackBinding>() {
 
         player.queue.events.bindToLifecycle(this).subscribe { updateSongsList() }
 
+        player.songChanges()
+                .switchMap {
+                    Observable.interval(16, TimeUnit.MILLISECONDS)
+                            .take(3, TimeUnit.SECONDS)
+                            .observeOnMainThread()
+                            .doOnNext { blurView.invalidate() }
+                }
+                .bindToLifecycle(this)
+                .subscribe()
+
         updateSongsList()
 
         songsViewPager.adapter = songsAdapter
@@ -72,59 +78,9 @@ class PlaybackActivity : BaseBoundActivity<ActivityPlaybackBinding>() {
         songItems.addAll(player.queue.queue.map(::PlaybackSongItem))
         songsAdapter.notifyDataSetChanged()
     }
-
-    override fun onResume() {
-        super.onResume()
-        initEventHandlers()
-        initView()
-    }
-
-    private fun initEventHandlers() {
-        RxBus.on(EPlaybackStateChanged::class.java)
-                .bindToLifecycle(this)
-                .observeOnMainThread()
-                .subscribe { onEvent(it) }
-    }
-
-    fun setSongInfo(song: Song) {
-        @Suppress("MISSING_DEPENDENCY_CLASS")
-        binding.song = song
-
-        Observable.interval(16, TimeUnit.MILLISECONDS)
-                .take(3, TimeUnit.SECONDS)
-                .observeOnMainThread()
-                .subscribe { blurView.invalidate() }
-    }
-
-    private fun setShuffleButton(enabled: Boolean) {
-        btnShuffleIcon.setColorFilter(resources.getColor(if (enabled) R.color.colorPrimary else android.R.color.white, theme))
-    }
-
-    private fun setRepeatButton(enabled: Boolean) {
-        btnRepeatIcon.setColorFilter(resources.getColor(if (enabled) R.color.colorPrimary else android.R.color.white, theme))
-    }
-
-    private fun initView() {
-        setSongInfo(player.currentSong!!)
-        setShuffleButton(player.getShuffle())
-        setRepeatButton(player.getRepeat())
-    }
-
-    private fun onEvent(e: EPlaybackStateChanged) {
-        when (e.type) {
-            EPlaybackStateChanged.Type.STARTED -> {
-                setSongInfo(e.song)
-            }
-            EPlaybackStateChanged.Type.PAUSED -> {
-            }
-            EPlaybackStateChanged.Type.PROGRESS -> {
-            }
-            EPlaybackStateChanged.Type.STOPPED -> TODO()
-        }
-    }
 }
 
-@BindingAdapter("bind:playbackBgUri")
+@BindingAdapter("playbackBgUri")
 fun setPlaybackBgUri(iv: ImageView, uri: Uri) {
     Debug.d("setPlaybackBgUri: $uri")
     var previousDrawable: Drawable = ColorDrawable(ContextCompat.getColor(iv.context, R.color.md_black_1000))
