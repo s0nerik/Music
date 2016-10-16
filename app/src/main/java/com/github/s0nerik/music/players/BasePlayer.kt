@@ -32,6 +32,8 @@ abstract class BasePlayer(
         get
         protected set
 
+    abstract val currentSongIndex: Int
+
     protected var prepareTimeMeasurer = DelayMeasurer<Long>(10)
     protected var lastState = ExoPlayer.STATE_IDLE
     private val afListener = OnAudioFocusChangeListener {
@@ -78,6 +80,7 @@ abstract class BasePlayer(
     }
 
     abstract fun startService(context: Context)
+    abstract fun playSong(index: Int): Observable<*>
     abstract fun playNextSong(): Observable<*>
     abstract fun playPrevSong(): Observable<*>
     abstract fun shuffle(exceptPlayed: Boolean = true): Observable<*>

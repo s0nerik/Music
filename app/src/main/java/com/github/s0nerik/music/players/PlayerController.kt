@@ -16,6 +16,10 @@ class PlayerController(
     fun play() { player.setPaused(false).subscribe().addTo(disposable) }
     fun pause() { player.setPaused(true).subscribe().addTo(disposable) }
     fun togglePause() { player.togglePause().subscribe().addTo(disposable) }
+    fun playAtIndex(index: Int) {
+        if (player.currentSongIndex != index)
+            player.playSong(index).subscribe().addTo(disposable)
+    }
     fun playNext() { player.playNextSong().subscribe().addTo(disposable) }
     fun playPrev() { player.playPrevSong().subscribe().addTo(disposable) }
     fun seekTo(ms: Long) { player.seekTo(ms).subscribe().addTo(disposable) }

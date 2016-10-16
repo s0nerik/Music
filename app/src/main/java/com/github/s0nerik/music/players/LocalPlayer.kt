@@ -14,7 +14,9 @@ class LocalPlayer(
 ) : BaseBoundPlayer(context) {
 
     val queue: PlaybackQueue = PlaybackQueue()
-//    var server: WebSocketMessageServer? = null
+
+    override var currentSongIndex: Int = queue.currentIndex
+        get() = queue.currentIndex
 
     init {
         val playerEvents = playerSubject.distinctUntilChanged()
@@ -112,7 +114,7 @@ class LocalPlayer(
                 .flatMap { start() }
     }
 
-    fun playSong(index: Int): Observable<*> {
+    override fun playSong(index: Int): Observable<*> {
         return reset()
                 .flatMap { prepare(index) }
                 .flatMap { start() }

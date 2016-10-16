@@ -50,6 +50,7 @@
             android:paddingRight="48dp"
             app:offscreenPageLimit='@{2}'
             app:currentItem='@{player.getQueue().observableCurrentIndex}'
+            app:onPageSelected="@{(index) -> playerController.playAtIndex(index)}"
             />
 
         <TextView

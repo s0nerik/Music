@@ -9,7 +9,6 @@ import android.graphics.drawable.TransitionDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
-import android.support.v4.view.ViewPager
 import android.view.ViewTreeObserver
 import android.widget.ImageView
 import com.bumptech.glide.Glide
@@ -62,13 +61,6 @@ class PlaybackActivity : BaseBoundActivity<ActivityPlaybackBinding>() {
 
         songsViewPager.adapter = songsAdapter
         songsViewPager.setPageTransformer(false, PlaybackSongsPageTransformer())
-        songsViewPager.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
-            override fun onPageSelected(position: Int) {
-                if (player.queue.currentIndex != position) {
-                    player.playSong(position).subscribe()
-                }
-            }
-        })
 
         blurView.setBlurredView(background)
     }
