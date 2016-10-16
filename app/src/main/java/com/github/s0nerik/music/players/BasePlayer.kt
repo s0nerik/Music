@@ -3,6 +3,7 @@ package com.github.s0nerik.music.players
 import android.content.Context
 import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
+import android.databinding.ObservableFloat
 import android.databinding.ObservableLong
 import android.media.AudioManager.*
 import android.net.Uri
@@ -54,6 +55,8 @@ abstract class BasePlayer(
 
     val observablePlayingState: ObservableBoolean = ObservableBoolean(isPlaying)
 
+    val observableProgressPercent: ObservableFloat = ObservableFloat(observablePosition.get() * 100f / observableDuration.get())
+
     private var progressNotifierSubscription: Subscription? = null
 
     init {
@@ -68,6 +71,7 @@ abstract class BasePlayer(
                     progressNotifierSubscription = playbackProgress().subscribe {
                         observablePosition.set(it)
                         observablePositionInMinutes.set(currentPositionInMinutes)
+                        observableProgressPercent.set(it * 100f / observableDuration.get())
                         RxBus.post(EPlaybackStateChanged(EPlaybackStateChanged.Type.PROGRESS, currentSong!!, innerPlayer.currentPosition, innerPlayer.duration))
                     }
                 }

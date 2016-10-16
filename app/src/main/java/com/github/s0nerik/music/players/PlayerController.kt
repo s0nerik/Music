@@ -1,6 +1,5 @@
 package com.github.s0nerik.music.players
 
-import android.databinding.ObservableBoolean
 import com.github.s0nerik.music.ext.addTo
 import rx.subscriptions.CompositeSubscription
 
@@ -8,7 +7,8 @@ class PlayerController(
         val player: BasePlayer,
         private val disposable: CompositeSubscription = CompositeSubscription()
 ) {
-    val isPlaying: ObservableBoolean = player.observablePlayingState
+    val isPlaying = player.observablePlayingState
+    val progressPercent = player.observableProgressPercent
 
     fun play() { player.setPaused(false).subscribe().addTo(disposable) }
     fun pause() { player.setPaused(true).subscribe().addTo(disposable) }

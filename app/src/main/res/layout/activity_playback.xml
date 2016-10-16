@@ -110,6 +110,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:max="1000"
+                android:progress="@{(int) (player.observableProgressPercent * 10f)}"
                 tools:progress="500"
                 style="@style/PlaybackSeekBar"
                 />

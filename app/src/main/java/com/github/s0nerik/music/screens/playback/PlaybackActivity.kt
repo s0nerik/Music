@@ -118,7 +118,6 @@ class PlaybackActivity : BaseBoundActivity<ActivityPlaybackBinding>() {
             EPlaybackStateChanged.Type.PAUSED -> {
             }
             EPlaybackStateChanged.Type.PROGRESS -> {
-                seekBar.progress = (e.progressPercent * 10f).toInt()
             }
             EPlaybackStateChanged.Type.STOPPED -> TODO()
         }
