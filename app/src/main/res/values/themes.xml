@@ -19,5 +19,7 @@
 
     <style name="AppTheme.TranslucentStatusBar.TranslucentNavigation">
         <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
     </style>
 </resources>

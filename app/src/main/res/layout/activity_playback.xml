@@ -18,6 +18,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:clipChildren="false"
         >
 
         <ImageView
@@ -47,10 +48,9 @@
             android:layout_height="match_parent"
             android:layout_above="@+id/bottomBar"
             android:layout_below="@+id/toolbar"
+            android:layout_marginTop="-28dp"
             android:clipToPadding="false"
             android:overScrollMode="never"
-            android:paddingTop="16dp"
-            android:paddingBottom="16dp"
             android:paddingLeft="48dp"
             android:paddingRight="48dp"
             app:offscreenPageLimit='@{2}'
@@ -84,72 +84,73 @@
             android:id="@+id/bottomBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:clipToPadding="false"
             android:clipChildren="false"
             android:layout_alignParentBottom="true"
             android:orientation="vertical"
             android:background="@color/md_grey_900"
-            android:paddingBottom="48dp"
+            android:paddingBottom="56dp"
             android:elevation="16dp"
             >
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="8dp"
-                >
-                <TextView
-                    android:id="@+id/currentTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:layout_marginLeft="16dp"
-                    android:gravity="center"
-                    android:shadowColor="#000000"
-
-                    android:shadowDx="0"
-                    android:shadowDy="0"
-                    android:shadowRadius="2"
-                    android:textColor="@android:color/white"
-
-                    android:text="@{player.observablePositionInMinutes}"
-                    tools:text="0:00"
-                    />
-
-                <TextView
-                    android:id="@+id/endTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:layout_marginRight="16dp"
-                    android:gravity="center"
-                    android:shadowColor="#000000"
-
-                    android:shadowDx="0"
-                    android:shadowDy="0"
-                    android:shadowRadius="2"
-                    android:text="@{playerController.currentSong.durationString}"
-                    android:textColor="@android:color/white"
-
-                    tools:text="3:00"
-                    />
-            </FrameLayout>
-
             <SeekBar
                 android:id="@+id/seekBar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="-8dp"
+                android:layout_marginLeft="-16dp"
+                android:layout_marginRight="-16dp"
                 android:max="1000"
                 android:progress="@{(int) (player.observableProgressPercent * 10f)}"
                 tools:progress="500"
                 style="@style/PlaybackSeekBar"
                 />
-
             <include
                 layout="@layout/part_playback_control_buttons"
                 app:playerController="@{playerController}"
                 />
-
         </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/bottomBar"
+            android:layout_marginBottom="12dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            >
+            <TextView
+                android:id="@+id/currentTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:gravity="center"
+                android:shadowColor="#000000"
+
+                android:shadowDx="0"
+                android:shadowDy="0"
+                android:shadowRadius="2"
+                android:textColor="@android:color/white"
+
+                android:text="@{player.observablePositionInMinutes}"
+                tools:text="0:00"
+                />
+
+            <TextView
+                android:id="@+id/endTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:gravity="center"
+                android:shadowColor="#000000"
+
+                android:shadowDx="0"
+                android:shadowDy="0"
+                android:shadowRadius="2"
+                android:text="@{playerController.currentSong.durationString}"
+                android:textColor="@android:color/white"
+
+                tools:text="3:00"
+                />
+        </FrameLayout>
     </RelativeLayout>
 </layout>
