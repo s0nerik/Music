@@ -10,7 +10,6 @@ import com.facebook.rebound.SimpleSpringListener
 import com.facebook.rebound.Spring
 import com.facebook.rebound.SpringConfig
 import com.facebook.rebound.SpringSystem
-import com.github.s0nerik.music.App
 import com.github.s0nerik.music.databinding.FragmentNowPlayingBinding
 import com.github.s0nerik.music.players.PlayerController
 import com.github.s0nerik.music.screens.playback.PlaybackActivity
@@ -30,6 +29,7 @@ class NowPlayingView @JvmOverloads constructor(
 
     var playerController: PlayerController? = null
         set(value) {
+            @Suppress("MISSING_DEPENDENCY_CLASS")
             binding.playerController = value
         }
 

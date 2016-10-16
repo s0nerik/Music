@@ -74,6 +74,7 @@ class LocalMusicFragment : BaseBoundFragment<FragmentLocalMusicBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        @Suppress("MISSING_DEPENDENCY_CLASS")
         binding.playerController = PlayerController(App.comp.getLocalPlayer())
 
         initToolbar()
