@@ -73,6 +73,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
             app:theme="@style/PlaybackToolbar"
             app:title="Now playing"
             app:navigationIcon="@drawable/arrow_left"
@@ -87,7 +88,8 @@
             android:layout_alignParentBottom="true"
             android:orientation="vertical"
             android:background="@color/md_grey_900"
-            android:elevation="8dp"
+            android:paddingBottom="48dp"
+            android:elevation="16dp"
             >
 
             <FrameLayout
