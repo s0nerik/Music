@@ -6,6 +6,7 @@
     >
     <data>
         <import type="com.github.s0nerik.music.ext.ModelExtensionsKt" />
+        <import type="com.github.s0nerik.music.R" />
         <variable
             name="player"
             type="com.github.s0nerik.music.players.LocalPlayer"
@@ -38,8 +39,8 @@
             android:layout_height="match_parent"
             android:layout_above="@+id/bottomBar"
             app:realtimeBlurRadius="36dp"
-            app:realtimeDownsampleFactor="6"
-            app:realtimeOverlayColor="#8000"
+            app:realtimeDownsampleFactor="8"
+            app:realtimeOverlayColor="#6000"
             />
 
         <com.github.s0nerik.music.ui.views.FixedTransformerViewPager
@@ -69,15 +70,17 @@
             tools:visibility="visible"
             />
 
-        <android.support.v7.widget.Toolbar
+        <com.github.s0nerik.music.ui.views.TintableMenuToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
+            app:menuItemTint="@color/md_white_1000"
             app:theme="@style/PlaybackToolbar"
             app:title="Now playing"
             app:navigationIcon="@drawable/arrow_left"
             app:navIconColor="@{@color/md_white_1000}"
+            app:menu="@{R.menu.playback}"
             />
 
         <LinearLayout

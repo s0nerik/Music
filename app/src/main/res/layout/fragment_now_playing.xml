@@ -86,8 +86,8 @@
                 android:layout_alignTop="@+id/cover"
                 android:layout_alignBottom="@+id/cover"
                 app:realtimeBlurRadius="36dp"
-                app:realtimeDownsampleFactor="6"
-                app:realtimeOverlayColor="#8000"
+                app:realtimeDownsampleFactor="8"
+                app:realtimeOverlayColor="#6000"
                 />
 
             <LinearLayout

@@ -3,7 +3,6 @@ package com.github.s0nerik.music.ui.views
 import android.content.Context
 import android.graphics.Color
 import android.graphics.PorterDuff
-import android.graphics.PorterDuffColorFilter
 import android.graphics.drawable.Drawable
 import android.support.annotation.MenuRes
 import android.support.v7.widget.Toolbar
@@ -52,7 +51,7 @@ class TintableMenuToolbar : Toolbar {
     }
 
     private fun applyTint(icon: Drawable): Drawable {
-        icon.colorFilter = PorterDuffColorFilter(menuItemTintColor, PorterDuff.Mode.SRC_IN)
+        icon.setColorFilter(menuItemTintColor, PorterDuff.Mode.SRC_IN)
         return icon
     }
 }
