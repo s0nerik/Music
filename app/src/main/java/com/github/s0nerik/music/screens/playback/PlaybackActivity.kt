@@ -19,15 +19,12 @@ import com.github.s0nerik.music.adapters.playback_songs.PlaybackSongItem
 import com.github.s0nerik.music.adapters.playback_songs.PlaybackSongsListAdapter
 import com.github.s0nerik.music.base.BaseBoundActivity
 import com.github.s0nerik.music.databinding.ActivityPlaybackBinding
-import com.github.s0nerik.music.ext.observeOnMainThread
 import com.github.s0nerik.music.players.LocalPlayer
 import com.github.s0nerik.music.players.PlayerController
 import com.github.s0nerik.music.ui.views.PlaybackSongsPageTransformer
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
 import kotlinx.android.synthetic.main.activity_playback.*
 import ru.noties.debug.Debug
-import rx.Observable
-import java.util.concurrent.TimeUnit
 
 class PlaybackActivity : BaseBoundActivity<ActivityPlaybackBinding>() {
     override val layoutId = R.layout.activity_playback
@@ -47,22 +44,22 @@ class PlaybackActivity : BaseBoundActivity<ActivityPlaybackBinding>() {
 
         player.queue.events.bindToLifecycle(this).subscribe { updateSongsList() }
 
-        player.songChanges()
-                .switchMap {
-                    Observable.interval(16, TimeUnit.MILLISECONDS)
-                            .take(3, TimeUnit.SECONDS)
-                            .observeOnMainThread()
-                            .doOnNext { blurView.invalidate() }
-                }
-                .bindToLifecycle(this)
-                .subscribe()
+//        player.songChanges()
+//                .switchMap {
+//                    Observable.interval(16, TimeUnit.MILLISECONDS)
+//                            .take(3, TimeUnit.SECONDS)
+//                            .observeOnMainThread()
+//                            .doOnNext { blurView.invalidate() }
+//                }
+//                .bindToLifecycle(this)
+//                .subscribe()
 
         updateSongsList()
 
         songsViewPager.adapter = songsAdapter
         songsViewPager.setPageTransformer(false, PlaybackSongsPageTransformer())
 
-        blurView.setBlurredView(background)
+//        blurView.setBlurredView(background)
     }
 
     private fun updateSongsList() {

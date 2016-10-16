@@ -61,13 +61,13 @@
                             app:glideImageSrc='@{"file://"+album.albumArtPath}'
                             />
 
-                        <com.fivehundredpx.android.blur.BlurringView
+                        <com.github.mmin18.widget.RealtimeBlurView
                             android:id="@+id/blurView"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            app:blurRadius="1"
-                            app:downsampleFactor="6"
-                            app:overlayColor="#0000"
+                            app:realtimeBlurRadius="0dp"
+                            app:realtimeDownsampleFactor="6"
+                            app:realtimeOverlayColor="#0000"
                             />
 
                     </FrameLayout>

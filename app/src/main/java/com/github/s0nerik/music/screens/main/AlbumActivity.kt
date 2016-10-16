@@ -34,7 +34,7 @@ class AlbumActivity : BaseBoundActivity<ActivityAlbumBinding>() {
 
         songsAdapter.addSelection(0)
 
-        blurView.setBlurredView(image)
+//        blurView.setBlurredView(image)
 
         btnBack.onClick { onBackPressed() }
         btnMenu.onClick {  }
@@ -44,10 +44,11 @@ class AlbumActivity : BaseBoundActivity<ActivityAlbumBinding>() {
         super.onResume()
 
         appBarLayout.addOnOffsetChangedListener { appBarLayout, i ->
-            val radius = Math.sqrt(Math.abs(i.toDouble())).toInt()
+//            val radius = Math.sqrt(Math.abs(i.toDouble())).toInt()
+            val radius = Math.sqrt(Math.abs(i.toDouble()))
             if (radius > 0) {
                 blurView.show()
-                blurView.setBlurRadius(radius)
+                blurView.setBlurRadius(radius.toFloat())
                 blurView.invalidate()
             } else {
                 blurView.hide()

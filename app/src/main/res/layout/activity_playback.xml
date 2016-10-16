@@ -29,13 +29,13 @@
             app:playbackBgUri='@{playerController.currentSong.albumArtUri}'
             />
 
-        <com.fivehundredpx.android.blur.BlurringView
+        <com.github.mmin18.widget.RealtimeBlurView
             android:id="@+id/blurView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:blurRadius="12"
-            app:downsampleFactor="6"
-            app:overlayColor="#8000"
+            app:realtimeBlurRadius="12dp"
+            app:realtimeDownsampleFactor="6"
+            app:realtimeOverlayColor="#8000"
             />
 
         <com.github.s0nerik.music.ui.views.FixedTransformerViewPager
