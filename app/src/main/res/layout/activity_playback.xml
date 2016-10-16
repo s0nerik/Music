@@ -20,6 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipChildren="false"
+        android:clipToPadding="false"
         >
 
         <ImageView
@@ -91,22 +92,24 @@
             android:clipChildren="false"
             android:layout_alignParentBottom="true"
             android:orientation="vertical"
-            android:background="@color/md_grey_900"
+            android:background="@color/md_grey_800"
             android:paddingBottom="56dp"
-            android:elevation="16dp"
+            android:elevation="8dp"
             >
             <SeekBar
                 android:id="@+id/seekBar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="-8dp"
+                android:layout_height="3dp"
                 android:layout_marginLeft="-16dp"
                 android:layout_marginRight="-16dp"
+                android:layout_marginBottom="8dp"
                 android:max="1000"
                 android:progress="@{(int) (player.observableProgressPercent * 10f)}"
+                android:progressDrawable="@drawable/now_playing_progress_drawable"
                 tools:progress="500"
                 style="@style/PlaybackSeekBar"
                 />
+
             <include
                 layout="@layout/part_playback_control_buttons"
                 app:playerController="@{playerController}"

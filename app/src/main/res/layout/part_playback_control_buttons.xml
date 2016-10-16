@@ -30,7 +30,7 @@
             <ImageView
                 android:id="@+id/btnShuffleIcon"
                 android:src="@drawable/ic_shuffle_black_24dp"
-                android:tint="@{playerController.isShuffle ? @color/md_grey_400 : @color/md_white_1000}"
+                android:tint="@{playerController.isShuffle ? @color/md_black_1000 : @color/md_white_1000}"
                 style="@style/PlaybackControlButtonIcon"
                 />
 
@@ -95,7 +95,7 @@
             <ImageView
                 android:id="@+id/btnRepeatIcon"
                 android:src="@drawable/ic_repeat_black_24dp"
-                android:tint="@{playerController.isRepeat ? @color/md_grey_400 : @color/md_white_1000}"
+                android:tint="@{playerController.isRepeat ? @color/md_black_1000 : @color/md_white_1000}"
                 style="@style/PlaybackControlButtonIcon"
                 />
         </FrameLayout>
