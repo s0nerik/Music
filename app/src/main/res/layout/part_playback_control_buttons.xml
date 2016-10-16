@@ -63,7 +63,9 @@
             <ImageView
                 android:id="@+id/btnPlayPauseIcon"
                 style="@style/PlaybackControlButtonIcon"
-                tools:src="@drawable/ic_pause_black_24dp" />
+                android:src="@{playerController.isPlaying ? @drawable/ic_pause_black_24dp : @drawable/ic_play_arrow_black_24dp}"
+                tools:src="@drawable/ic_pause_black_24dp"
+                />
 
         </FrameLayout>
 

@@ -1,6 +1,7 @@
 package com.github.s0nerik.music.players
 
 import android.content.Context
+import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
 import android.databinding.ObservableLong
 import android.media.AudioManager.*
@@ -51,6 +52,8 @@ abstract class BasePlayer(
     val observableDuration: ObservableLong = ObservableLong(duration)
     val observableDurationInMinutes: ObservableField<String> = ObservableField(durationInMinutes)
 
+    val observablePlayingState: ObservableBoolean = ObservableBoolean(isPlaying)
+
     private var progressNotifierSubscription: Subscription? = null
 
     init {
@@ -58,6 +61,7 @@ abstract class BasePlayer(
             when (it) {
                 PlayerEvent.STARTED -> {
                     gainAudioFocus()
+                    observablePlayingState.set(true)
                     observableDuration.set(duration)
                     observableDurationInMinutes.set(durationInMinutes)
                     RxBus.post(EPlaybackStateChanged(EPlaybackStateChanged.Type.STARTED, currentSong!!, innerPlayer.currentPosition))
@@ -68,11 +72,13 @@ abstract class BasePlayer(
                     }
                 }
                 PlayerEvent.PAUSED -> {
+                    observablePlayingState.set(false)
                     progressNotifierSubscription?.unsubscribe()
                     RxBus.post(EPlaybackStateChanged(EPlaybackStateChanged.Type.PAUSED, currentSong!!, innerPlayer.currentPosition))
                     abandonAudioFocus()
                 }
                 PlayerEvent.ENDED, PlayerEvent.IDLE -> {
+                    observablePlayingState.set(false)
                     progressNotifierSubscription?.unsubscribe()
                     abandonAudioFocus()
                 }

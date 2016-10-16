@@ -22,7 +22,6 @@ import com.github.s0nerik.music.base.BaseBoundActivity
 import com.github.s0nerik.music.data.models.Song
 import com.github.s0nerik.music.databinding.ActivityPlaybackBinding
 import com.github.s0nerik.music.events.EPlaybackStateChanged
-import com.github.s0nerik.music.ext.currentPositionInMinutes
 import com.github.s0nerik.music.ext.observeOnMainThread
 import com.github.s0nerik.music.players.LocalPlayer
 import com.github.s0nerik.music.players.PlayerController
@@ -97,14 +96,6 @@ class PlaybackActivity : BaseBoundActivity<ActivityPlaybackBinding>() {
                 .subscribe { blurView.invalidate() }
     }
 
-    private fun setPlayButton(playing: Boolean) {
-        if (playing) {
-            btnPlayPauseIcon.setImageResource(R.drawable.ic_pause_black_24dp)
-        } else {
-            btnPlayPauseIcon.setImageResource(R.drawable.ic_play_arrow_black_24dp)
-        }
-    }
-
     private fun setShuffleButton(enabled: Boolean) {
         btnShuffleIcon.setColorFilter(resources.getColor(if (enabled) R.color.colorPrimary else android.R.color.white, theme))
     }
@@ -115,7 +106,6 @@ class PlaybackActivity : BaseBoundActivity<ActivityPlaybackBinding>() {
 
     private fun initView() {
         setSongInfo(player.currentSong!!)
-        setPlayButton(player.isPlaying)
         setShuffleButton(player.getShuffle())
         setRepeatButton(player.getRepeat())
     }
@@ -124,14 +114,11 @@ class PlaybackActivity : BaseBoundActivity<ActivityPlaybackBinding>() {
         when (e.type) {
             EPlaybackStateChanged.Type.STARTED -> {
                 setSongInfo(e.song)
-                setPlayButton(true)
             }
             EPlaybackStateChanged.Type.PAUSED -> {
-                setPlayButton(false)
             }
             EPlaybackStateChanged.Type.PROGRESS -> {
                 seekBar.progress = (e.progressPercent * 10f).toInt()
-                currentTime.text = player.currentPositionInMinutes
             }
             EPlaybackStateChanged.Type.STOPPED -> TODO()
         }
