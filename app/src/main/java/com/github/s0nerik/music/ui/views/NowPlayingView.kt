@@ -94,7 +94,7 @@ class NowPlayingView @JvmOverloads constructor(
 
     fun show(): Observable<Int> {
         return Observable.create({
-            visibility = View.GONE
+            visibility = View.INVISIBLE
 
             val mainSpringSystem = SpringSystem.create()
             val mainSpring = mainSpringSystem.createSpring()
