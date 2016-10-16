@@ -24,15 +24,18 @@
             android:id="@+id/background"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_above="@+id/bottomBar"
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
             app:playbackBgUri='@{playerController.currentSong.albumArtUri}'
+            tools:src="@drawable/no_cover"
             />
 
         <com.github.mmin18.widget.RealtimeBlurView
             android:id="@+id/blurView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_above="@+id/bottomBar"
             app:realtimeBlurRadius="12dp"
             app:realtimeDownsampleFactor="6"
             app:realtimeOverlayColor="#8000"
@@ -42,6 +45,8 @@
             android:id="@+id/songsViewPager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_above="@+id/bottomBar"
+            android:layout_below="@+id/toolbar"
             android:clipToPadding="false"
             android:overScrollMode="never"
             android:paddingTop="16dp"
@@ -53,44 +58,25 @@
             app:onPageSelected="@{(index) -> playerController.playAtIndex(index)}"
             />
 
-        <TextView
-            android:id="@+id/currentTime"
+        <ProgressBar
+            android:id="@+id/progressBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_above="@+id/bottomBar"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="10dp"
-            android:gravity="center"
-            android:padding="3dp"
-            android:shadowColor="#000000"
-
-            android:shadowDx="0"
-            android:shadowDy="0"
-            android:shadowRadius="2"
-            android:textColor="@android:color/white"
-
-            android:text="@{player.observablePositionInMinutes}"
-            tools:text="0:00"
+            android:layout_below="@+id/toolbar"
+            android:layout_centerInParent="true"
+            android:visibility="gone"
+            tools:visibility="visible"
             />
 
-        <TextView
-            android:id="@+id/endTime"
-            android:layout_width="wrap_content"
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/bottomBar"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
-            android:gravity="center"
-            android:padding="3dp"
-            android:shadowColor="#000000"
-
-            android:shadowDx="0"
-            android:shadowDy="0"
-            android:shadowRadius="2"
-            android:text="@{playerController.currentSong.durationString}"
-            android:textColor="@android:color/white"
-
-            tools:text="3:00"
+            app:theme="@style/PlaybackToolbar"
+            app:title="Now playing"
+            app:navigationIcon="@drawable/arrow_left"
+            app:navIconColor="@{@color/md_white_1000}"
             />
 
         <LinearLayout
@@ -100,7 +86,52 @@
             android:clipChildren="false"
             android:layout_alignParentBottom="true"
             android:orientation="vertical"
+            android:background="@color/md_grey_900"
+            android:elevation="8dp"
             >
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"
+                >
+                <TextView
+                    android:id="@+id/currentTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="16dp"
+                    android:gravity="center"
+                    android:shadowColor="#000000"
+
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="2"
+                    android:textColor="@android:color/white"
+
+                    android:text="@{player.observablePositionInMinutes}"
+                    tools:text="0:00"
+                    />
+
+                <TextView
+                    android:id="@+id/endTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginRight="16dp"
+                    android:gravity="center"
+                    android:shadowColor="#000000"
+
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="2"
+                    android:text="@{playerController.currentSong.durationString}"
+                    android:textColor="@android:color/white"
+
+                    tools:text="3:00"
+                    />
+            </FrameLayout>
 
             <SeekBar
                 android:id="@+id/seekBar"
@@ -118,24 +149,5 @@
                 />
 
         </LinearLayout>
-
-        <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:visibility="gone"
-            tools:visibility="visible"
-            />
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:title="@{playerController.currentSong.title}"
-            app:subtitle="@{playerController.currentSong.artistNameForUi}"
-            app:theme="@style/PlaybackToolbar"
-            />
-
     </RelativeLayout>
 </layout>

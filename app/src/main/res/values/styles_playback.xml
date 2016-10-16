@@ -31,6 +31,7 @@
 
     <style name="PlaybackToolbar" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="android:textColorPrimary">#fff</item>
+        <item name="android:colorControlNormal">#fff</item>
         <item name="colorControlNormal">#fff</item>
         <item name="colorControlHighlight">#3fff</item>
     </style>

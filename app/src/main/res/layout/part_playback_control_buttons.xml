@@ -16,7 +16,6 @@
         android:layout_height="?actionBarSize"
         android:clipChildren="false"
         android:weightSum="5"
-        tools:background="@color/md_grey_800"
         tools:visibility="visible"
         >
 
