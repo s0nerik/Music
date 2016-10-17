@@ -79,6 +79,10 @@ public abstract class RxExoPlayer {
         }
     }
 
+    public Observable<PlayerEvent> eventOnce(final PlayerEvent e) {
+        return event(e).take(1);
+    }
+
     public Observable<ExoPlaybackException> errors() {
         return errorSubject;
     }
@@ -145,6 +149,7 @@ public abstract class RxExoPlayer {
 
     protected abstract TrackRenderer getRenderer(Uri uri);
 
+    //region Main functionality
     public Observable<PlayerEvent> start() {
         return Observable.defer(new Func0<Observable<PlayerEvent>>() {
             @Override
@@ -152,8 +157,7 @@ public abstract class RxExoPlayer {
                 if (innerPlayer.getPlayWhenReady()) {
                     return Observable.just(PlayerEvent.STARTED);
                 } else {
-                    return event(PlayerEvent.STARTED)
-                            .take(1)
+                    return eventOnce(PlayerEvent.STARTED)
                             .doOnSubscribe(new Action0() {
                                 @Override
                                 public void call() {
@@ -172,8 +176,7 @@ public abstract class RxExoPlayer {
                     public Observable<PlayerEvent> call(PlayerEvent event) {
                         return start();
                     }
-                })
-                .take(1);
+                });
     }
 
     public Observable<PlayerEvent> pause() {
@@ -183,8 +186,7 @@ public abstract class RxExoPlayer {
                 if (!innerPlayer.getPlayWhenReady()) {
                     return Observable.just(PlayerEvent.PAUSED);
                 } else {
-                    return event(PlayerEvent.PAUSED)
-                            .take(1)
+                    return eventOnce(PlayerEvent.PAUSED)
                             .doOnSubscribe(new Action0() {
                                 @Override
                                 public void call() {
@@ -196,16 +198,24 @@ public abstract class RxExoPlayer {
         });
     }
 
-    public Observable<PlayerEvent> setPaused(boolean flag) {
-        return flag ? pause() : start();
+    public Observable<PlayerEvent> setPaused(final boolean flag) {
+        return Observable.defer(new Func0<Observable<PlayerEvent>>() {
+            @Override
+            public Observable<PlayerEvent> call() {
+                return flag ? pause() : start();
+            }
+        });
     }
 
-    public Observable<PlayerEvent> togglePause() { return setPaused(!isPaused()); }
+    public Observable<PlayerEvent> togglePause() {
+        return Observable.defer(new Func0<Observable<PlayerEvent>>() {
+            @Override
+            public Observable<PlayerEvent> call() {
+                return setPaused(!isPaused());
+            }
+        });
+    }
 
-    /**
-     * Stop playback
-     * @return true if playback stopped successfully and false means that error has occurred during playback stopping.
-     */
     public Observable<PlayerEvent> stop() {
         return Observable.defer(new Func0<Observable<PlayerEvent>>() {
             @Override
@@ -213,8 +223,7 @@ public abstract class RxExoPlayer {
                 if (innerPlayer.getPlaybackState() == STATE_IDLE) {
                     return Observable.just(PlayerEvent.IDLE);
                 } else {
-                    return event(PlayerEvent.IDLE)
-                            .take(1)
+                    return eventOnce(PlayerEvent.IDLE)
                             .doOnSubscribe(new Action0() {
                                 @Override
                                 public void call() {
@@ -227,12 +236,11 @@ public abstract class RxExoPlayer {
     }
 
     public Observable<PlayerEvent> prepare(@NonNull final Uri uri) {
-        return event(PlayerEvent.PREPARING)
-                .take(1)
+        return eventOnce(PlayerEvent.PREPARING)
                 .concatMap(new Func1<PlayerEvent, Observable<PlayerEvent>>() {
                     @Override
                     public Observable<PlayerEvent> call(PlayerEvent event) {
-                        return event(PlayerEvent.READY).take(1);
+                        return eventOnce(PlayerEvent.READY);
                     }
                 })
                 .doOnSubscribe(new Action0() {
@@ -255,12 +263,11 @@ public abstract class RxExoPlayer {
                 } else if (innerPlayer.getCurrentPosition() == msec) {
                     return Observable.just(PlayerEvent.READY);
                 } else {
-                    return event(PlayerEvent.BUFFERING)
-                            .take(1)
+                    return eventOnce(PlayerEvent.BUFFERING)
                             .concatMap(new Func1<PlayerEvent, Observable<PlayerEvent>>() {
                                 @Override
                                 public Observable<PlayerEvent> call(PlayerEvent event) {
-                                    return event(PlayerEvent.READY).take(1);
+                                    return eventOnce(PlayerEvent.READY);
                                 }
                             })
                             .doOnSubscribe(new Action0() {
@@ -287,9 +294,9 @@ public abstract class RxExoPlayer {
                     public Observable<PlayerEvent> call(PlayerEvent event) {
                         return stop();
                     }
-                })
-                .take(1);
+                });
     }
+    //endregion
 
     // region Delegated methods
 
