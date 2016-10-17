@@ -39,7 +39,7 @@ class App : Application() {
 
         GlideBindingConfig.registerProvider("song", { iv, request ->
             request.centerCrop()
-                    .placeholder(R.color.md_black_1000)
+                    .placeholder(R.color.md_grey_900)
                     .error(R.drawable.no_cover)
         })
 
