@@ -7,9 +7,8 @@ import com.github.s0nerik.music.data.models.Song
 import com.github.s0nerik.music.events.EPlaybackStateChanged
 import com.github.s0nerik.music.ext.sourceUri
 import com.github.s0nerik.music.helpers.DelayMeasurer
+import com.github.s0nerik.music.players.rx_exo_player.BasicRxExoPlayer
 import com.github.s0nerik.rxbus.RxBus
-import com.github.sonerik.rxexoplayer.BasicRxExoPlayer
-import com.google.android.exoplayer.ExoPlayer
 import com.google.android.exoplayer.MediaCodecAudioTrackRenderer
 import com.google.android.exoplayer.MediaCodecSelector
 import com.google.android.exoplayer.TrackRenderer
@@ -35,29 +34,29 @@ abstract class BasePlayer(
     abstract val currentSongIndex: Int
 
     protected var prepareTimeMeasurer = DelayMeasurer<Long>(10)
-    protected var lastState = ExoPlayer.STATE_IDLE
+//    protected var lastState = ExoPlayer.STATE_IDLE
     private val afListener = OnAudioFocusChangeListener {
         when (it) {
-            AUDIOFOCUS_LOSS, AUDIOFOCUS_LOSS_TRANSIENT, AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK -> innerPlayer.sendMessage(currentRenderer, MediaCodecAudioTrackRenderer.MSG_SET_VOLUME, 0f)
-            AUDIOFOCUS_GAIN -> innerPlayer.sendMessage(currentRenderer, MediaCodecAudioTrackRenderer.MSG_SET_VOLUME, 1f)
+            AUDIOFOCUS_LOSS, AUDIOFOCUS_LOSS_TRANSIENT, AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK -> sendMessage(currentRenderer, MediaCodecAudioTrackRenderer.MSG_SET_VOLUME, 0f)
+            AUDIOFOCUS_GAIN -> sendMessage(currentRenderer, MediaCodecAudioTrackRenderer.MSG_SET_VOLUME, 1f)
         }
     }
 
     private var progressNotifierSubscription: Subscription? = null
 
     init {
-        playerSubject.subscribe {
+        events().subscribe {
             when (it) {
                 PlayerEvent.STARTED -> {
                     gainAudioFocus()
-                    RxBus.post(EPlaybackStateChanged(EPlaybackStateChanged.Type.STARTED, currentSong!!, innerPlayer.currentPosition))
+                    RxBus.post(EPlaybackStateChanged(EPlaybackStateChanged.Type.STARTED, currentSong!!, currentPosition))
                     progressNotifierSubscription = playbackProgress().subscribe {
-                        RxBus.post(EPlaybackStateChanged(EPlaybackStateChanged.Type.PROGRESS, currentSong!!, innerPlayer.currentPosition, innerPlayer.duration))
+                        RxBus.post(EPlaybackStateChanged(EPlaybackStateChanged.Type.PROGRESS, currentSong!!, currentPosition, duration))
                     }
                 }
                 PlayerEvent.PAUSED -> {
                     progressNotifierSubscription?.unsubscribe()
-                    RxBus.post(EPlaybackStateChanged(EPlaybackStateChanged.Type.PAUSED, currentSong!!, innerPlayer.currentPosition))
+                    RxBus.post(EPlaybackStateChanged(EPlaybackStateChanged.Type.PAUSED, currentSong!!, currentPosition))
                     abandonAudioFocus()
                 }
                 PlayerEvent.ENDED, PlayerEvent.IDLE -> {
@@ -68,7 +67,7 @@ abstract class BasePlayer(
             }
         }
 
-        playerSubject.filter { it == PlayerEvent.PREPARING }
+        events().filter { it == PlayerEvent.PREPARING }
                 .take(1)
                 .subscribe { startService(context) }
 

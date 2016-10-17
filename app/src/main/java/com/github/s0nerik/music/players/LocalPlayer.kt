@@ -19,7 +19,7 @@ class LocalPlayer(
         get() = queue.currentIndex
 
     init {
-        val playerEvents = playerSubject.distinctUntilChanged()
+        val playerEvents = events().distinctUntilChanged()
 
         playerEvents.filter { it == PlayerEvent.ENDED }
                 .concatMap { if (repeat) restart() else prepareNextSong().flatMap { start() } }

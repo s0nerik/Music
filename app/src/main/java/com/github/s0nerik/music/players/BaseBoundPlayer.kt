@@ -36,7 +36,7 @@ abstract class BaseBoundPlayer(context: Context) : BasePlayer(context) {
     private var progressNotifierSubscription: Subscription? = null
 
     init {
-        playerSubject.subscribe {
+        events().subscribe {
             when (it) {
                 PlayerEvent.STARTED -> {
                     gainAudioFocus()
