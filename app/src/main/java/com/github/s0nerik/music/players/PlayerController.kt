@@ -13,6 +13,8 @@ class PlayerController(
     val isShuffle = player.observableShuffleState
     val isRepeat = player.observableRepeatState
 
+    // TODO: "set queue and play" method
+
     fun play() { player.setPaused(false).subscribe().addTo(disposable) }
     fun pause() { player.setPaused(true).subscribe().addTo(disposable) }
     fun togglePause() { player.togglePause().subscribe().addTo(disposable) }
