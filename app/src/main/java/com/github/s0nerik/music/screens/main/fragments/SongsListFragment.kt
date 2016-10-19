@@ -11,9 +11,11 @@ import com.github.s0nerik.music.base.BaseBoundFragment
 import com.github.s0nerik.music.data.helpers.CollectionManager
 import com.github.s0nerik.music.data.models.Song
 import com.github.s0nerik.music.databinding.FragmentListSongsBinding
+import com.github.s0nerik.music.events.EFabActionAvailable
 import com.github.s0nerik.music.ext.hide
 import com.github.s0nerik.music.ext.show
 import com.github.s0nerik.music.players.LocalPlayer
+import com.github.s0nerik.rxbus.RxBus
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import kotlinx.android.synthetic.main.fragment_list_songs.*
@@ -85,13 +87,13 @@ class SongsListFragment : BaseBoundFragment<FragmentListSongsBinding>(), Sortabl
                 )
     }
 
-//    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
-//        super.setUserVisibleHint(isVisibleToUser)
-//
-//        if (isVisibleToUser) {
-//            RxBus.post(ChangeFabActionCommand(R.drawable.ic_shuffle_white_24dp, { shuffleAll() } ))
-//        }
-//    }
+    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+        super.setUserVisibleHint(isVisibleToUser)
+
+        if (isVisibleToUser) {
+            RxBus.post(EFabActionAvailable(R.drawable.ic_shuffle_black_24dp, { shuffleAll() } ))
+        }
+    }
 
     private fun shuffleAll() {
         if (filteredSongs.size > 0) {

@@ -14,6 +14,7 @@ import com.github.s0nerik.music.R
 import com.github.s0nerik.music.adapters.LocalMusicFragmentsAdapter
 import com.github.s0nerik.music.base.BaseBoundFragment
 import com.github.s0nerik.music.databinding.FragmentLocalMusicBinding
+import com.github.s0nerik.music.events.EFabActionAvailable
 import com.github.s0nerik.music.events.EPlaybackStateChanged
 import com.github.s0nerik.music.players.PlayerController
 import com.github.s0nerik.rxbus.RxBus
@@ -65,9 +66,9 @@ class LocalMusicFragment : BaseBoundFragment<FragmentLocalMusicBinding>() {
 
     private fun initEventHandlers() {
         RxBus.on(EPlaybackStateChanged::class.java).bindToLifecycle(this).subscribe { onEvent(it) }
+        RxBus.on(EFabActionAvailable::class.java).bindToLifecycle(this).subscribe { onEvent(it) }
 //        RxBus.on(PlaybackPausedEvent).bindToLifecycle(this).subscribe(::onEvent)
 //        RxBus.on(EPlaybackProgress).bindToLifecycle(this).subscribe(::onEvent)
-//        RxBus.on(ChangeFabActionCommand).bindToLifecycle(this).subscribe(::onEvent)
 //        RxBus.on(PlaybackStartedEvent).bindToLifecycle(this).subscribe(::onEvent)
 //        RxBus.on(ShouldStartArtistInfoActivity).bindToLifecycle(this).subscribe(::onEvent)
     }
@@ -161,17 +162,17 @@ class LocalMusicFragment : BaseBoundFragment<FragmentLocalMusicBinding>() {
                 }
     }
 
-//    // region Event handlers
-//
-//    private fun onEvent(c: ChangeFabActionCommand) {
-//        if (!canShowFab) return
-//
-//        fabAction = c.action
-//        with(binding) {
-//            fab.setImageResource(c.iconId)
-//            fab.show()
-//        }
-//    }
+    // region Event handlers
+
+    private fun onEvent(c: EFabActionAvailable) {
+        if (!canShowFab) return
+
+        fabAction = c.action
+        with(binding) {
+            fab.setImageResource(c.iconId)
+            fab.show()
+        }
+    }
 
     private fun onEvent(e: EPlaybackStateChanged) {
         if (e.type == EPlaybackStateChanged.Type.STARTED) {
