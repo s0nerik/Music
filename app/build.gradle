@@ -60,7 +60,9 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
+    // Language features
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    compile 'co.metalab.asyncawait:asyncawait:0.7'
 
     // Support libs
     compile "com.android.support:appcompat-v7:$support_version"
