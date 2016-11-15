@@ -19,7 +19,6 @@ import com.github.s0nerik.music.adapters.playback_songs.PlaybackSongsListAdapter
 import com.github.s0nerik.music.base.BaseBoundActivity
 import com.github.s0nerik.music.databinding.ActivityPlaybackBinding
 import com.github.s0nerik.music.players.LocalPlayer
-import com.github.s0nerik.music.players.PlayerController
 import com.github.s0nerik.music.ui.views.PlaybackSongsPageTransformer
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
 import kotlinx.android.synthetic.main.activity_playback.*
@@ -37,9 +36,7 @@ class PlaybackActivity : BaseBoundActivity<ActivityPlaybackBinding>() {
         super.onCreate(savedInstanceState)
         player = App.comp.getLocalPlayer()
         @Suppress("MISSING_DEPENDENCY_CLASS")
-        binding.player = player
-        @Suppress("MISSING_DEPENDENCY_CLASS")
-        binding.playerController = PlayerController(player)
+        binding.viewModel = PlaybackViewModel(this, player)
 
         player.queue.events.bindToLifecycle(this).subscribe { updateSongsList() }
 

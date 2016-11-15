@@ -7,15 +7,7 @@
     <data>
         <import type="com.github.s0nerik.music.ext.ModelExtensionsKt" />
         <import type="com.github.s0nerik.music.R" />
-        <!--<variable name="viewModel" type="com.github.s0nerik.music.players.LocalPlayer" />-->
-        <variable
-            name="player"
-            type="com.github.s0nerik.music.players.LocalPlayer"
-            />
-        <variable
-            name="playerController"
-            type="com.github.s0nerik.music.players.PlayerController"
-            />
+        <variable name="viewModel" type="com.github.s0nerik.music.screens.playback.PlaybackViewModel" />
     </data>
     <RelativeLayout
         android:layout_width="match_parent"
@@ -31,7 +23,7 @@
             android:layout_above="@+id/bottomBar"
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
-            app:playbackBgUri='@{playerController.currentSong.albumArtUri}'
+            app:playbackBgUri='@{viewModel.song.albumArtUri}'
             tools:src="@drawable/no_cover"
             />
 
@@ -57,8 +49,8 @@
             android:paddingLeft="48dp"
             android:paddingRight="48dp"
             app:offscreenPageLimit='@{2}'
-            app:currentItem='@{player.getQueue().observableCurrentIndex}'
-            app:onPageSelected="@{(index) -> playerController.playAtIndex(index)}"
+            app:currentItem='@{viewModel.currentSongIndex}'
+            app:onPageSelected='@{(index) -> viewModel.playAtIndex(index)}'
             />
 
         <ProgressBar
@@ -95,7 +87,7 @@
             android:orientation="vertical"
             android:paddingBottom="56dp"
             android:elevation="8dp"
-            app:bgColorFrom="@{playerController.currentSong.albumArtUri}"
+            app:bgColorFrom="@{viewModel.song.albumArtUri}"
             >
             <SeekBar
                 android:id="@+id/seekBar"
@@ -105,7 +97,7 @@
                 android:layout_marginRight="-16dp"
                 android:layout_marginBottom="8dp"
                 android:max="1000"
-                android:progress="@{(int) (player.observableProgressPercent * 10f)}"
+                android:progress="@{(int) (viewModel.progressPercent * 10f)}"
                 android:progressDrawable="@drawable/now_playing_progress_drawable"
                 tools:progress="500"
                 style="@style/PlaybackSeekBar"
@@ -113,7 +105,7 @@
 
             <include
                 layout="@layout/part_playback_control_buttons"
-                app:playerController="@{playerController}"
+                app:playerController="@{viewModel.playerController}"
                 />
         </LinearLayout>
 
@@ -138,7 +130,7 @@
                 android:shadowRadius="2"
                 android:textColor="@android:color/white"
 
-                android:text="@{player.observablePositionInMinutes}"
+                android:text="@{viewModel.positionInMinutes}"
                 tools:text="0:00"
                 />
 
@@ -153,7 +145,7 @@
                 android:shadowDx="0"
                 android:shadowDy="0"
                 android:shadowRadius="2"
-                android:text="@{playerController.currentSong.durationString}"
+                android:text="@{viewModel.song.durationString}"
                 android:textColor="@android:color/white"
 
                 tools:text="3:00"
