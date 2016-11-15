@@ -2,9 +2,17 @@ package com.github.s0nerik.music.binding_adapters
 
 import android.databinding.BindingAdapter
 import android.databinding.adapters.ListenerUtil
+import android.graphics.Bitmap
+import android.net.Uri
 import android.support.v4.view.ViewPager
+import android.support.v7.graphics.Palette
 import android.view.View
+import co.metalab.asyncawait.async
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.animation.GlideAnimation
+import com.bumptech.glide.request.target.SimpleTarget
 import com.github.s0nerik.music.R
+import org.jetbrains.anko.backgroundColor
 
 @BindingAdapter("squareSize")
 fun setSquareSize(view: View, size: Float) {
@@ -12,6 +20,24 @@ fun setSquareSize(view: View, size: Float) {
     layoutParams.width = size.toInt()
     layoutParams.height = size.toInt()
     view.layoutParams = layoutParams
+}
+
+@BindingAdapter("bgColorFrom")
+fun setBackgroundWithCircularTransition(view: View, uri: Uri?) {
+    Glide.with(view.context)
+            .load(uri)
+            .asBitmap()
+            .into(object : SimpleTarget<Bitmap>(256, 256) {
+                override fun onResourceReady(resource: Bitmap?, glideAnimation: GlideAnimation<in Bitmap>?) {
+                    async {
+                        val palette = await { Palette.from(resource).generate() }
+                        val swatch = palette.vibrantSwatch ?: palette.dominantSwatch!!
+                        view.backgroundColor = swatch.rgb
+//                        val bgColor = palette.getColorForTarget(Target.DARK_VIBRANT, ContextCompat.getColor(view.context, R.color.md_grey_800))
+//                        view.backgroundColor = bgColor
+                    }
+                }
+            })
 }
 
 interface OnPageScrollStateChanged {

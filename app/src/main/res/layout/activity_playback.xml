@@ -7,6 +7,7 @@
     <data>
         <import type="com.github.s0nerik.music.ext.ModelExtensionsKt" />
         <import type="com.github.s0nerik.music.R" />
+        <!--<variable name="viewModel" type="com.github.s0nerik.music.players.LocalPlayer" />-->
         <variable
             name="player"
             type="com.github.s0nerik.music.players.LocalPlayer"
@@ -92,9 +93,9 @@
             android:clipChildren="false"
             android:layout_alignParentBottom="true"
             android:orientation="vertical"
-            android:background="@color/md_grey_800"
             android:paddingBottom="56dp"
             android:elevation="8dp"
+            app:bgColorFrom="@{playerController.currentSong.albumArtUri}"
             >
             <SeekBar
                 android:id="@+id/seekBar"
