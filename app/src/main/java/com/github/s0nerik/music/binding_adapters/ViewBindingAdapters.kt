@@ -1,8 +1,12 @@
 package com.github.s0nerik.music.binding_adapters
 
+import android.animation.ArgbEvaluator
+import android.animation.ObjectAnimator
 import android.databinding.BindingAdapter
 import android.databinding.adapters.ListenerUtil
 import android.graphics.Bitmap
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.support.v4.view.ViewPager
 import android.support.v7.graphics.Palette
@@ -12,7 +16,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.animation.GlideAnimation
 import com.bumptech.glide.request.target.SimpleTarget
 import com.github.s0nerik.music.R
-import org.jetbrains.anko.backgroundColor
 
 @BindingAdapter("squareSize")
 fun setSquareSize(view: View, size: Float) {
@@ -32,9 +35,15 @@ fun setBackgroundWithCircularTransition(view: View, uri: Uri?) {
                     async {
                         val palette = await { Palette.from(resource).generate() }
                         val swatch = palette.vibrantSwatch ?: palette.dominantSwatch!!
-                        view.backgroundColor = swatch.rgb
-//                        val bgColor = palette.getColorForTarget(Target.DARK_VIBRANT, ContextCompat.getColor(view.context, R.color.md_grey_800))
-//                        view.backgroundColor = bgColor
+
+                        with(view) {
+                            (background as? ColorDrawable)?.color
+                            val startColor = (background as? ColorDrawable)?.color ?: Color.BLACK
+
+                            ObjectAnimator.ofObject(this, "backgroundColor", ArgbEvaluator(), startColor, swatch.rgb)
+                                    .setDuration(500)
+                                    .start()
+                        }
                     }
                 }
             })
