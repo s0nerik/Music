@@ -99,6 +99,7 @@
                 android:max="1000"
                 android:progress="@{(int) (viewModel.progressPercent * 10f)}"
                 android:progressDrawable="@drawable/now_playing_progress_drawable"
+                android:onProgressChanged='@{viewModel::onProgressChange}'
                 tools:progress="500"
                 style="@style/PlaybackSeekBar"
                 />

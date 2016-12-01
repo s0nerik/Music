@@ -14,6 +14,7 @@ import android.net.Uri
 import android.support.v4.graphics.ColorUtils
 import android.support.v7.graphics.Palette
 import android.view.View
+import android.widget.SeekBar
 import co.metalab.asyncawait.async
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.animation.GlideAnimation
@@ -36,6 +37,9 @@ class PlaybackViewModel(
         val positionInMinutes: ObservableField<String> = player.observablePositionInMinutes
 ) {
     fun playAtIndex(position: Int) { playerController.playAtIndex(position) }
+    fun onProgressChange(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+        if (fromUser) playerController.seekTo((progress / 1000f * (song.get()?.duration ?: 0)).toLong())
+    }
 }
 
 @BindingAdapter("bottomBarBgColorSourceUri")
@@ -62,7 +66,11 @@ fun setBackgroundWithCircularTransition(view: View, uri: Uri?) {
                                     PorterDuff.Mode.SRC_ATOP
                             )
 
-                            (background as? ColorDrawable)?.color
+                            seekBar.thumb.setColorFilter(
+                                    ColorUtils.blendARGB(swatch.rgb, ColorUtils.setAlphaComponent(if (isColorDark(swatch.bodyTextColor)) Color.WHITE else Color.BLACK, 128), 0.33f),
+                                    PorterDuff.Mode.SRC_ATOP
+                            )
+
                             val startColor = (background as? ColorDrawable)?.color ?: Color.BLACK
 
                             ObjectAnimator.ofObject(this, "backgroundColor", ArgbEvaluator(), startColor, swatch.rgb)

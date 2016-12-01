@@ -7,6 +7,7 @@ import com.github.s0nerik.music.di.AppComponent
 import com.github.s0nerik.music.di.AppModule
 import com.github.s0nerik.music.di.DaggerAppComponent
 import ru.noties.debug.Debug
+import rx.plugins.RxJavaHooks
 
 class App : Application() {
     init {
@@ -25,6 +26,10 @@ class App : Application() {
         super.onCreate()
         Debug.init(BuildConfig.DEBUG)
         Kotpref.init(this)
+
+        RxJavaHooks.clear()
+        RxJavaHooks.enableAssemblyTracking()
+        RxJavaHooks.setOnError { it.printStackTrace() }
     }
 
     private fun registerGlideConfigs() {

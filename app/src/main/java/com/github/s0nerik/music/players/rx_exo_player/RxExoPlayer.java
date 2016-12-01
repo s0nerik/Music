@@ -51,7 +51,7 @@ public abstract class RxExoPlayer {
             public Boolean call(PlayerEvent event) {
                 return event == e;
             }
-        });
+        }).onBackpressureBuffer();
     }
 
     public Observable<PlayerEvent> events() {
