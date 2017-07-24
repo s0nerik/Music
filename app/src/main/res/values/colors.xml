@@ -6,8 +6,8 @@
     <color name="colorAccentDark">@color/md_grey_100</color>
 
 
-    <color name="nowPlayingProgressBarBg">@color/md_grey_600</color>
-    <color name="nowPlayingProgressBarColor">@color/md_grey_200</color>
+    <color name="nowPlayingProgressBarBg">@color/md_grey_200</color>
+    <color name="nowPlayingProgressBarColor">@color/md_grey_900</color>
     <color name="nowPlayingFabBg">@color/colorAccent</color>
     <color name="nowPlayingFabTint">@color/nowPlayingProgressBarBg</color>
 </resources>

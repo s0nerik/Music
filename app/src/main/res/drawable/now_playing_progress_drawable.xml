@@ -1,32 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <item android:id="@android:id/background">
-        <shape>
-            <solid android:color="@color/nowPlayingProgressBarBg" />
-        </shape>
+    <item>
+        <inset
+            android:drawable="@drawable/now_playing_progress_fg"
+            android:insetLeft="-18dp"
+            android:insetRight="-18dp"
+            />
     </item>
-
-    <!--<item android:id="@android:id/secondaryProgress">-->
-        <!--<clip>-->
-            <!--<shape>-->
-                <!--<gradient-->
-                    <!--android:startColor="#234"-->
-                    <!--android:centerColor="#234"-->
-                    <!--android:centerY="0.75"-->
-                    <!--android:endColor="#a24"-->
-                    <!--android:angle="270"-->
-                    <!--/>-->
-            <!--</shape>-->
-        <!--</clip>-->
-    <!--</item>-->
-
-    <item android:id="@android:id/progress">
+    <item android:id="@android:id/background" >
         <clip>
-            <shape>
-                <solid android:color="@color/nowPlayingProgressBarColor" />
-            </shape>
+            <inset
+                android:drawable="@drawable/now_playing_progress_bg"
+                android:insetLeft="0dp"
+                android:insetRight="0dp"
+                />
         </clip>
     </item>
-
+    <item android:id="@android:id/progress">
+        <clip>
+            <inset
+                android:drawable="@drawable/now_playing_progress_fg"
+                android:insetLeft="0dp"
+                android:insetRight="0dp"
+                />
+        </clip>
+    </item>
 </layer-list>

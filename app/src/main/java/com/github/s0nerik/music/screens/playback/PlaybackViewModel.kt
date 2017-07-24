@@ -61,12 +61,12 @@ fun setBackgroundWithCircularTransition(view: View, uri: Uri?) {
                             btnPrevIcon.setColorFilter(swatch.bodyTextColor)
                             btnNextIcon.setColorFilter(swatch.bodyTextColor)
 
-                            seekBar.progressDrawable.setColorFilter(
+                            seekBar.progressDrawable?.setColorFilter(
                                     ColorUtils.blendARGB(swatch.rgb, ColorUtils.setAlphaComponent(if (isColorDark(swatch.bodyTextColor)) Color.WHITE else Color.BLACK, 128), 0.33f),
                                     PorterDuff.Mode.SRC_ATOP
                             )
 
-                            seekBar.thumb.setColorFilter(
+                            seekBar.thumb?.setColorFilter(
                                     ColorUtils.blendARGB(swatch.rgb, ColorUtils.setAlphaComponent(if (isColorDark(swatch.bodyTextColor)) Color.WHITE else Color.BLACK, 128), 0.33f),
                                     PorterDuff.Mode.SRC_ATOP
                             )

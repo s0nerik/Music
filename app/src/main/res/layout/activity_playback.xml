@@ -89,19 +89,15 @@
             android:elevation="16dp"
             app:bottomBarBgColorSourceUri="@{viewModel.song.albumArtUri}"
             >
-            <SeekBar
+            <com.github.s0nerik.music.ui.views.LwmSeekBar
                 android:id="@+id/seekBar"
                 android:layout_width="match_parent"
-                android:layout_height="3dp"
-                android:layout_marginLeft="-17dp"
-                android:layout_marginRight="-17dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-6dp"
                 android:layout_marginBottom="8dp"
                 android:max="1000"
-                android:progress="@{(int) (viewModel.progressPercent * 10f)}"
-                android:progressDrawable="@drawable/now_playing_progress_drawable"
+                android:progress='@{(int) (viewModel.progressPercent * 10f)}'
                 android:onProgressChanged='@{viewModel::onProgressChange}'
-                tools:progress="500"
-                style="@style/PlaybackSeekBar"
                 />
 
             <include
